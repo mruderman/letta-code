@@ -544,6 +544,14 @@ async function main() {
           );
         }
 
+        // If resuming with --model flag, update agent's model if different
+        if (model && agent.llm_config?.model !== model) {
+          const { updateAgentLLMConfig } = await import("./agent/modify");
+          const updatedConfig = await updateAgentLLMConfig(agent.id, model);
+          // Update local agent state so UI reflects the change immediately
+          agent.llm_config = updatedConfig;
+        }
+
         // Ensure local project settings are loaded before updating
         // (they may not have been loaded if we didn't try to resume from project settings)
         try {
