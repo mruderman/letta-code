@@ -135,12 +135,14 @@ interface EditRendererProps {
   filePath: string;
   oldString: string;
   newString: string;
+  startLineNumber?: number;
 }
 
 export function EditRenderer({
   filePath,
   oldString,
   newString,
+  startLineNumber = 1,
 }: EditRendererProps) {
   const relativePath = formatRelativePath(filePath);
   const oldLines = oldString.split("\n");
@@ -168,7 +170,7 @@ export function EditRenderer({
       {oldLines.map((line, i) => (
         <DiffLine
           key={`old-${i}-${line.substring(0, 20)}`}
-          lineNumber={i + 1}
+          lineNumber={startLineNumber + i}
           type="remove"
           content={line}
           compareContent={singleLineEdit ? newLines[0] : undefined}
@@ -179,7 +181,7 @@ export function EditRenderer({
       {newLines.map((line, i) => (
         <DiffLine
           key={`new-${i}-${line.substring(0, 20)}`}
-          lineNumber={i + 1}
+          lineNumber={startLineNumber + i}
           type="add"
           content={line}
           compareContent={singleLineEdit ? oldLines[0] : undefined}
@@ -194,6 +196,7 @@ interface MultiEditRendererProps {
   edits: Array<{
     old_string: string;
     new_string: string;
+    startLineNumber?: number;
   }>;
 }
 
@@ -223,6 +226,7 @@ export function MultiEditRenderer({ filePath, edits }: MultiEditRendererProps) {
         const oldLines = edit.old_string.split("\n");
         const newLines = edit.new_string.split("\n");
         const singleLineEdit = oldLines.length === 1 && newLines.length === 1;
+        const startLineNumber = edit.startLineNumber ?? 1;
 
         return (
           <Box
@@ -232,7 +236,7 @@ export function MultiEditRenderer({ filePath, edits }: MultiEditRendererProps) {
             {oldLines.map((line, i) => (
               <DiffLine
                 key={`old-${index}-${i}-${line.substring(0, 20)}`}
-                lineNumber={i + 1} // TODO: This should be actual file line numbers
+                lineNumber={startLineNumber + i}
                 type="remove"
                 content={line}
                 compareContent={
@@ -243,7 +247,7 @@ export function MultiEditRenderer({ filePath, edits }: MultiEditRendererProps) {
             {newLines.map((line, i) => (
               <DiffLine
                 key={`new-${index}-${i}-${line.substring(0, 20)}`}
-                lineNumber={i + 1} // TODO: This should be actual file line numbers
+                lineNumber={startLineNumber + i}
                 type="add"
                 content={line}
                 compareContent={
