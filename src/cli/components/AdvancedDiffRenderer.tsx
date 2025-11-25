@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { relative } from "node:path";
 import * as Diff from "diff";
 import { Box, Text } from "ink";
@@ -237,19 +238,31 @@ export function AdvancedDiffRenderer(
       );
     }
     if (props.kind === "edit") {
+      // For fallback, we need to calculate the line number manually
+      const fileContent = readFileSync(filePathForFallback, "utf-8");
+      const startLineNumber =
+        fileContent.substring(0, fileContent.indexOf(props.oldString)).split(
+          "\n",
+        ).length;
       return (
         <EditRenderer
           filePath={filePathForFallback}
           oldString={props.oldString}
           newString={props.newString}
+          startLineNumber={startLineNumber}
         />
       );
     }
     // multi_edit fallback
     if (props.kind === "multi_edit") {
+      const fileContent = readFileSync(filePathForFallback, "utf-8");
       const edits = (props.edits || []).map((e) => ({
         old_string: e.old_string,
         new_string: e.new_string,
+        startLineNumber:
+          fileContent.substring(0, fileContent.indexOf(e.old_string)).split(
+            "\n",
+          ).length,
       }));
       return <MultiEditRenderer filePath={filePathForFallback} edits={edits} />;
     }
