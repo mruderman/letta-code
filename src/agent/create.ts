@@ -18,7 +18,7 @@ import {
   resolveModel,
 } from "./model";
 import { updateAgentLLMConfig } from "./modify";
-import { SYSTEM_PROMPT } from "./promptAssets";
+import { SYSTEM_PROMPT, SYSTEM_PROMPTS } from "./promptAssets";
 import { SLEEPTIME_MEMORY_PERSONA } from "./prompts/sleeptime";
 import { discoverSkills, formatSkillsForMemory, SKILLS_DIR } from "./skills";
 
@@ -31,6 +31,9 @@ export async function createAgent(
   skillsDirectory?: string,
   parallelToolCalls = true,
   enableSleeptime = false,
+  systemPromptId?: string,
+  initBlocks?: string[],
+  baseTools?: string[],
 ) {
   // Resolve model identifier to handle
   let modelHandle: string;
@@ -58,16 +61,42 @@ export async function createAgent(
     getServerToolName(name),
   );
 
-  const toolNames = [
-    ...serverToolNames,
+  const defaultBaseTools = baseTools ?? [
     "memory",
     "web_search",
     "conversation_search",
     "fetch_webpage",
   ];
 
+  const toolNames = [...serverToolNames, ...defaultBaseTools];
+
   // Load memory blocks from .mdx files
-  const defaultMemoryBlocks = await getDefaultMemoryBlocks();
+  const defaultMemoryBlocks =
+    initBlocks && initBlocks.length === 0 ? [] : await getDefaultMemoryBlocks();
+
+  // Optional filter: only initialize a subset of memory blocks on creation
+  const allowedBlockLabels = initBlocks
+    ? new Set(
+        initBlocks.map((name) => name.trim()).filter((name) => name.length > 0),
+      )
+    : undefined;
+
+  if (allowedBlockLabels && allowedBlockLabels.size > 0) {
+    const knownLabels = new Set(defaultMemoryBlocks.map((b) => b.label));
+    for (const label of Array.from(allowedBlockLabels)) {
+      if (!knownLabels.has(label)) {
+        console.warn(
+          `Ignoring unknown init block "${label}". Valid blocks: ${Array.from(knownLabels).join(", ")}`,
+        );
+        allowedBlockLabels.delete(label);
+      }
+    }
+  }
+
+  const filteredMemoryBlocks =
+    allowedBlockLabels && allowedBlockLabels.size > 0
+      ? defaultMemoryBlocks.filter((b) => allowedBlockLabels.has(b.label))
+      : defaultMemoryBlocks;
 
   // Resolve absolute path for skills directory
   const resolvedSkillsDirectory =
@@ -86,7 +115,7 @@ export async function createAgent(
     }
 
     // Find and update the skills memory block with discovered skills
-    const skillsBlock = defaultMemoryBlocks.find((b) => b.label === "skills");
+    const skillsBlock = filteredMemoryBlocks.find((b) => b.label === "skills");
     if (skillsBlock) {
       skillsBlock.value = formatSkillsForMemory(
         skills,
@@ -115,6 +144,9 @@ export async function createAgent(
   if (!forceNewBlocks) {
     // Load global blocks (persona, human)
     for (const [label, blockId] of Object.entries(globalSharedBlockIds)) {
+      if (allowedBlockLabels && !allowedBlockLabels.has(label)) {
+        continue;
+      }
       try {
         const block = await client.blocks.retrieve(blockId);
         existingBlocks.set(label, block);
@@ -128,6 +160,9 @@ export async function createAgent(
 
     // Load local blocks (style)
     for (const [label, blockId] of Object.entries(localSharedBlockIds)) {
+      if (allowedBlockLabels && !allowedBlockLabels.has(label)) {
+        continue;
+      }
       try {
         const block = await client.blocks.retrieve(blockId);
         existingBlocks.set(label, block);
@@ -144,7 +179,7 @@ export async function createAgent(
   const blockIds: string[] = [];
   const blocksToCreate: Array<{ block: CreateBlock; label: string }> = [];
 
-  for (const defaultBlock of defaultMemoryBlocks) {
+  for (const defaultBlock of filteredMemoryBlocks) {
     const existingBlock = existingBlocks.get(defaultBlock.label);
     if (existingBlock?.id) {
       // Reuse existing global shared block
@@ -209,10 +244,16 @@ export async function createAgent(
   const modelUpdateArgs = getModelUpdateArgs(modelHandle);
   const contextWindow = (modelUpdateArgs?.context_window as number) || 200_000;
 
+  // Resolve system prompt (use specified ID or default)
+  const systemPrompt = systemPromptId
+    ? (SYSTEM_PROMPTS.find((p) => p.id === systemPromptId)?.content ??
+      SYSTEM_PROMPT)
+    : SYSTEM_PROMPT;
+
   // Create agent with all block IDs (existing + newly created)
   const agent = await client.agents.create({
     agent_type: "letta_v1_agent" as AgentType,
-    system: SYSTEM_PROMPT,
+    system: systemPrompt,
     name,
     embedding: embeddingModel,
     model: modelHandle,
@@ -235,12 +276,7 @@ export async function createAgent(
     const otherArgs = { ...updateArgs } as Record<string, unknown>;
     delete (otherArgs as Record<string, unknown>).context_window;
     if (Object.keys(otherArgs).length > 0) {
-      await updateAgentLLMConfig(
-        agent.id,
-        modelHandle,
-        otherArgs,
-        true, // preserve parallel_tool_calls
-      );
+      await updateAgentLLMConfig(agent.id, modelHandle, otherArgs);
     }
   }
 

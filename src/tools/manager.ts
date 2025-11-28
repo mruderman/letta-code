@@ -57,6 +57,7 @@ export const ANTHROPIC_DEFAULT_TOOLS: ToolName[] = [
   "LS",
   "MultiEdit",
   "Read",
+  "Skill",
   "TodoWrite",
   "Write",
 ];
@@ -69,6 +70,7 @@ export const OPENAI_DEFAULT_TOOLS: ToolName[] = [
   "grep_files",
   "apply_patch",
   "update_plan",
+  "Skill",
 ];
 
 export const GEMINI_DEFAULT_TOOLS: ToolName[] = [
@@ -81,6 +83,7 @@ export const GEMINI_DEFAULT_TOOLS: ToolName[] = [
   "write_file_gemini",
   "write_todos",
   "read_many_files",
+  "Skill",
 ];
 
 // Tool permissions configuration
@@ -95,6 +98,7 @@ const TOOL_PERMISSIONS: Record<ToolName, { requiresApproval: boolean }> = {
   LS: { requiresApproval: false },
   MultiEdit: { requiresApproval: true },
   Read: { requiresApproval: false },
+  Skill: { requiresApproval: false },
   TodoWrite: { requiresApproval: false },
   Write: { requiresApproval: true },
   shell_command: { requiresApproval: true },
@@ -161,6 +165,27 @@ function getRegistry(): ToolRegistry {
 }
 
 const toolRegistry = getRegistry();
+
+/**
+ * Resolve a server/visible tool name to an internal tool name
+ * based on the currently loaded toolset.
+ *
+ * - If a tool with the exact name is loaded, prefer that.
+ * - Otherwise, fall back to the alias mapping used for Gemini tools.
+ * - Returns undefined if no matching tool is loaded.
+ */
+function resolveInternalToolName(name: string): string | undefined {
+  if (toolRegistry.has(name)) {
+    return name;
+  }
+
+  const internalName = getInternalToolName(name);
+  if (toolRegistry.has(internalName)) {
+    return internalName;
+  }
+
+  return undefined;
+}
 
 /**
  * Generates a Python stub for a tool that will be executed client-side.
@@ -289,23 +314,29 @@ export async function loadSpecificTools(toolNames: string[]): Promise<void> {
       continue;
     }
 
-    const definition = TOOL_DEFINITIONS[name as ToolName];
+    // Map server-facing name to our internal tool name
+    const internalName = getInternalToolName(name);
+
+    const definition = TOOL_DEFINITIONS[internalName as ToolName];
     if (!definition) {
-      console.warn(`Tool ${name} not found in definitions, skipping`);
+      console.warn(
+        `Tool ${name} (internal: ${internalName}) not found in definitions, skipping`,
+      );
       continue;
     }
 
     if (!definition.impl) {
-      throw new Error(`Tool implementation not found for ${name}`);
+      throw new Error(`Tool implementation not found for ${internalName}`);
     }
 
     const toolSchema: ToolSchema = {
-      name,
+      name: internalName,
       description: definition.description,
       input_schema: definition.schema,
     };
 
-    toolRegistry.set(name, {
+    // Register under the internal name so later lookups using mapping succeed
+    toolRegistry.set(internalName, {
       schema: toolSchema,
       fn: definition.impl,
     });
@@ -637,10 +668,15 @@ export async function executeTool(
   args: ToolArgs,
   options?: { signal?: AbortSignal },
 ): Promise<ToolExecutionResult> {
-  // Map server name to internal name for registry lookup
-  const internalName = getInternalToolName(name);
-  const tool = toolRegistry.get(internalName);
+  const internalName = resolveInternalToolName(name);
+  if (!internalName) {
+    return {
+      toolReturn: `Tool not found: ${name}. Available tools: ${Array.from(toolRegistry.keys()).join(", ")}`,
+      status: "error",
+    };
+  }
 
+  const tool = toolRegistry.get(internalName);
   if (!tool) {
     return {
       toolReturn: `Tool not found: ${name}. Available tools: ${Array.from(toolRegistry.keys()).join(", ")}`,
@@ -651,7 +687,7 @@ export async function executeTool(
   try {
     // Inject abort signal for tools that support it (currently Bash) without altering schemas
     const argsWithSignal =
-      name === "Bash" && options?.signal
+      internalName === "Bash" && options?.signal
         ? { ...args, signal: options.signal }
         : args;
 
@@ -730,7 +766,9 @@ export function getToolSchemas(): ToolSchema[] {
  * @returns The tool schema or undefined if not found
  */
 export function getToolSchema(name: string): ToolSchema | undefined {
-  return toolRegistry.get(name)?.schema;
+  const internalName = resolveInternalToolName(name);
+  if (!internalName) return undefined;
+  return toolRegistry.get(internalName)?.schema;
 }
 
 /**

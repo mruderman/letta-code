@@ -43,6 +43,7 @@ import { PlanModeDialog } from "./components/PlanModeDialog";
 // import { ReasoningMessage } from "./components/ReasoningMessage";
 import { ReasoningMessage } from "./components/ReasoningMessageRich";
 import { SessionStats as SessionStatsComponent } from "./components/SessionStats";
+import { SystemPromptSelector } from "./components/SystemPromptSelector";
 // import { ToolCallMessage } from "./components/ToolCallMessage";
 import { ToolCallMessage } from "./components/ToolCallMessageRich";
 import { ToolsetSelector } from "./components/ToolsetSelector";
@@ -94,6 +95,16 @@ function getPlanModeReminder(): string {
   // Use bundled reminder text for binary compatibility
   const { PLAN_MODE_REMINDER } = require("../agent/promptAssets");
   return PLAN_MODE_REMINDER;
+}
+
+// Get skill unload reminder if skills are loaded (using cached flag)
+function getSkillUnloadReminder(): string {
+  const { hasLoadedSkills } = require("../agent/context");
+  if (hasLoadedSkills()) {
+    const { SKILL_UNLOAD_REMINDER } = require("../agent/promptAssets");
+    return SKILL_UNLOAD_REMINDER;
+  }
+  return "";
 }
 
 // Items that have finished rendering and no longer change
@@ -206,6 +217,11 @@ export default function App({
   // Model selector state
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [toolsetSelectorOpen, setToolsetSelectorOpen] = useState(false);
+  const [systemPromptSelectorOpen, setSystemPromptSelectorOpen] =
+    useState(false);
+  const [currentSystemPromptId, setCurrentSystemPromptId] = useState<
+    string | null
+  >("default");
   const [currentToolset, setCurrentToolset] = useState<
     "codex" | "default" | "gemini" | null
   >(null);
@@ -806,6 +822,12 @@ export default function App({
           return { submitted: true };
         }
 
+        // Special handling for /system command - opens system prompt selector
+        if (msg.trim() === "/system") {
+          setSystemPromptSelectorOpen(true);
+          return { submitted: true };
+        }
+
         // Special handling for /agent command - show agent link
         if (msg.trim() === "/agent") {
           const cmdId = uid("cmd");
@@ -1255,6 +1277,52 @@ export default function App({
           return { submitted: true };
         }
 
+        // Special handling for /download command - download agent file
+        if (msg.trim() === "/download") {
+          const cmdId = uid("cmd");
+          buffersRef.current.byId.set(cmdId, {
+            kind: "command",
+            id: cmdId,
+            input: msg,
+            output: "Downloading agent file...",
+            phase: "running",
+          });
+          buffersRef.current.order.push(cmdId);
+          refreshDerived();
+
+          setCommandRunning(true);
+
+          try {
+            const client = await getClient();
+            const fileContent = await client.agents.exportFile(agentId);
+            const fileName = `${agentId}.af`;
+            await Bun.write(fileName, JSON.stringify(fileContent, null, 2));
+
+            buffersRef.current.byId.set(cmdId, {
+              kind: "command",
+              id: cmdId,
+              input: msg,
+              output: `AgentFile downloaded to ${fileName}`,
+              phase: "finished",
+              success: true,
+            });
+            refreshDerived();
+          } catch (error) {
+            buffersRef.current.byId.set(cmdId, {
+              kind: "command",
+              id: cmdId,
+              input: msg,
+              output: `Failed: ${error instanceof Error ? error.message : String(error)}`,
+              phase: "finished",
+              success: false,
+            });
+            refreshDerived();
+          } finally {
+            setCommandRunning(false);
+          }
+          return { submitted: true };
+        }
+
         // Immediately add command to transcript with "running" phase
         const cmdId = uid("cmd");
         buffersRef.current.byId.set(cmdId, {
@@ -1307,14 +1375,17 @@ export default function App({
 
       // Prepend plan mode reminder if in plan mode
       const planModeReminder = getPlanModeReminder();
+
+      // Prepend skill unload reminder if skills are loaded (using cached flag)
+      const skillUnloadReminder = getSkillUnloadReminder();
+
+      // Combine reminders with content (plan mode first, then skill unload)
+      const allReminders = planModeReminder + skillUnloadReminder;
       const messageContent =
-        planModeReminder && typeof contentParts === "string"
-          ? planModeReminder + contentParts
-          : Array.isArray(contentParts) && planModeReminder
-            ? [
-                { type: "text" as const, text: planModeReminder },
-                ...contentParts,
-              ]
+        allReminders && typeof contentParts === "string"
+          ? allReminders + contentParts
+          : Array.isArray(contentParts) && allReminders
+            ? [{ type: "text" as const, text: allReminders }, ...contentParts]
             : contentParts;
 
       // Append the user message to transcript IMMEDIATELY (optimistic update)
@@ -1737,17 +1808,31 @@ export default function App({
         );
         setLlmConfig(updatedConfig);
 
-        // After switching models, reload tools for the selected provider and relink
-        const { switchToolsetForModel } = await import("../tools/toolset");
-        const toolsetName = await switchToolsetForModel(
-          selectedModel.handle ?? "",
-          agentId,
+        // After switching models, only switch toolset if it actually changes
+        const { isOpenAIModel, isGeminiModel } = await import(
+          "../tools/manager"
         );
-        setCurrentToolset(toolsetName);
+        const targetToolset: "codex" | "default" | "gemini" = isOpenAIModel(
+          selectedModel.handle ?? "",
+        )
+          ? "codex"
+          : isGeminiModel(selectedModel.handle ?? "")
+            ? "gemini"
+            : "default";
 
-        // Update the same command with final result (include toolset info)
+        let toolsetName: "codex" | "default" | "gemini" | null = null;
+        if (currentToolset !== targetToolset) {
+          const { switchToolsetForModel } = await import("../tools/toolset");
+          toolsetName = await switchToolsetForModel(
+            selectedModel.handle ?? "",
+            agentId,
+          );
+          setCurrentToolset(toolsetName);
+        }
+
+        // Update the same command with final result (include toolset info only if changed)
         const autoToolsetLine = toolsetName
-          ? `Automatically switched toolset to ${toolsetName}. Use /toolset to change back if desired.`
+          ? `Automatically switched toolset to ${toolsetName}. Use /toolset to change back if desired.\nConsider switching to a different system prompt using /system to match.`
           : null;
         const outputLines = [
           `Switched to ${selectedModel.label}`,
@@ -1778,6 +1863,90 @@ export default function App({
         }
       } finally {
         // Unlock input
+        setCommandRunning(false);
+      }
+    },
+    [agentId, refreshDerived, currentToolset],
+  );
+
+  const handleSystemPromptSelect = useCallback(
+    async (promptId: string) => {
+      setSystemPromptSelectorOpen(false);
+
+      const cmdId = uid("cmd");
+
+      try {
+        // Find the selected prompt
+        const { SYSTEM_PROMPTS } = await import("../agent/promptAssets");
+        const selectedPrompt = SYSTEM_PROMPTS.find((p) => p.id === promptId);
+
+        if (!selectedPrompt) {
+          buffersRef.current.byId.set(cmdId, {
+            kind: "command",
+            id: cmdId,
+            input: `/system ${promptId}`,
+            output: `System prompt not found: ${promptId}`,
+            phase: "finished",
+            success: false,
+          });
+          buffersRef.current.order.push(cmdId);
+          refreshDerived();
+          return;
+        }
+
+        // Immediately add command to transcript with "running" phase
+        buffersRef.current.byId.set(cmdId, {
+          kind: "command",
+          id: cmdId,
+          input: `/system ${promptId}`,
+          output: `Switching system prompt to ${selectedPrompt.label}...`,
+          phase: "running",
+        });
+        buffersRef.current.order.push(cmdId);
+        refreshDerived();
+
+        // Lock input during async operation
+        setCommandRunning(true);
+
+        // Update the agent's system prompt
+        const { updateAgentSystemPrompt } = await import("../agent/modify");
+        const result = await updateAgentSystemPrompt(
+          agentId,
+          selectedPrompt.content,
+        );
+
+        if (result.success) {
+          setCurrentSystemPromptId(promptId);
+          buffersRef.current.byId.set(cmdId, {
+            kind: "command",
+            id: cmdId,
+            input: `/system ${promptId}`,
+            output: `Switched system prompt to ${selectedPrompt.label}`,
+            phase: "finished",
+            success: true,
+          });
+        } else {
+          buffersRef.current.byId.set(cmdId, {
+            kind: "command",
+            id: cmdId,
+            input: `/system ${promptId}`,
+            output: result.message,
+            phase: "finished",
+            success: false,
+          });
+        }
+        refreshDerived();
+      } catch (error) {
+        buffersRef.current.byId.set(cmdId, {
+          kind: "command",
+          id: cmdId,
+          input: `/system ${promptId}`,
+          output: `Failed to switch system prompt: ${error instanceof Error ? error.message : String(error)}`,
+          phase: "finished",
+          success: false,
+        });
+        refreshDerived();
+      } finally {
         setCommandRunning(false);
       }
     },
@@ -2156,6 +2325,7 @@ export default function App({
                 pendingApprovals.length === 0 &&
                 !modelSelectorOpen &&
                 !toolsetSelectorOpen &&
+                !systemPromptSelectorOpen &&
                 !agentSelectorOpen &&
                 !planApprovalPending
               }
@@ -2176,7 +2346,11 @@ export default function App({
             {/* Model Selector - conditionally mounted as overlay */}
             {modelSelectorOpen && (
               <ModelSelector
-                currentModel={llmConfig?.model}
+                currentModel={
+                  llmConfig?.model_endpoint_type && llmConfig?.model
+                    ? `${llmConfig.model_endpoint_type}/${llmConfig.model}`
+                    : undefined
+                }
                 onSelect={handleModelSelect}
                 onCancel={() => setModelSelectorOpen(false)}
               />
@@ -2188,6 +2362,15 @@ export default function App({
                 currentToolset={currentToolset ?? undefined}
                 onSelect={handleToolsetSelect}
                 onCancel={() => setToolsetSelectorOpen(false)}
+              />
+            )}
+
+            {/* System Prompt Selector - conditionally mounted as overlay */}
+            {systemPromptSelectorOpen && (
+              <SystemPromptSelector
+                currentPromptId={currentSystemPromptId ?? undefined}
+                onSelect={handleSystemPromptSelect}
+                onCancel={() => setSystemPromptSelectorOpen(false)}
               />
             )}
 
