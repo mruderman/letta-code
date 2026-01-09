@@ -50,6 +50,48 @@ Letta Code works with skills (reusable modules that teach your agent new capabil
 
 Read the docs to learn more about [skills and skill learning](https://docs.letta.com/letta-code/skills).
 
+## Ralph Mode (Iterative Development)
+
+Ralph mode is an iterative development loop where the agent keeps working on a task until it outputs a completion promise or reaches a maximum iteration limit. This is useful for complex tasks that require multiple iterations to complete.
+
+### CLI Usage
+
+Start Ralph mode directly from the command line:
+
+```bash
+# Basic Ralph mode
+letta --ralph "Add a new feature to my app"
+
+# Ralph mode with custom completion promise
+letta --ralph "Fix the bug" --completion-promise "BUG_FIXED"
+
+# Ralph mode with iteration limit
+letta --ralph "Refactor code" --max-iterations 5
+
+# Yolo Ralph mode (bypasses permissions)
+letta --yolo-ralph "Implement feature X"
+
+# Combined options
+letta --ralph "Task description" --completion-promise "DONE" --max-iterations 10
+```
+
+### Exit Codes
+
+- `0` - Completion promise matched (task completed successfully)
+- `1` - Maximum iterations reached
+- `2` - Error occurred
+
+### In-Session Usage
+
+You can also start Ralph mode from within an interactive session:
+
+```bash
+> /ralph "Add user authentication"
+> /yolo-ralph "Refactor database" --completion-promise "REFACTOR_COMPLETE"
+```
+
+Read more about Ralph mode in the [official documentation](https://docs.letta.com/letta-code/ralph-mode).
+
 Community maintained packages are available for Arch Linux users on the [AUR](https://aur.archlinux.org/packages/letta-code):
 ```bash
 yay -S letta-code # release
