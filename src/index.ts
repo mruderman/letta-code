@@ -34,6 +34,10 @@ USAGE
   # headless
   letta -p "..."        One-off prompt in headless mode (no TTY UI)
 
+  # ralph mode (iterative development loop)
+  letta --ralph "task"  Start Ralph mode with given prompt
+  letta --yolo-ralph "task"  Start Ralph mode with bypassed permissions
+
   # maintenance
   letta update          Manually check for updates and install if available
 
@@ -59,6 +63,11 @@ OPTIONS
   --skills <path>       Custom path to skills directory (default: .skills in current directory)
   --sleeptime           Enable sleeptime memory management (only for new agents)
   --from-af <path>      Create agent from an AgentFile (.af) template
+  --ralph <prompt>      Start Ralph mode (iterative development loop)
+  --yolo-ralph <prompt> Start Ralph mode with bypassed permissions
+  --completion-promise <text>
+                        Completion promise for Ralph mode (exit when matched)
+  --max-iterations <n>  Maximum iterations for Ralph mode (0 = unlimited)
 
 BEHAVIOR
   On startup, Letta Code checks for saved profiles:
@@ -88,6 +97,11 @@ EXAMPLES
 
   # headless with JSON output (includes stats)
   letta -p "hello" --output-format json
+
+  # ralph mode (iterative development)
+  letta --ralph "Add a new feature to my app"
+  letta --ralph "Fix the bug" --max-iterations 5
+  letta --yolo-ralph "Refactor code" --completion-promise "DONE"
 
 `.trim();
 
@@ -355,6 +369,10 @@ async function main(): Promise<void> {
         skills: { type: "string" },
         sleeptime: { type: "boolean" },
         "from-af": { type: "string" },
+        ralph: { type: "string" },
+        "yolo-ralph": { type: "string" },
+        "completion-promise": { type: "string" },
+        "max-iterations": { type: "string" },
       },
       strict: true,
       allowPositionals: true,
@@ -586,6 +604,52 @@ async function main(): Promise<void> {
     }
   }
 
+  // Parse Ralph mode flags
+  const ralphPrompt = values.ralph as string | undefined;
+  const yoloRalphPrompt = values["yolo-ralph"] as string | undefined;
+  const ralphCompletionPromise = values["completion-promise"] as
+    | string
+    | undefined;
+  const ralphMaxIterationsRaw = values["max-iterations"] as string | undefined;
+
+  // Validate Ralph mode flags
+  const hasRalphFlag =
+    ralphPrompt !== undefined || yoloRalphPrompt !== undefined;
+  const hasRalphOption =
+    ralphCompletionPromise !== undefined || ralphMaxIterationsRaw !== undefined;
+
+  // Check if Ralph options are provided without Ralph mode flag
+  if (hasRalphOption && !hasRalphFlag) {
+    console.error(
+      "Error: --completion-promise and --max-iterations require --ralph or --yolo-ralph",
+    );
+    process.exit(1);
+  }
+
+  // Check if both --ralph and --yolo-ralph are specified (mutually exclusive)
+  if (ralphPrompt !== undefined && yoloRalphPrompt !== undefined) {
+    console.error("Error: --ralph and --yolo-ralph are mutually exclusive");
+    process.exit(1);
+  }
+
+  // Validate max-iterations value if provided
+  let ralphMaxIterations = 0;
+  if (ralphMaxIterationsRaw !== undefined) {
+    const parsed = parseInt(ralphMaxIterationsRaw, 10);
+    if (Number.isNaN(parsed) || parsed < 0) {
+      console.error(
+        `Error: Invalid --max-iterations value "${ralphMaxIterationsRaw}". Must be a non-negative integer.`,
+      );
+      process.exit(1);
+    }
+    ralphMaxIterations = parsed;
+  }
+
+  // Determine if we're in Ralph mode
+  const isRalphMode = hasRalphFlag;
+  const isYoloRalph = yoloRalphPrompt !== undefined;
+  const ralphModePrompt = ralphPrompt ?? yoloRalphPrompt;
+
   // Check if API key is configured
   const apiKey = process.env.LETTA_API_KEY || settings.env?.LETTA_API_KEY;
   const baseURL =
@@ -749,6 +813,39 @@ async function main(): Promise<void> {
     const { handleHeadlessCommand } = await import("./headless");
     await handleHeadlessCommand(process.argv, specifiedModel, skillsDirectory);
     return;
+  }
+
+  // Handle Ralph mode
+  if (isRalphMode) {
+    if (!ralphModePrompt) {
+      console.error(
+        "Error: --ralph and --yolo-ralph require a prompt argument",
+      );
+      process.exit(1);
+    }
+
+    // For Ralph mode, load tools synchronously (respecting model/toolset when provided)
+    const modelForTools = getModelForToolLoading(
+      specifiedModel,
+      specifiedToolset as "codex" | "default" | undefined,
+    );
+    await loadTools(modelForTools);
+
+    // Set permission mode if yolo-ralph
+    if (isYoloRalph) {
+      permissionMode.setMode("bypassPermissions");
+    }
+
+    const { handleRalphCommand } = await import("./ralph/cli");
+    const exitCode = await handleRalphCommand(
+      ralphModePrompt,
+      ralphCompletionPromise ?? undefined,
+      ralphMaxIterations,
+      isYoloRalph,
+      specifiedModel,
+      skillsDirectory,
+    );
+    process.exit(exitCode);
   }
 
   // Enable enhanced key reporting (Shift+Enter, etc.) BEFORE Ink initializes.
