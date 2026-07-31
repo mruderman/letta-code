@@ -214,6 +214,7 @@
     "check:skill-frontmatter": "node scripts/check-skill-frontmatter.js",
     "check:bundled-skill-scripts": "node scripts/check-bundled-skill-scripts.js",
     "check:minimal-linux-npm-artifact": "node scripts/check-minimal-linux-npm-artifact.js",
+    "check:windows-node-pty-artifact": "node scripts/check-windows-node-pty-artifact.js",
     "runtime-graph:generate": "bun run scripts/runtime-graph.ts generate",
     "runtime-graph:verify": "bun run scripts/runtime-graph.ts verify",
     "check": "bun run scripts/check.js",

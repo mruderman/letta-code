@@ -385,6 +385,12 @@ jobs:
           }
           NODE
 
+      - name: Minimal Linux npm artifact check
+        if: matrix.name == 'Linux x64 (ubuntu-24.04)'
+        env:
+          LETTA_CODE_MINIMAL_LINUX_ARTIFACT_SKIP_BUILD: "1"
+        run: bun run check:minimal-linux-npm-artifact
+
       - name: CLI help smoke test
         run: ./letta.js --help
 
@@ -416,6 +422,11 @@ jobs:
           npm pack
           npm install -g (Get-Item letta-ai-letta-code-*.tgz).FullName --timing --loglevel=verbose
           letta --help
+
+      - name: Windows node-pty artifact smoke test
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: bun run check:windows-node-pty-artifact
 
       - name: Test npm install flow (Unix)
         if: runner.os != 'Windows'
