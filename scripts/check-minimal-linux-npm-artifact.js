@@ -28,7 +28,8 @@ import { fileURLToPath } from "node:url";
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const tempDir = mkdtempSync(join(tmpdir(), "letta-code-minimal-linux-npm-"));
 const imageTag = `letta-code-minimal-linux-npm:${process.pid}`;
-const nodeVersion = "22.19.0";
+// The oldest Node 22 that package.json `engines` accepts; raise it with that floor.
+const nodeVersion = "22.23.4";
 
 const NODE_ARCH_BY_PLATFORM = {
   "linux/amd64": "x64",
