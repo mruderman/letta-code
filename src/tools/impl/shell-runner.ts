@@ -11,6 +11,10 @@ import { getMcpScopeAgentId } from "@/mcp-scope";
 import { getRuntimeContext } from "@/runtime-context";
 import { getRuntimeExecutionEnv } from "@/runtime-execution-settings";
 import { createSecretStreamScrubber } from "@/tools/secret-substitution";
+import {
+  isNodePtyUnavailableError,
+  requireNodePty,
+} from "@/utils/node-pty-loader";
 import { wrapManagedWorkloadLauncher } from "@/utils/systemd-workload-scope";
 import { noteExpectedWorktreeForLauncher } from "@/websocket/listener/worktree-ownership";
 import {
@@ -57,6 +61,8 @@ export interface RunningShellProcess {
   process: ShellProcessHandle;
   completion: Promise<ShellProcessResult>;
   terminate(): void;
+  /** False when a PTY was requested but node-pty was unusable on this system. */
+  tty: boolean;
 }
 
 type NodePtyExitEvent = { exitCode?: number; signal?: number };
@@ -354,8 +360,7 @@ function spawnNativePtyProcess(
     throw new ShellExecutionError("Executable is required");
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const pty = require("node-pty") as NodePtyModule;
+  const pty = requireNodePty() as NodePtyModule;
   const ptyProcess = pty.spawn(executable, args, {
     name: "xterm-256color",
     cols: 80,
@@ -393,6 +398,28 @@ function spawnPtyProcess(
   return typeof Bun !== "undefined"
     ? spawnPtyBridgeProcess(launcher, options, events)
     : spawnNativePtyProcess(launcher, options, events);
+}
+
+/**
+ * Spawns a PTY, or a pipe when node-pty's prebuilt binary is unusable on this
+ * system (musl, or glibc older than the prebuild). The reason goes to stderr so
+ * the caller can see why `tty: true` was downgraded. Takes its spawners as
+ * arguments so the fallback is testable without module mocking.
+ */
+export function spawnPtyOrPipe(
+  spawnPty: () => ShellProcessHandle,
+  spawnPipe: () => ShellProcessHandle,
+  reportFallback: (message: string) => void,
+): { handle: ShellProcessHandle; tty: boolean } {
+  try {
+    return { handle: spawnPty(), tty: true };
+  } catch (error) {
+    if (!isNodePtyUnavailableError(error)) throw error;
+    reportFallback(
+      `${(error as Error).message}\nFalling back to a non-TTY pipe for this command; stdin is closed.\n`,
+    );
+    return { handle: spawnPipe(), tty: false };
+  }
 }
 
 /**
@@ -585,10 +612,19 @@ export function startShellProcess(
     },
   };
 
+  let tty = false;
   try {
-    processHandle = launchOptions.tty
-      ? spawnPtyProcess(managedLauncher, launchOptions, events)
-      : spawnPipeProcess(managedLauncher, launchOptions, events);
+    if (launchOptions.tty) {
+      const spawned = spawnPtyOrPipe(
+        () => spawnPtyProcess(managedLauncher, launchOptions, events),
+        () => spawnPipeProcess(managedLauncher, launchOptions, events),
+        (message) => events.output(message, "stderr"),
+      );
+      processHandle = spawned.handle;
+      tty = spawned.tty;
+    } else {
+      processHandle = spawnPipeProcess(managedLauncher, launchOptions, events);
+    }
   } catch (error) {
     completed = true;
     cleanup();
@@ -612,7 +648,12 @@ export function startShellProcess(
     abortHandler();
   }
 
-  return { process: processHandle, completion, terminate: terminateProcess };
+  return {
+    process: processHandle,
+    completion,
+    terminate: terminateProcess,
+    tty,
+  };
 }
 
 /**
