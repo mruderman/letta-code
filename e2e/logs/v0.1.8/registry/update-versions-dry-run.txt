@@ -3,5 +3,6 @@ Command (no --apply, nothing written or pushed):
   python3 .github/workflows/update_versions.py --agents letta-acp --json
 Result: update-versions-dry-run.json -> letta-acp stable 0.1.8 -> 0.1.11 (npx).
 .github/workflows/update-versions.yml runs this hourly (cron "17 * * * *"); on main it applies the bump,
-checks it with verify_agents.py --auth-check (initialize only, which 0.1.11 passes) and commits it.
+checks it with build_registry.py --agents <id> and verify_agents.py --auth-check (initialize only;
+0.1.11 passes both) and commits it on the next successful hourly run.
 Agents listed in quarantine.json are skipped.
