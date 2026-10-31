@@ -1,0 +1,87 @@
+{
+  "scenario": "pty",
+  "expectLibc": "musl",
+  "agentCommand": "npx -y @letta-ai/letta-acp@0.1.99",
+  "stopReason": "end_turn",
+  "passed": false,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "exec_command was called with tty: true for the TTY probe",
+      "passed": true
+    },
+    {
+      "name": "write_stdin was called",
+      "passed": false
+    },
+    {
+      "name": "PTY refused on musl with the actionable fallback message",
+      "passed": true
+    },
+    {
+      "name": "command still ran via pipe (NO_PTY)",
+      "passed": true
+    }
+  ],
+  "toolCalls": [
+    {
+      "toolCallId": "call_eUHdUxse4NBFX0ryKz2bMZdJ|fc_072f00549b9cfee4016ae56fe75bcc87d28d89d63c43d5756a",
+      "title": "exec_command: Check terminal PTY support",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "test -t 0 && echo PTY_OK || echo NO_PTY",
+        "tty": true,
+        "description": "Check terminal PTY support"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: f2f5a9\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 89\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\nNO_PTY\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: f2f5a9\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 89\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\nNO_PTY\n"
+    },
+    {
+      "toolCallId": "call_PcJRecF6BL9KyhQ0nZIvQxbc|fc_07d792521ba685d3016ae56fe8869487d2a7682eeed0ef393f",
+      "title": "exec_command: Read terminal input",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "read x; echo got:$x",
+        "tty": true,
+        "description": "Read terminal input"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: 6a96a7\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 88\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\ngot:\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: 6a96a7\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 88\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\ngot:\n"
+    }
+  ],
+  "permissions": [
+    {
+      "title": "exec_command: Check terminal PTY support",
+      "toolCallId": "call_eUHdUxse4NBFX0ryKz2bMZdJ|fc_072f00549b9cfee4016ae56fe75bcc87d28d89d63c43d5756a"
+    },
+    {
+      "title": "exec_command: Read terminal input",
+      "toolCallId": "call_PcJRecF6BL9KyhQ0nZIvQxbc|fc_07d792521ba685d3016ae56fe8869487d2a7682eeed0ef393f"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "scenario": "pty",
+  "expectLibc": "musl",
+  "agentCommand": "npx -y @letta-ai/letta-acp@0.1.99",
+  "stopReason": "end_turn",
+  "passed": true,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "exec_command was called with tty: true for the TTY probe",
+      "passed": true
+    },
+    {
+      "name": "PTY refused on musl with the actionable fallback message",
+      "passed": true
+    },
+    {
+      "name": "command still ran via pipe (NO_PTY)",
+      "passed": true
+    }
+  ],
+  "toolCalls": [
+    {
+      "toolCallId": "call_Y4VsEyEr2nyLcPZNAZSVym3n|fc_0f8cfe522c5e90d6016ae57119965487d2a62b026b8540fbd9",
+      "title": "exec_command: Check terminal PTY support",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "test -t 0 && echo PTY_OK || echo NO_PTY",
+        "tty": true,
+        "description": "Check terminal PTY support"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: 8cabaf\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 89\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\nNO_PTY\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: 8cabaf\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 89\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\nNO_PTY\n"
+    },
+    {
+      "toolCallId": "call_r7hF7r8gli2Eefwc7PQActaG|fc_0f5780eea0ae0e10016ae5711b2c3c87d2affb220a2b9c9c60",
+      "title": "exec_command: Read terminal input",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "read x; echo got:$x",
+        "tty": true,
+        "description": "Read terminal input"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: 237340\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 88\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\ngot:\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: 237340\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 88\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\ngot:\n"
+    },
+    {
+      "toolCallId": "call_WF9cVIdy6b1ZObTkIpx054Mh|fc_0988081266b7c822016ae5711c3cdc87d299b5f5dffbd40b61",
+      "title": "write_stdin",
+      "kind": "other",
+      "status": "failed",
+      "locations": [],
+      "rawInput": {
+        "session_id": 0,
+        "chars": "hello\n"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Unknown process id 0",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Unknown process id 0"
+    }
+  ],
+  "permissions": [
+    {
+      "title": "exec_command: Check terminal PTY support",
+      "toolCallId": "call_Y4VsEyEr2nyLcPZNAZSVym3n|fc_0f8cfe522c5e90d6016ae57119965487d2a62b026b8540fbd9"
+    },
+    {
+      "title": "exec_command: Read terminal input",
+      "toolCallId": "call_r7hF7r8gli2Eefwc7PQActaG|fc_0f5780eea0ae0e10016ae5711b2c3c87d2affb220a2b9c9c60"
+    }
+  ]
+}

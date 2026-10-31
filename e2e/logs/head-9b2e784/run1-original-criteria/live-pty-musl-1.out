@@ -1,0 +1,35 @@
+(node:27) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[init] protocol v1; auth methods: none
+[session] local-conv-2
+[prompt] This is an automated test of terminal support. Use your exec_command tool for both steps, exactly as written, and do not use any other shell tool. Step 1: call exec_command with tty set to true and cmd: test -t 0 && echo PTY_OK || echo NO_PTY Step 2: call exec_command with tty set to true and cmd: read x; echo got:$x then call write_stdin on that session with chars set to hello followed by a newline, and read its output. Finally, reply with the outputs you saw.
+[tool_call] exec_command: Check terminal PTY support status=in_progress input={"cmd":"test -t 0 && echo PTY_OK || echo NO_PTY","tty":true,"description":"Check terminal PTY support"}
+[permission] exec_command: Check terminal PTY support -> allow_once
+[tool_call_update] exec_command: Check terminal PTY support status=completed output="node-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed."
+[tool_call_update] exec_command: Check terminal PTY support status=completed output="NO_PTY\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed."
+[tool_call_update] exec_command: Check terminal PTY support status=completed output="Chunk ID: ff2570\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 89\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling b
+[tool_call] exec_command: Read interactive terminal input status=in_progress input={"cmd":"read x; echo got:$x","tty":true,"description":"Read interactive terminal input"}
+[permission] exec_command: Read interactive terminal input -> allow_once
+[tool_call_update] exec_command: Read interactive terminal input status=completed output="node-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed."
+[tool_call_update] exec_command: Read interactive terminal input status=completed output="got:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed."
+[tool_call_update] exec_command: Read interactive terminal input status=completed output="Chunk ID: 4fee59\nWall time: 0.0250 seconds\nProcess exited with code 0\nOriginal token count: 88\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling b
+[agent text] Step 1 output:
+```text
+NO_PTY
+```
+
+Step 2 output:
+```text
+got:
+```
+
+The PTY was disabled because the prebuilt `node-pty` binary requires glibc, while the environment uses musl. No interactive session was created, so I could not call `write_stdin`.
+[done] stopReason=end_turn
+[result] FAIL
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  FAIL write_stdin was called
+  ok   PTY refused on musl with the actionable fallback message
+  ok   command still ran via pipe (NO_PTY)

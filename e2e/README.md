@@ -7,17 +7,19 @@ of the ACP Registry). This branch holds only test material: the plan
 ([`TEST-PLAN.md`](TEST-PLAN.md)), reproducible [`scripts/`](scripts/), and scrubbed
 [`logs/`](logs/). It shares no history with letta-code and is not meant to be merged.
 
-**Status:** sandbox phase complete (all checks pass). Pending: Letta's own CI on the
-fork, and the live-agent runs (OpenAI model, incl. Toad).
+**Status:** sandbox phase, fork CI and live-agent runs (OpenAI model, incl. Toad) are
+complete on the refreshed head `9b2e784`; everything that ran passes, with the
+non-credentialed fork CI jobs and the live-run caveats listed below. Not covered, stated
+plainly: [what the suite does not test](#not-covered).
 
 ## Under test
 
 | Component | Version / ref |
 |---|---|
-| letta-code (fix) | `fix/node-pty-prebuilds` @ `bb0e02c`, on letta-ai `main` @ `e2b62e2` (0.34.35); test build published as `0.34.99` |
-| letta-acp | letta-ai `main` @ `4b0a571`, with `@letta-ai/letta-code` → `0.34.99` and `@letta-ai/letta-agent-sdk` → `0.8.64` bumped together; test build `0.1.99` |
+| letta-code (fix) | `fix/node-pty-prebuilds` @ `9b2e784`, rebased on `main` @ `8f72222` (0.34.36); test build published as `0.34.99`. The first sandbox pass (`logs/sandbox/`) ran on the previous head `bb0e02c` (on `e2b62e2`); the rebase only moved the branch over two unrelated upstream commits and recomputed the runtime-graph digest, and checks 1–9 were re-run on `9b2e784` (`logs/head-9b2e784/`) |
+| letta-acp | letta-ai `main` @ `4b0a571`, with `@letta-ai/letta-code` → `0.34.99` and `@letta-ai/letta-agent-sdk` → `^0.8.64` (resolved `0.8.65` on the re-run) bumped together; test build `0.1.99` |
 | node-pty | `1.2.0-beta.14`, delivered through letta-code's published `npm-shrinkwrap.json` |
-| ACP Registry validator | agentclientprotocol/registry `main` @ `8c75170`, Letta entry from registry#472 |
+| ACP Registry validator | agentclientprotocol/registry `main` @ `b51a879` (first pass: `8c75170`), Letta entry from registry#472 (`a726a80`) |
 | Third-party client | Toad `0.6.20` (batrachian.ai) |
 | ACP client SDK (scripted client) | `@agentclientprotocol/sdk` `1.3.0` (same as letta-acp) |
 
@@ -44,17 +46,73 @@ directory) with **no** `make` or compiler present.
 
 ![Toad running the fixed letta-acp](logs/sandbox/toad-det/toad-2-turn-finished.png)
 
+Checks 1–9 were re-run unchanged on `9b2e784` and all pass again; those logs are in
+[`logs/head-9b2e784/`](logs/head-9b2e784/) (the first pass stays in `logs/sandbox/`).
+
+## Results — live agent (OpenAI `gpt-5.6-luna`, local backend, fresh agent per run)
+
+Every run creates a fresh agent in an empty `HOME` inside a container; nothing persists.
+Model: `openai/gpt-5.6-luna` (Codex toolset: `exec_command`, `write_stdin`). Pass criteria
+are applied to the tools' `rawInput`/`rawOutput` in the ACP transcript, not to model prose.
+
+| # | Check | Environment | Result | Logs |
+|---|---|---|---|---|
+| 10 | letta-acp's own live test (`bun run test:backend:live:local`, the one Letta's CI runs on `main`) against the bumped chain | host, Bun | ✓ listed models, created an agent, received `ACP_LOCAL_OK` | [`live-letta-acp-own-test.out`](logs/head-9b2e784/live-letta-acp-own-test.out) |
+| 11 | PTY scenario through ACP, 3 runs | registry image (glibc, no `make`) | ✓ 3/3: `exec_command` with `tty: true` printed `PTY_OK`; `write_stdin` input came back as `got:hello` | [`live-pty-glibc-{1,2,3}/`](logs/head-9b2e784/) |
+| 12 | same scenario, 3 runs | `node:22-alpine` (musl) | ✓ 3/3 (see run-1 note): glibc prebuild refused with the actionable message, command still ran through the pipe (`NO_PTY`), turn ended normally, no crash | [`live-pty-musl-{1,2,3}/`](logs/head-9b2e784/) |
+| 13 | same scenario in **Toad** (independent client), pre-approved tools | registry image | ✓ `check-wire.mjs` passes on Toad's wire log (3 tool calls); screenshot below | [`live-toad-pty/`](logs/head-9b2e784/live-toad-pty/) |
+
+![Toad running the PTY scenario against the fixed letta-acp](logs/head-9b2e784/live-toad-pty/toad-2-turn-finished.png)
+
+**Run-1 note (musl).** The first live pass, kept in
+[`logs/head-9b2e784/run1-original-criteria/`](logs/head-9b2e784/run1-original-criteria/), went 7/8:
+two of three musl runs failed the criterion "`write_stdin` was called". That criterion was
+wrong for musl. In the pipe fallback the command has already finished (`read x` returns at
+once), so whether the model then calls `write_stdin` is its own choice and says nothing about
+the fix; the same transcripts show the fallback message, `NO_PTY` and a normal end of turn.
+I removed that check from the musl branch of `acp-client.mjs` and `check-wire.mjs`
+(it stays for glibc) and re-ran the whole live suite from scratch: that second run is
+8/8 and is the one tabled above. The saved run-1 musl wire logs also pass the corrected checker.
+
+**Permission assertion (added after run 2).** The glibc/musl scripted runs use standard
+mode and the client answers `allow_once`. `check-wire.mjs --expect-permission yes` now also
+requires that the agent asked for permission to run the TTY probe. It passes on all six
+scripted runs, and fails on the Toad run (pre-approved, as a negative control), so it
+discriminates. It was applied to the saved wire logs, not baked into the run itself.
+
+## Results — fork CI (draft PR [mruderman/letta-code#3](https://github.com/mruderman/letta-code/pull/3), head `9b2e784`)
+
+61 jobs: 39 passed, 22 failed. Cite these:
+
+| Job | Result |
+|---|---|
+| Package on macOS arm64, Linux x64, **Linux arm64**, Windows x64 (incl. packaged-local-backend smoke) | ✓ all four |
+| Minimal Linux npm artifact check (no toolchain, registry install) | ✓ x64 and arm64 |
+| Windows node-pty artifact smoke (after `npm install -g`; shell level, not through ACP) | ✓ |
+| Unit tests, every shard, Linux x64 / Linux arm64 / macOS / Windows | ✓ |
+| Lint & Type Check, Node 22 Smoke, Update Chain Smoke | ✓ |
+
+The 22 failures are `API / <runner> / <shard>` (20), `OpenCode native lifecycle` and
+`Cursor native lifecycle`. One API job's log shows `LETTA_API_KEY` empty and
+`Model catalog is unavailable`; the other two fail in their "run native … tests" steps,
+which read the `OPENAI_API_KEY` and `CURSOR_API_KEY` secrets; I did not read those two logs.
+**Do not cite** the `Headless` and `Headless Local` jobs as evidence: they are green but
+vacuous on a fork without secrets (the `Headless Local / openai/gpt-5-mini` log reads
+`SKIP: Missing env OPENAI_API_KEY`). The PR could not run CI at first because it conflicted
+with fork `main` (GitHub does not start pull-request workflows on a conflicted PR); it was
+rebased onto `8f72222` and force-pushed with lease to the fork branch only.
+
 ## Coverage map
 
 | What the fix touches | Covered by |
 |---|---|
 | `npx` install without build tools | 1–4, 9 (and every container run) |
 | Published shrinkwrap pins node-pty for consumers | 3–9 install letta-code/letta-acp from the registry, not from source |
-| `exec_command` `tty: true` + `write_stdin` | 5, 7; live: scenario `pty` (pending) |
+| `exec_command` `tty: true` + `write_stdin` | 5, 7; live: 11, 12, 13 |
 | Websocket terminal handler | 6, 8 (driven via a recording socket, not a live app-server connection) |
 | musl degrades instead of segfaulting | 4, 7, 8 |
-| Real model choosing the PTY path through ACP | live runs (pending) |
-| macOS, Windows ConPTY, linux/arm64 | Letta's CI on the fork (pending) — arm64 emulation is unavailable in this sandbox (no `binfmt_misc`) |
+| Real model choosing the PTY path through ACP | 11, 12, 13 |
+| macOS, Windows ConPTY, linux/arm64 | Letta's CI on the fork (above): Package and minimal-Linux checks on arm64, Windows ConPTY artifact smoke, unit tests on macOS. Arm64 emulation is unavailable in this sandbox (no `binfmt_misc`) |
 
 ## Deviations (all test-environment only)
 
@@ -71,6 +129,14 @@ directory) with **no** `make` or compiler present.
 5. **Toad live run pre-approves tools** (`LETTA_ACP_PERMISSION_MODE=unrestricted`)
    so the scripted UI session is not blocked on a dialog; permission prompts are
    exercised by the scripted client instead.
+6. **OpenAI key is a proxy-injected network secret.** This session's key never exists as a
+   variable; an egress proxy adds it to requests for `api.openai.com`. The scripts send a
+   placeholder key (`90-live-all.sh` proves injection by getting HTTP 200 from
+   `/v1/models`, which OpenAI would answer with 401 to the placeholder alone). Containers on
+   Docker's bridge network bypass that proxy, so live containers use host networking plus the
+   proxy variables and `NODE_USE_ENV_PROXY=1`; the Verdaccio host is added to `NO_PROXY`
+   explicitly because Node matches it literally (no CIDR ranges). The real key is never
+   printed or logged, and `95-collect-logs.sh` scrubs key-shaped strings.
 
 ## Findings beyond the fix
 
@@ -84,6 +150,29 @@ directory) with **no** `make` or compiler present.
   tools** (`DeterministicPongExecutor`), so tool execution through ACP is covered
   by the live runs rather than deterministically.
 
+- **The musl live criterion in the original plan was wrong** (see run-1 note above): a
+  model that sees the pipe fallback has no live session to `write_stdin` to.
+- **Fork CI green is not always evidence** (see above): jobs that skip for missing secrets
+  pass vacuously.
+- **A failing unit test on unmodified `main` in this sandbox:** `Bash background tools >
+  background timeout force-kills the whole process tree` fails here on both `main` and the
+  fix branch (the sandbox has no init process to reap killed descendants, so they linger as
+  zombies). It is unrelated; the fork's CI unit jobs were all green.
+
+<a id="not-covered"></a>
+## Not covered
+
+- **cloud-oauth with local tools** (Letta's documented default for editors): needs a Letta
+  account and is out of scope here. The PTY also runs there; nothing in this suite tests it.
+- **Letta behavior beyond the fix:** agent identity and persistence across adapter restarts,
+  memory/MemFS, cancel while a PTY session is alive, real approval deny / allow-always, and
+  harness-executed slash commands. Every run uses a fresh empty `HOME`, so reuse is
+  unreachable by design.
+- **Windows through ACP or a live agent**, **macOS** artifact-level checks, **Node 24/26**,
+  and clients other than Toad and the scripted client (Zed, JetBrains, Obsidian).
+- **Toad's own permission dialog** (its run pre-approves tools).
+- **The musl guard is protected only by this suite**, which is not in any CI.
+
 ## Reproduce
 
 ```bash
@@ -91,24 +180,27 @@ export E2E_WORK=/tmp/letta-e2e LETTA_CODE_DIR=~/letta-code LETTA_ACP_DIR=~/letta
 # Only in sandboxes that intercept TLS:
 # export EXTRA_CA_BUNDLE=/path/to/ca-bundle.crt
 bash e2e/scripts/run-sandbox.sh                         # this table's checks 1–9
-OPENAI_API_KEY=... bash e2e/scripts/90-live-all.sh      # live-agent runs
+bash e2e/scripts/90-live-all.sh                          # live-agent runs (placeholder key + egress proxy), or
+OPENAI_API_KEY=... bash e2e/scripts/90-live-all.sh       # with a real key
 bash e2e/scripts/95-collect-logs.sh <label>             # copy + scrub logs here
 ```
 
 Clones: letta-code with `fix/node-pty-prebuilds` checked out as a branch, letta-acp
 `main`, and agentclientprotocol/registry `main`. Requires Docker, Bun, Node, Python 3.
 
-## Continuing in a new session (live runs)
+## Continuing in a new session
 
-The OpenAI key is a session secret (`OPENAI_API_KEY_OR_ACCESS_TOKEN`), visible only
-in sessions started after it was added. In a new session:
+Remaining optional work, in rough value order: a cancel-while-PTY-running test, an identity
+and memory round trip across adapter restarts, a real approval deny / allow-always test
+(assert the denied command did not run), and pinning the Codex-toolset presentation in
+letta-acp. See "Not covered".
 
-1. Clone `mruderman/letta-code` (branches `fix/node-pty-prebuilds` and
-   `e2e-evidence`), `letta-ai/letta-acp`, and `agentclientprotocol/registry`
-   (fetch `pull/472/head` as `pr-472`).
-2. Start Docker (`dockerd`), set the env above, run `run-sandbox.sh`.
-3. Run `90-live-all.sh` (maps the secret itself; stops if OpenAI rejects it).
-4. Run `95-collect-logs.sh live`, update the results here, commit to `e2e-evidence`.
+To re-run: clone `mruderman/letta-code` (branches `fix/node-pty-prebuilds` and
+`e2e-evidence`), `letta-ai/letta-acp` and `agentclientprotocol/registry` (fetch
+`pull/472/head` as `pr-472`); start Docker; set the env above; run `run-sandbox.sh`, then
+`90-live-all.sh` (it uses a real key if one is in the environment, otherwise a placeholder
+when an egress proxy injects it, and stops if OpenAI rejects the result); then
+`95-collect-logs.sh <label>`.
 
-Ground rules: nothing is posted to any `letta-ai` repository; every live run creates
-a fresh agent in a throwaway directory; failures are reported as failures.
+Ground rules: nothing is posted to any `letta-ai` repository; every live run creates a fresh
+agent in a throwaway directory; failures are reported as failures.

@@ -120,13 +120,14 @@ function scenarioChecks() {
   const execCalls = calls.filter((c) => c.rawInput && typeof c.rawInput === "object" && "cmd" in c.rawInput);
   const ttyStep = execCalls.find((c) => String(c.rawInput.cmd).includes("test -t 0"));
   const stdinCall = calls.find((c) => c.rawInput && typeof c.rawInput === "object" && "chars" in c.rawInput);
-  checks.push(
-    { name: "exec_command was called with tty: true for the TTY probe", passed: ttyStep?.rawInput?.tty === true },
-    { name: "write_stdin was called", passed: Boolean(stdinCall) },
-  );
+  checks.push({ name: "exec_command was called with tty: true for the TTY probe", passed: ttyStep?.rawInput?.tty === true });
   const allOutput = calls.map(outputText).join("\n");
   if (expectLibc === "glibc") {
+    // Only glibc has a live PTY session to write to. On musl the command has already
+    // finished through the pipe fallback, so whether the model then calls write_stdin
+    // is its own choice and says nothing about the code under test.
     checks.push(
+      { name: "write_stdin was called", passed: Boolean(stdinCall) },
       { name: "TTY probe printed PTY_OK (a real PTY was allocated)", passed: outputText(ttyStep ?? {}).includes("PTY_OK") },
       { name: "input written via write_stdin was read (got:hello)", passed: allOutput.includes("got:hello") },
     );

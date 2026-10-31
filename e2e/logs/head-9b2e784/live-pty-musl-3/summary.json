@@ -1,0 +1,106 @@
+{
+  "scenario": "pty",
+  "expectLibc": "musl",
+  "agentCommand": "npx -y @letta-ai/letta-acp@0.1.99",
+  "stopReason": "end_turn",
+  "passed": true,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "exec_command was called with tty: true for the TTY probe",
+      "passed": true
+    },
+    {
+      "name": "PTY refused on musl with the actionable fallback message",
+      "passed": true
+    },
+    {
+      "name": "command still ran via pipe (NO_PTY)",
+      "passed": true
+    }
+  ],
+  "toolCalls": [
+    {
+      "toolCallId": "call_ydLkPf9JzSVLqTI3QFo8TMmB|fc_0ca615135f1c5d12016ae5716b751087d28f042b60214a89e8",
+      "title": "exec_command: Check terminal allocation",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "test -t 0 && echo PTY_OK || echo NO_PTY",
+        "tty": true,
+        "description": "Check terminal allocation"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: bf6116\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 89\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\nNO_PTY\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: bf6116\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 89\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\nNO_PTY\n"
+    },
+    {
+      "toolCallId": "call_GyzHXvWctVIg5Cg30NXCnvDO|fc_0d2a4a5c3d29a972016ae5716cfc3087d28f7ad1ac50a7a3ec",
+      "title": "exec_command: Read terminal input",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "read x; echo got:$x",
+        "tty": true,
+        "description": "Read terminal input"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: 01f853\nWall time: 0.0250 seconds\nProcess exited with code 0\nOriginal token count: 88\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\ngot:\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: 01f853\nWall time: 0.0250 seconds\nProcess exited with code 0\nOriginal token count: 88\nOutput:\nnode-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\ngot:\n"
+    },
+    {
+      "toolCallId": "call_6WMYmCiBxUVAtR95f580MHKO|fc_08f834708104c4ec016ae5716e359087d287819f933b42947b",
+      "title": "write_stdin",
+      "kind": "other",
+      "status": "failed",
+      "locations": [],
+      "rawInput": {
+        "session_id": 0,
+        "chars": "hello\n",
+        "yield_time_ms": 1000
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Unknown process id 0",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Unknown process id 0"
+    }
+  ],
+  "permissions": [
+    {
+      "title": "exec_command: Check terminal allocation",
+      "toolCallId": "call_ydLkPf9JzSVLqTI3QFo8TMmB|fc_0ca615135f1c5d12016ae5716b751087d28f042b60214a89e8"
+    },
+    {
+      "title": "exec_command: Read terminal input",
+      "toolCallId": "call_GyzHXvWctVIg5Cg30NXCnvDO|fc_0d2a4a5c3d29a972016ae5716cfc3087d28f7ad1ac50a7a3ec"
+    }
+  ]
+}

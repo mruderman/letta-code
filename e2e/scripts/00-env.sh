@@ -32,4 +32,19 @@ EXTRA_CA_BUNDLE="${EXTRA_CA_BUNDLE:-}"
 REGISTRY_IMAGE="acp-registry-tools-e2e"
 REGISTRY_IMAGE_VERDACCIO="acp-registry-tools-e2e-verdaccio"
 
+# Live runs reach OpenAI through the session's HTTPS proxy, which injects the real
+# key into requests to api.openai.com (the key never exists in this environment).
+# A container on Docker's bridge network bypasses that proxy and gets a 401, so live
+# containers must use host networking (callers add --network host) plus these proxy
+# variables. NODE_USE_ENV_PROXY makes Node's fetch honor them. Node matches NO_PROXY
+# entries literally (no CIDR ranges), so the Verdaccio host is listed explicitly or
+# npm's requests to it would be sent through the proxy (HTTP 405). Empty (no change)
+# when no proxy is configured.
+LIVE_NET_ARGS=()
+if [ -n "${HTTPS_PROXY:-}" ]; then
+  _live_no_proxy="${NO_PROXY:-},localhost,127.0.0.1,$VERDACCIO_HOST_FROM_CONTAINER"
+  LIVE_NET_ARGS=(-e HTTPS_PROXY="$HTTPS_PROXY" -e https_proxy="$HTTPS_PROXY"
+    -e NO_PROXY="$_live_no_proxy" -e no_proxy="$_live_no_proxy" -e NODE_USE_ENV_PROXY=1)
+fi
+
 mkdir -p "$E2E_WORK/tarballs" "$E2E_WORK/logs"

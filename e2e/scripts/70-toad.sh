@@ -18,11 +18,11 @@ env_args=(-e HOME=/tmp/e2e-home -e LETTA_LOCAL_BACKEND_DIR=/tmp/e2e-home/letta-l
 if [ "$scenario" = deterministic ]; then
   env_args+=(-e LETTA_LOCAL_BACKEND_EXECUTOR=deterministic)
 else
-  : "${OPENAI_API_KEY:?the pty scenario needs OPENAI_API_KEY}"
+  : "${OPENAI_API_KEY:?the pty scenario needs OPENAI_API_KEY (a placeholder is fine when a proxy injects the real key)}"
   # Toad shows ACP permission prompts in its UI; this run pre-approves tools so
   # the scripted session is not blocked on a dialog. Permission handling itself
   # is exercised by acp-client.mjs (40-acp-scenario.sh).
-  env_args+=(-e OPENAI_API_KEY -e LETTA_ACP_MODEL="${LETTA_ACP_MODEL:-openai/gpt-5.6-luna}" -e LETTA_ACP_PERMISSION_MODE=unrestricted)
+  env_args+=(-e OPENAI_API_KEY -e LETTA_ACP_MODEL="${LETTA_ACP_MODEL:-openai/gpt-5.6-luna}" -e LETTA_ACP_PERMISSION_MODE=unrestricted "${LIVE_NET_ARGS[@]}")
 fi
 
 agent="node /e2e-scripts/acp-tap.mjs --log /e2e-out/wire.ndjson -- npx -y @letta-ai/letta-acp@$TEST_ACP_VERSION"

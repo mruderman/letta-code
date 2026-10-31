@@ -1,0 +1,11 @@
+{
+  "prompt": "Run the deterministic test command.",
+  "steps": [
+    "Toad initialized letta-acp and opened a session",
+    "Toad sent the typed prompt as session/prompt",
+    "prompt turn finished: {\"stopReason\":\"end_turn\"}"
+  ],
+  "stopReason": "end_turn",
+  "error": null,
+  "passed": true
+}

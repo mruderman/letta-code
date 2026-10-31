@@ -1,0 +1,111 @@
+{
+  "scenario": "pty",
+  "expectLibc": "glibc",
+  "agentCommand": "npx -y @letta-ai/letta-acp@0.1.99",
+  "stopReason": "end_turn",
+  "passed": true,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "exec_command was called with tty: true for the TTY probe",
+      "passed": true
+    },
+    {
+      "name": "write_stdin was called",
+      "passed": true
+    },
+    {
+      "name": "TTY probe printed PTY_OK (a real PTY was allocated)",
+      "passed": true
+    },
+    {
+      "name": "input written via write_stdin was read (got:hello)",
+      "passed": true
+    }
+  ],
+  "toolCalls": [
+    {
+      "toolCallId": "call_Mkm133JKkSgaEwQlR9ZKGvPs|fc_03747b77e9b27aac016ae57141b82c87d29fa7c74a1b1ab6b4",
+      "title": "exec_command: Check PTY allocation",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "test -t 0 && echo PTY_OK || echo NO_PTY",
+        "tty": true,
+        "description": "Check PTY allocation"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: fbafd8\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: fbafd8\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n"
+    },
+    {
+      "toolCallId": "call_HRoVXXo0tl4KX6hAjiykblP5|fc_0d0458434d876f9f016ae57143031887d289cd7d7eedaffdb7",
+      "title": "exec_command: Read interactive input",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "read x; echo got:$x",
+        "tty": true,
+        "description": "Read interactive input",
+        "yield_time_ms": 1000
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: afb599\nWall time: 1.0160 seconds\nProcess running with session ID 2\nYou will be notified when the process completes. Do not poll unless you need the output before continuing.\nOriginal token count: 0\nOutput:\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: afb599\nWall time: 1.0160 seconds\nProcess running with session ID 2\nYou will be notified when the process completes. Do not poll unless you need the output before continuing.\nOriginal token count: 0\nOutput:\n"
+    },
+    {
+      "toolCallId": "call_HhwjL9Aqqqd64yLmz8OwYsN3|fc_03fb17263a4ff389016ae571452c7c87d2b46ff50145884d61",
+      "title": "write_stdin",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "session_id": 2,
+        "chars": "hello\n",
+        "yield_time_ms": 1000
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: c760f4\nWall time: 0.0010 seconds\nProcess exited with code 0\nOriginal token count: 5\nOutput:\nhello\r\ngot:hello\r\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: c760f4\nWall time: 0.0010 seconds\nProcess exited with code 0\nOriginal token count: 5\nOutput:\nhello\r\ngot:hello\r\n"
+    }
+  ],
+  "permissions": [
+    {
+      "title": "exec_command: Check PTY allocation",
+      "toolCallId": "call_Mkm133JKkSgaEwQlR9ZKGvPs|fc_03747b77e9b27aac016ae57141b82c87d29fa7c74a1b1ab6b4"
+    },
+    {
+      "title": "exec_command: Read interactive input",
+      "toolCallId": "call_HRoVXXo0tl4KX6hAjiykblP5|fc_0d0458434d876f9f016ae57143031887d289cd7d7eedaffdb7"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+=================== live-letta-acp-own-test
+letta-code under test: 0.34.99
+$ bun test/backend-live.ts local
+Live local ACP test passed: listed models, created agent-local-87b98339-121f-4307-83f3-94207e85acf6, and received ACP_LOCAL_OK.
+=================== live-pty-glibc-1
+Step 2 output after sending `hello`:
+```text
+hello
+got:hello
+```
+[done] stopReason=end_turn
+[result] PASS
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   TTY probe printed PTY_OK (a real PTY was allocated)
+  ok   input written via write_stdin was read (got:hello)
+=================== live-pty-musl-1
+```text
+got:
+```
+
+The PTY was disabled because the prebuilt `node-pty` binary requires glibc, while the environment uses musl. No interactive session was created, so I could not call `write_stdin`.
+[done] stopReason=end_turn
+[result] FAIL
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  FAIL write_stdin was called
+  ok   PTY refused on musl with the actionable fallback message
+  ok   command still ran via pipe (NO_PTY)
+=================== live-pty-glibc-2
+Step 2 output:
+```text
+hello
+got:hello
+```
+[done] stopReason=end_turn
+[result] PASS
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   TTY probe printed PTY_OK (a real PTY was allocated)
+  ok   input written via write_stdin was read (got:hello)
+=================== live-pty-musl-2
+```text
+got:
+```
+
+The PTY was disabled because `node-pty` is incompatible with this musl-based system, so the command received closed stdin and no interactive session was available for `write_stdin`.
+[done] stopReason=end_turn
+[result] PASS
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   PTY refused on musl with the actionable fallback message
+  ok   command still ran via pipe (NO_PTY)
+=================== live-pty-glibc-3
+Step 2 output after sending `hello`:
+```text
+hello
+got:hello
+```
+[done] stopReason=end_turn
+[result] PASS
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   TTY probe printed PTY_OK (a real PTY was allocated)
+  ok   input written via write_stdin was read (got:hello)
+=================== live-pty-musl-3
+```text
+got:
+```
+
+The terminal support reported that `node-pty` is incompatible with this musl-based system, so PTY mode was disabled and stdin was closed. No session was available for `write_stdin`.
+[done] stopReason=end_turn
+[result] FAIL
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  FAIL write_stdin was called
+  ok   PTY refused on musl with the actionable fallback message
+  ok   command still ran via pipe (NO_PTY)
+=================== live-toad-pty
+    "prompt turn finished: {\"stopReason\":\"end_turn\"}"
+  ],
+  "stopReason": "end_turn",
+  "error": null,
+  "passed": true
+}
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   TTY probe printed PTY_OK (a real PTY was allocated)
+  ok   input written via write_stdin was read (got:hello)
+[wire check] PASS (3 tool calls, stopReason=end_turn)
+
+== live summary
+PASS  live-letta-acp-own-test
+PASS  live-pty-glibc-1
+FAIL  live-pty-musl-1
+PASS  live-pty-glibc-2
+PASS  live-pty-musl-2
+PASS  live-pty-glibc-3
+FAIL  live-pty-musl-3
+PASS  live-toad-pty

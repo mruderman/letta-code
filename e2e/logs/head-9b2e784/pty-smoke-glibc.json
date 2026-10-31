@@ -1,0 +1,28 @@
+{
+  "environment": {
+    "libc": "ldd (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39",
+    "nodePty": "1.2.0-beta.14",
+    "prebuildUsed": true,
+    "make": "absent"
+  },
+  "shellRunner": {
+    "effectiveTty": true,
+    "probe": {
+      "stdout": "PTY_OK\r\n",
+      "stderr": "",
+      "exitCode": 0
+    },
+    "stdinEffectiveTty": true,
+    "stdin": {
+      "stdout": "hello\r\ngot:hello\r\n",
+      "stderr": "",
+      "exitCode": 0
+    }
+  },
+  "terminalHandler": {
+    "spawned": true,
+    "exited": null,
+    "evaluated": true,
+    "outputTail": "\u001b[?2004h\u001b]0;root@076574a8c120: /app\u0007root@076574a8c120:/app# echo TERM_$((40+2))\r\n\u001b[?2004l\rTERM_42\r\n\u001b[?2004h\u001b]0;root@076574a8c120: /app\u0007root@076574a8c120:/app# \u001b[?2004l\r\u001b[?2004h\u001b[?2004l\r\r\n"
+  }
+}

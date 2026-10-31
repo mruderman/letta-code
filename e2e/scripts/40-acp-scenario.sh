@@ -30,8 +30,8 @@ if [ "$scenario" = deterministic ]; then
   # (DeterministicPongExecutor) answers every turn with "pong" and calls no tools.
   env_args+=(-e LETTA_LOCAL_BACKEND_EXECUTOR=deterministic)
 else
-  : "${OPENAI_API_KEY:?the pty scenario needs OPENAI_API_KEY}"
-  env_args+=(-e OPENAI_API_KEY -e LETTA_ACP_MODEL="${LETTA_ACP_MODEL:-openai/gpt-5.6-luna}")
+  : "${OPENAI_API_KEY:?the pty scenario needs OPENAI_API_KEY (a placeholder is fine when a proxy injects the real key)}"
+  env_args+=(-e OPENAI_API_KEY -e LETTA_ACP_MODEL="${LETTA_ACP_MODEL:-openai/gpt-5.6-luna}" --network host "${LIVE_NET_ARGS[@]}")
 fi
 ca_args=()
 if [ -n "$EXTRA_CA_BUNDLE" ]; then

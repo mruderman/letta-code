@@ -1,0 +1,11 @@
+{
+  "prompt": "This is an automated test of terminal support. Use your exec_command tool for both steps, exactly as written, and do not use any other shell tool. Step 1: call exec_command with tty set to true and cmd: test -t 0 && echo PTY_OK || echo NO_PTY Step 2: call exec_command with tty set to true and cmd: read x; echo got:$x then call write_stdin on that session with chars set to hello followed by a newline, and read its output. Finally, reply with the outputs you saw.",
+  "steps": [
+    "Toad initialized letta-acp and opened a session",
+    "Toad sent the typed prompt as session/prompt",
+    "prompt turn finished: {\"stopReason\":\"end_turn\"}"
+  ],
+  "stopReason": "end_turn",
+  "error": null,
+  "passed": true
+}

@@ -1,0 +1,33 @@
+{
+  "environment": {
+    "libc": "musl libc (x86_64)",
+    "nodePty": "1.2.0-beta.14",
+    "prebuildUsed": true,
+    "make": "absent"
+  },
+  "shellRunner": {
+    "effectiveTty": false,
+    "probe": {
+      "stdout": "NO_PTY\n",
+      "stderr": "node-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\n",
+      "exitCode": 0
+    },
+    "stdinEffectiveTty": false,
+    "stdin": {
+      "stdout": "got:\n",
+      "stderr": "node-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain).\nFalling back to a non-TTY pipe for this command; stdin is closed.\n",
+      "exitCode": 0
+    }
+  },
+  "terminalHandler": {
+    "spawned": false,
+    "exited": {
+      "type": "terminal_exited",
+      "terminal_id": "e2e-terminal",
+      "exitCode": 1,
+      "error": "node-pty's prebuilt binary is linked against glibc, but this system uses musl (Alpine). Calling into it segfaults the process, so the PTY is disabled.\nReinstall with `npm_config_build_from_source=true` to compile node-pty from source (requires make, python3 and a C++ toolchain)."
+    },
+    "evaluated": false,
+    "outputTail": ""
+  }
+}

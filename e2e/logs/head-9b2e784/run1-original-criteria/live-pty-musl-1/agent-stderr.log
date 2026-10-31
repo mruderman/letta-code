@@ -1,0 +1,56 @@
+(node:53) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @pierre/diffs@1.2.2
+npm warn Found: react@18.2.0
+npm warn node_modules/@letta-ai/letta-code/node_modules/react
+npm warn   react@"18.2.0" from @letta-ai/letta-code@0.34.99
+npm warn   node_modules/@letta-ai/letta-code
+npm warn     @letta-ai/letta-code@"0.34.99" from @letta-ai/letta-acp@0.1.99
+npm warn     node_modules/@letta-ai/letta-acp
+npm warn     2 more (@letta-ai/letta-agent-sdk, @letta-ai/letta-agent-sdk)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer react@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn   @pierre/diffs@"1.2.2" from @letta-ai/letta-code@0.34.99
+npm warn   node_modules/@letta-ai/letta-code
+npm warn
+npm warn Conflicting peer dependency: react@19.3.1
+npm warn node_modules/react
+npm warn   peer react@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn   node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn     @pierre/diffs@"1.2.2" from @letta-ai/letta-code@0.34.99
+npm warn     node_modules/@letta-ai/letta-code
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-dom@19.3.1
+npm warn Found: react@18.2.0
+npm warn node_modules/@letta-ai/letta-code/node_modules/react
+npm warn   react@"18.2.0" from @letta-ai/letta-code@0.34.99
+npm warn   node_modules/@letta-ai/letta-code
+npm warn     @letta-ai/letta-code@"0.34.99" from @letta-ai/letta-acp@0.1.99
+npm warn     node_modules/@letta-ai/letta-acp
+npm warn     2 more (@letta-ai/letta-agent-sdk, @letta-ai/letta-agent-sdk)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer react@"^19.3.1" from react-dom@19.3.1
+npm warn node_modules/@letta-ai/letta-code/node_modules/react-dom
+npm warn   peer react-dom@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn   node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn
+npm warn Conflicting peer dependency: react@19.3.1
+npm warn node_modules/react
+npm warn   peer react@"^19.3.1" from react-dom@19.3.1
+npm warn   node_modules/@letta-ai/letta-code/node_modules/react-dom
+npm warn     peer react-dom@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn     node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+(node:141) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)...
+[letta-acp] created agent agent-local-59239a39-39eb-497f-a5f1-b30794295d70 — set LETTA_AGENT_ID=agent-local-59239a39-39eb-497f-a5f1-b30794295d70 to keep using it
+[letta-acp] editor fs tools enabled: read_editor_buffer, write_via_editor
+[letta-acp] session local-conv-2 -> agent agent-local-59239a39-39eb-497f-a5f1-b30794295d70 (cwd: /tmp/work)
+[letta-acp] advertising 40 slash commands
+[letta-acp] permission requested for exec_command
+[letta-acp] permission requested for exec_command

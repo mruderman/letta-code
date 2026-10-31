@@ -1,0 +1,3 @@
+letta-code under test: 0.34.99
+$ bun test/backend-live.ts local
+Live local ACP test passed: listed models, created agent-local-d13bd901-5d35-493c-abb6-aabd49631ac6, and received ACP_LOCAL_OK.
