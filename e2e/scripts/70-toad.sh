@@ -3,6 +3,9 @@
 # client, in the ACP Registry's no-make image. Toad launches the agent itself
 # via `toad acp "<command>"`; acp-tap.mjs sits in that command to log the wire.
 #   usage: 70-toad.sh <deterministic|pty> <run-name>
+#   CHAIN_ROOT=<dir with node_modules/.bin/letta-acp>: run that installed chain (mounted read-only)
+#   in the plain registry image instead of `npx` from the local Verdaccio (used for the 0.1.8 runs,
+#   where the chain under test is the published package as npm resolves it today).
 # The prompt comes from prompts.json, so Toad runs the same scenario as acp-client.mjs.
 set -euo pipefail
 . "$(dirname "$0")/00-env.sh"
@@ -26,9 +29,14 @@ else
 fi
 
 agent="node /e2e-scripts/acp-tap.mjs --log /e2e-out/wire.ndjson -- npx -y @letta-ai/letta-acp@$TEST_ACP_VERSION"
+image="$REGISTRY_IMAGE_VERDACCIO"; chain_args=()
+if [ -n "${CHAIN_ROOT:-}" ]; then
+  agent="node /e2e-scripts/acp-tap.mjs --log /e2e-out/wire.ndjson -- /chain/node_modules/.bin/letta-acp"
+  image="$REGISTRY_IMAGE"; chain_args=(-v "$CHAIN_ROOT:/chain:ro")
+fi
 docker rm -f e2e-toad >/dev/null 2>&1 || true
-docker run -d --name e2e-toad --network host --entrypoint sh "${env_args[@]}" \
-  -v "$here:/e2e-scripts:ro" -v "$out:/e2e-out" "$REGISTRY_IMAGE_VERDACCIO" -c '
+docker run -d --name e2e-toad --network host --entrypoint sh "${env_args[@]}" "${chain_args[@]}" \
+  -v "$here:/e2e-scripts:ro" -v "$out:/e2e-out" "$image" -c '
     set -e
     uv tool install -q --python 3.14 batrachian-toad >/dev/null 2>&1
     /tmp/uv-bin/toad --version > /e2e-out/toad-version.txt

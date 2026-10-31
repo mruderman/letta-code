@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 # One clean-room cell: a stock Node image (no compiler, no make: like the registry's tools image),
 # install a chain from npm, then run platform-smoke.mjs.
-#   usage: run-docker-cell.sh <node-major> <glibc|musl> <published|lock-pinned> <outdir>
+#   usage: run-docker-cell.sh <node-major> <glibc|musl|glibc-toolchain> <published|lock-pinned> <outdir>
+#   glibc-toolchain uses the full node:<major>-bookworm image (gcc, make, python3 present), i.e. a
+#   developer machine or a CI runner with a C toolchain, as the contrast to the no-make cells.
+#   ACP_VERSION picks the letta-acp version; the lock-pinned column pins what that tag's bun.lock used.
 set -uo pipefail
 node="$1" libc="$2" column="$3" out="$4"
 here="$(cd "$(dirname "$0")" && pwd)"
-variant=bookworm-slim; [ "$libc" = musl ] && variant=alpine
+variant=bookworm-slim; [ "$libc" = musl ] && variant=alpine; [ "$libc" = glibc-toolchain ] && variant=bookworm
 image="mirror.gcr.io/library/node:$node-$variant"
 acp="${ACP_VERSION:-0.1.11}"
+lock_sdk=0.7.2; [ "$acp" = 0.1.8 ] && lock_sdk=0.5.7
 case "$column" in
   published)   pkgs="@letta-ai/letta-acp@$acp" ;;
-  lock-pinned) pkgs="@letta-ai/letta-acp@$acp @letta-ai/letta-agent-sdk@0.7.2 @agentclientprotocol/sdk@1.3.0" ;;
+  lock-pinned) pkgs="@letta-ai/letta-acp@$acp @letta-ai/letta-agent-sdk@$lock_sdk @agentclientprotocol/sdk@1.3.0" ;;
   node-pty-fix) pkgs="@letta-ai/letta-acp@${TEST_ACP_VERSION:-0.1.99}"; registry="http://${VERDACCIO_HOST:-172.17.0.1}:${VERDACCIO_PORT:-4873}/" ;;
   *) echo "unknown column $column" >&2; exit 2 ;;
 esac

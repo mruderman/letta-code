@@ -5,6 +5,8 @@
 # is pushed or posted; the registry clone is only used to create throwaway worktrees.
 #
 #   REGISTRY_DIR=<clone>  E2E_WORK=<scratch>  OUT=<log dir>  bash run-final-entry-gates.sh
+#   ENTRY_DIR=<dir with agent.json + icon.svg>  (default: letta-acp-entry, the 0.1.11 pin)
+#   REGISTRY_COMMIT=<sha>                       (default: b51a879)
 #
 # Gates, matching .github/workflows in the registry:
 #   R1 build_registry.py --dry-run     schema + icon + required fields   (build-registry.yml)
@@ -19,10 +21,14 @@ here="$(cd "$(dirname "$0")" && pwd)"
 : "${REGISTRY_DIR:?}" "${E2E_WORK:?}" "${OUT:?}"
 IMAGE="${REGISTRY_IMAGE:-acp-registry-tools-e2e}"
 mkdir -p "$OUT"
+# Gates cd into the worktree or a temp HOME, so a relative OUT would land there (and the worktree is
+# removed at the end). Resolve it once.
+OUT="$(cd "$OUT" && pwd)"
 wt="$E2E_WORK/wt-final-entry"
 git -C "$REGISTRY_DIR" worktree remove --force "$wt" 2>/dev/null || true
 git -C "$REGISTRY_DIR" worktree add -q --detach "$wt" "${REGISTRY_COMMIT:-b51a879}"
-mkdir -p "$wt/letta-acp" && cp "$here"/letta-acp-entry/* "$wt/letta-acp/"
+ENTRY_DIR="${ENTRY_DIR:-$here/letta-acp-entry}"
+mkdir -p "$wt/letta-acp" && cp "$ENTRY_DIR"/* "$wt/letta-acp/"
 { echo "registry commit: $(git -C "$wt" rev-parse HEAD)"; echo "entry:"; cat "$wt/letta-acp/agent.json"; } > "$OUT/entry.txt"
 status() { echo "$1 exit=$2" | tee -a "$OUT/summary.txt"; }
 # protocol_matrix.py exits 0 even when the agent fails to start, so the gate verdict is read from
