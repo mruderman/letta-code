@@ -24,9 +24,8 @@ const result = { node: process.version, platform: `${process.platform}-${process
 
 // Does node-pty load from this install? (the thing the unreleased fix is about)
 try {
-  const binDir = dirname(command[0]);
-  const req = createRequire(join(binDir, "..", "package.json"));
-  const letta = dirname(req.resolve("@letta-ai/letta-code/package.json"));
+  // node_modules/.bin/letta-acp -> node_modules/@letta-ai/letta-code (packages hide package.json behind "exports")
+  const letta = join(dirname(command[0]), "..", "@letta-ai", "letta-code");
   const probe = createRequire(join(letta, "package.json"));
   try { probe("node-pty"); result.nodePty = { loads: true }; } catch (error) { result.nodePty = { loads: false, error: String(error.message).split("\n")[0].slice(0, 160) }; }
 } catch (error) {

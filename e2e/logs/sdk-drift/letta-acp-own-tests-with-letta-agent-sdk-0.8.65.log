@@ -1,0 +1,338 @@
+== letta-acp main (5197491) as 0.1.99
+Resolving dependencies
+Resolved, downloaded and extracted [481]
+Saved lockfile
+
+$ bun run build
+$ tsc -p tsconfig.build.json
+$ bun run test && bun run typecheck && bun run build
+$ bun test
+bun test v1.4.4 (38afee6c8)
+
+test/agent-integration.test.ts:
+[letta-acp] MCP server "in-band" skipped: ACP transport is not supported
+[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)...
+[letta-acp] created agent agent-created — set LETTA_AGENT_ID=agent-created to keep using it
+[letta-acp] session conv-test-2 -> agent agent-created (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)...
+[letta-acp] created agent agent-created — set LETTA_AGENT_ID=agent-created to keep using it
+[letta-acp] session conv-test-2 -> agent agent-created (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] using existing agent agent-existing
+[letta-acp] session conv-test-1 -> agent agent-existing (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] loaded session conv-existing (0 replayed updates)
+[letta-acp] advertising 40 slash commands
+[letta-acp] loaded session conv-existing (0 replayed updates)
+[letta-acp] advertising 40 slash commands
+[letta-acp] using existing agent agent-test
+[letta-acp] using existing agent agent-test
+[letta-acp] cannot resolve listed session conv-missing: Error: conversation unavailable
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] session conv-test-2 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] session conv-test-3 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] session conv-test-1 model -> test/other-model
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] session conv-test-1 mode -> unrestricted
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1023:19)
+(fail) Agent SDK app-server integration > switches permission enforcement through session config options [1008.83ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1049:34)
+(fail) Agent SDK app-server integration > streams an assistant response through a complete prompt turn [1004.10ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1074:34)
+(fail) Agent SDK app-server integration > streams fragmented tool arguments as one tool card [1002.61ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1139:34)
+(fail) Agent SDK app-server integration > renders Bash output as a native terminal when the client supports it [1006.28ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1222:34)
+(fail) Agent SDK app-server integration > renders an SDK Edit call as a native ACP diff [1003.68ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1274:34)
+(fail) Agent SDK app-server integration > routes a permission request after the prompt handler returns [1008.18ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1315:19)
+(fail) Agent SDK app-server integration > auto-allows task bookkeeping in ask-before-edits mode [1006.51ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-editor-permissions-WeNCZF/repo)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at /tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1356:19
+(fail) Agent SDK app-server integration > aligns editor-tool approvals with session modes and cwd [1009.68ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-editor-always-LtAO0T/first)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1448:19)
+(fail) Agent SDK app-server integration > scopes always-allow editor decisions to one ACP session [1009.24ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1499:19)
+(fail) Agent SDK app-server integration > attaches a permission request to the tool call it belongs to [1006.63ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1539:19)
+(fail) Agent SDK app-server integration > denies a permission request that lands after cancellation [1003.25ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1576:19)
+(fail) Agent SDK app-server integration > denies an out-of-turn permission request the client never answers [1007.62ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] turn reported complete while runs are active (run-first, run-second)
+(fail) Agent SDK app-server integration > keeps the turn open when the server is still running a job [5000.01ms]
+  ^ this test timed out after 5000ms.
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] turn reported complete while runs are active (run-first, run-second)
+[letta-acp] no further activity during the grace round; ending turn
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] permission requested for Write
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] executing /remember via execute_command
+[letta-acp] permission requested for Write
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] stream error: Timed out waiting for app-server turn
+1034 |       default:
+1035 |         if (state.cancelled) {
+1036 |           stopReason = "cancelled";
+1037 |           break;
+1038 |         }
+1039 |         throw new Error(
+                         ^
+error: Timed out waiting for app-server turn
+      at toPromptResponse (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:1039:19)
+      at prompt (/tmp/e2e-work/e2e-work-main/wt-letta-acp/src/agent.ts:595:25)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/agent-integration.test.ts:1758:39)
+(fail) Agent SDK app-server integration > drains a cancelled turn before starting its replacement [1003.80ms]
+[letta-acp] using existing agent agent-test
+[letta-acp] session conv-test-1 -> agent agent-test (cwd: /tmp/letta-acp-test)
+[letta-acp] advertising 40 slash commands
+[letta-acp] executing /init via execute_command
+
+test/acpx-client.test.ts:
+203 |     new Response(child.stdout).text(),
+204 |     new Response(child.stderr).text(),
+205 |     child.exited,
+206 |   ]);
+207 |   if (exitCode !== 0) {
+208 |     throw new Error(`acpx exited ${exitCode}:\n${stderr}\n${stdout}`);
+                    ^
+error: acpx exited 3:
+[acpx] error: TIMEOUT Timed out after 5000ms
+
+
+      at runAcpx (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/acpx-client.test.ts:208:15)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/acpx-client.test.ts:315:30)
+(fail) acpx client compatibility > completes a prompt through a real ACP client [5657.38ms]
+203 |     new Response(child.stdout).text(),
+204 |     new Response(child.stderr).text(),
+205 |     child.exited,
+206 |   ]);
+207 |   if (exitCode !== 0) {
+208 |     throw new Error(`acpx exited ${exitCode}:\n${stderr}\n${stdout}`);
+                    ^
+error: acpx exited 3:
+[acpx] error: TIMEOUT Timed out after 5000ms
+
+
+      at runAcpx (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/acpx-client.test.ts:208:15)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/acpx-client.test.ts:320:47)
+(fail) acpx client compatibility > records a new ACP session for discovery [5866.42ms]
+203 |     new Response(child.stdout).text(),
+204 |     new Response(child.stderr).text(),
+205 |     child.exited,
+206 |   ]);
+207 |   if (exitCode !== 0) {
+208 |     throw new Error(`acpx exited ${exitCode}:\n${stderr}\n${stdout}`);
+                    ^
+error: acpx exited 3:
+
+{"jsonrpc":"2.0","id":0,"method":"initialize","params":{"protocolVersion":1,"clientCapabilities":{"fs":{"readTextFile":true,"writeTextFile":true},"terminal":true},"clientInfo":{"name":"acpx","version":"0.13.0"}}}
+{"jsonrpc":"2.0","id":0,"result":{"protocolVersion":1,"agentCapabilities":{"loadSession":true,"sessionCapabilities":{"list":{}},"mcpCapabilities":{"http":true,"sse":true},"promptCapabilities":{"image":true,"embeddedContext":true}},"authMethods":[]}}
+{"jsonrpc":"2.0","id":1,"method":"session/new","params":{"cwd":"/tmp/e2e-work/e2e-work-main/wt-letta-acp","mcpServers":[]}}
+{"jsonrpc":"2.0","method":"session/update","params":{"sessionId":"conv-acpx-test","update":{"sessionUpdate":"available_commands_update","availableCommands":[{"name":"model","description":"Show available models or switch the session's model","input":{"hint":"model handle (leave empty to list)"}},{"name":"clear","description":"Clear in-context messages (moved to conversation history)"},{"name":"compact","description":"Summarize conversation history immediately","input":{"hint":"all | sliding_window (empty for default)"}},{"name":"init","description":"Initialize or re-initialize agent memory"},{"name":"doctor","description":"Audit and refine the agent's memory structure"},{"name":"remember","description":"Ask the agent to remember conversation content","input":{"hint":"what to remember (empty to infer from context)"}},{"name":"context-limit","description":"Set or reset the max context window","input":{"hint":"tokens (empty to show current)"}},{"name":"reload","description":"Reload harness settings"},{"name":"toolset","description":"Switch toolset","input":{"hint":"default | codex | gemini"}},{"name":"memory","description":"Show the agent's memory blocks"},{"name":"search","description":"Search past conversation history","input":{"hint":"query"}},{"name":"skills","description":"List available skills by source"},{"name":"skill-creator","description":"Create a new skill interactively","input":{"hint":"what the skill should do"}},{"name":"acquiring-skills","description":"Discover and install skills from Hermes, ClawHub, GitHub, and other registries. Load this skill whenever a user asks for a capability you don't already have ...","input":{"hint":"optional instructions"}},{"name":"browser-use","description":"Control a real browser to navigate pages, click, type, fill forms, inspect rendered UI, take screenshots, or record video. Load only when the user asks to op...","input":{"hint":"optional instructions"}},{"name":"context-doctor","description":"Investigate and repair an agent's context — memory, system prompt, and skills — using observed behavior as evidence. Use when the user asks to audit, clean u...","input":{"hint":"optional instructions"}},{"name":"creating-mods","description":"Creates and edits trusted local Letta Code mods, including tools, slash commands, local-only model providers, lifecycle/turn events, scoped conversation help...","input":{"hint":"optional instructions"}},{"name":"creating-skills","description":"Guide for creating effective skills. Use when creating a new skill or updating an existing one that extends Letta Code's capabilities with specialized knowle...","input":{"hint":"optional instructions"}},{"name":"customizing-commands","description":"Creates, edits, and enables Letta Code mod-provided slash commands. Use when the user asks to add a custom /command, slash command, command shortcut, scoped ...","input":{"hint":"optional instructions"}},{"name":"customizing-statusline","description":"Creates, edits, and migrates Letta Code statusline mods. Use when handling the /statusline command or continuing work started by /statusline.","input":{"hint":"optional instructions"}},{"name":"finding-agents","description":"Find other agents on the same server. Use when the user asks about other agents, wants to migrate memory from another agent, or needs to find an agent by nam...","input":{"hint":"optional instructions"}},{"name":"generating-mod-envs","description":"Generates and reviews mod learning env JSON files for Letta Code local mods. Use when asked to teach, learn, or optimize a mod behavior; create, draft, valid...","input":{"hint":"optional instructions"}},{"name":"image-generation","description":"Generate images from text prompts (and optionally edit/remix input images). Use when the user asks to create, generate, draw, render, or edit an image, illus...","input":{"hint":"optional instructions"}},{"name":"initializing-memory","description":"Comprehensive guide for initializing or reorganizing agent memory. Load this skill when running /init, when the user asks you to set up your memory, or when ...","input":{"hint":"optional instructions"}},{"name":"letta-guide","description":"Read the official Letta documentation (docs.letta.com) through its cached, ETag-checked fetch route. Load before ANY docs.letta.com retrieval — answering how...","input":{"hint":"optional instructions"}},{"name":"maintaining-core-memory","description":"Maintains an agent's core memory, the editable part of its system prompt. Use to modify the agent's core behavior, embed critical knowledge (needed on every ...","input":{"hint":"optional instructions"}},{"name":"maintaining-deferred-memory","description":"Maintains deferred memory, which stores accumulated knowledge, analysis, and observations made by the agent over time. Use when saving knowledge (e.g. about ...","input":{"hint":"optional instructions"}},{"name":"managing-agent-webhooks","description":"Creates, lists, tests, enables, disables, rotates, inspects, and deletes inbound webhooks for the current Letta Cloud agent. Use when a user asks to set up a...","input":{"hint":"optional instructions"}},{"name":"managing-shared-memory","description":"Create and manage shared memory — git-tracked repositories hosted on Letta Cloud that are attached to one or more agents and projected into their filesystems...","input":{"hint":"optional instructions"}},{"name":"messaging-agents","description":"Send a message to another Letta agent, continue a thread with one, check on it, or reply to a message another agent sent you. Use when you need to ask, infor...","input":{"hint":"optional instructions"}},{"name":"music-generation","description":"Generate music using ElevenLabs Music through Letta. Use when creating instrumental tracks, songs with lyrics, background music, jingles, theme songs, or any...","input":{"hint":"optional instructions"}},{"name":"scheduling-tasks","description":"Advanced scheduling through the letta cron CLI for other conversations, computers, run history, and schedule replacement. Use Wake for ordinary create/list/c...","input":{"hint":"optional instructions"}},{"name":"self-configuration","description":"Inspect or modify Letta Code's own memory, model, context window, system prompt, compaction, permissions, toolsets, mods, skills, channels, schedules, agent ...","input":{"hint":"optional instructions"}},{"name":"speech-generation","description":"Convert text to speech using ElevenLabs voice AI through Letta. Use when generating audio from text, sending a voice message, reading text aloud, creating vo...","input":{"hint":"optional instructions"}},{"name":"submitting-feedback","description":"Submits user-approved product feedback and bug reports about Letta Code to the Letta team. Load when the user reports a Letta Code bug, requests a product or...","input":{"hint":"optional instructions"}},{"name":"syncing-memory-filesystem","description":"Diagnose and repair MemFS repository setup, remote sync, authentication failures, optional backup remotes, or merge/rebase conflicts. Do not load for routine...","input":{"hint":"optional instructions"}},{"name":"using-mcp-tools","description":"Reference for the `letta mcp` CLI, which finds and invokes MCP tools available to this agent. A system reminder already lists your connected MCP servers and ...","input":{"hint":"optional instructions"}},{"name":"video-generation","description":"Generate videos from text prompts (and optional reference or frame images) using Letta's asynchronous video generation API. Use when the user asks to create,...","input":{"hint":"optional instructions"}},{"name":"workflow-authoring","description":"Reference for writing a Workflow tool script (script API and gotchas, pipeline-vs-barrier rules, quality patterns, worked examples). Load before authoring a ...","input":{"hint":"optional instructions"}},{"name":"working-across-computers","description":"Guides work across Cloud, local, and other available computers, including teleporting conversations, running remote subagents, and transferring files. Load w...","input":{"hint":"optional instructions"}}]}}}
+{"jsonrpc":"2.0","id":1,"result":{"sessionId":"conv-acpx-test","modes":{"currentModeId":"standard","availableModes":[{"id":"standard","name":"Ask before edits","description":"Allow workspace reads; ask before edits, shell commands, and outside-workspace reads"},{"id":"acceptEdits","name":"Accept edits","description":"Allow workspace reads and file edits; ask before shell commands and outside-workspace reads"},{"id":"unrestricted","name":"Bypass permissions","description":"Auto-allow all tool calls without asking"}]},"configOptions":[{"id":"permissions","name":"Permissions","description":"Approval behavior for tool calls","category":"mode","type":"select","currentValue":"standard","options":[{"value":"standard","name":"Ask before edits","description":"Allow workspace reads; ask before edits, shell commands, and outside-workspace reads"},{"value":"acceptEdits","name":"Accept edits","description":"Allow workspace reads and file edits; ask before shell commands and outside-workspace reads"},{"value":"unrestricted","name":"Bypass permissions","description":"Auto-allow all tool calls without asking"}]},{"id":"model","name":"Model","description":"Model used for this Letta session","category":"model","type":"select","currentValue":"test-model","options":[{"value":"test-model","name":"Test Model","description":"Deterministic test model"}]}]}}
+{"jsonrpc":"2.0","id":2,"method":"session/prompt","params":{"sessionId":"conv-acpx-test","prompt":[{"type":"text","text":"Exercise the ACP tool lifecycle."}]}}
+{"jsonrpc":"2.0","method":"session/update","params":{"sessionId":"conv-acpx-test","update":{"sessionUpdate":"tool_call","toolCallId":"call-acpx","title":"Read: /tmp/example.txt","kind":"read","status":"in_progress","rawInput":{"file_path":"/tmp/example.txt"},"locations":[{"path":"/tmp/example.txt"}]}}}
+{"jsonrpc":"2.0","method":"session/update","params":{"sessionId":"conv-acpx-test","update":{"sessionUpdate":"tool_call_update","toolCallId":"call-acpx","status":"completed","rawOutput":"example contents","locations":[{"path":"/tmp/example.txt"}],"content":[{"type":"content","content":{"type":"text","text":"example contents"}}]}}}
+{"jsonrpc":"2.0","method":"session/update","params":{"sessionId":"conv-acpx-test","update":{"sessionUpdate":"agent_message_chunk","content":{"type":"text","text":"ACPX_OK"}}}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32070,"message":"Timed out after 5000ms","data":{"acpxCode":"TIMEOUT","origin":"cli","sessionId":"unknown"}}}
+
+      at runAcpx (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/acpx-client.test.ts:208:15)
+      at async <anonymous> (/tmp/e2e-work/e2e-work-main/wt-letta-acp/test/acpx-client.test.ts:349:30)
+(fail) acpx client compatibility > emits a complete tool lifecycle as ACP notifications [5957.05ms]
+
+ 58 pass
+ 17 fail
+ 135 expect() calls
+Ran 75 tests across 9 files. [39.52s]
+error: script "test" exited with code 1
+error: script "check" exited with code 1
