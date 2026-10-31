@@ -12,44 +12,81 @@ on:
 permissions:
   contents: read
 jobs:
-  cell:
+  host:
     name: ${{ matrix.cell }} / ${{ matrix.column }}
     runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
     timeout-minutes: 25
     strategy:
       fail-fast: false
       matrix:
-        column: [published, lock-pinned]
         include:
-          - { cell: n22-glibc-x64, os: ubuntu-24.04, node: "22" }
-          - { cell: n24-glibc-x64, os: ubuntu-24.04, node: "24" }
-          - { cell: n22-glibc-arm64, os: ubuntu-24.04-arm, node: "22" }
-          - { cell: n24-glibc-arm64, os: ubuntu-24.04-arm, node: "24" }
-          - { cell: n22-musl-x64, os: ubuntu-24.04, node: "22", container: "node:22-alpine" }
-          - { cell: n24-musl-x64, os: ubuntu-24.04, node: "24", container: "node:24-alpine" }
-          - { cell: n22-musl-arm64, os: ubuntu-24.04-arm, node: "22", container: "node:22-alpine" }
-          - { cell: n24-musl-arm64, os: ubuntu-24.04-arm, node: "24", container: "node:24-alpine" }
-          - { cell: macos-arm64-n22, os: macos-14, node: "22" }
-          - { cell: windows-x64-n22, os: windows-2022, node: "22" }
+          - { cell: n22-glibc-x64, os: ubuntu-24.04, node: "22", column: published }
+          - { cell: n22-glibc-x64, os: ubuntu-24.04, node: "22", column: lock-pinned }
+          - { cell: n24-glibc-x64, os: ubuntu-24.04, node: "24", column: published }
+          - { cell: n24-glibc-x64, os: ubuntu-24.04, node: "24", column: lock-pinned }
+          - { cell: n22-glibc-arm64, os: ubuntu-24.04-arm, node: "22", column: published }
+          - { cell: n22-glibc-arm64, os: ubuntu-24.04-arm, node: "22", column: lock-pinned }
+          - { cell: n24-glibc-arm64, os: ubuntu-24.04-arm, node: "24", column: published }
+          - { cell: n24-glibc-arm64, os: ubuntu-24.04-arm, node: "24", column: lock-pinned }
+          - { cell: macos-arm64-n22, os: macos-14, node: "22", column: published }
+          - { cell: macos-arm64-n22, os: macos-14, node: "22", column: lock-pinned }
+          - { cell: windows-x64-n22, os: windows-2022, node: "22", column: published }
+          - { cell: windows-x64-n22, os: windows-2022, node: "22", column: lock-pinned }
     steps:
       - name: Checkout (the smoke script only)
-        if: ${{ !matrix.container }}
         uses: actions/checkout@v4
         with: { sparse-checkout: e2e/platform }
-      - name: Checkout inside the alpine container
-        if: ${{ matrix.container }}
-        run: |
-          apk add --no-cache git >/dev/null
-          git clone --depth 1 --branch "${GITHUB_REF_NAME}" "https://github.com/${GITHUB_REPOSITORY}.git" /tmp/src
-          mkdir -p e2e && cp -r /tmp/src/e2e/platform e2e/platform
-          apk del git >/dev/null
       - name: Node
-        if: ${{ !matrix.container }}
         uses: actions/setup-node@v4
         with: { node-version: "${{ matrix.node }}" }
       - name: Install and smoke (${{ matrix.column }})
         shell: bash
+        env:
+          ACP_VERSION: "0.1.11"
+          COLUMN: ${{ matrix.column }}
+          CELL: ${{ matrix.cell }}
+        run: |
+          set +e
+          mkdir -p "$RUNNER_TEMP/w" 2>/dev/null || mkdir -p /tmp/w
+          W="${RUNNER_TEMP:-/tmp}/w"; cd "$W" && npm init -y >/dev/null
+          echo "toolchain: make=$(command -v make || echo absent) gcc=$(command -v gcc || echo absent) node=$(node --version) arch=$(uname -m)"
+          if [ "$COLUMN" = published ]; then PKGS="@letta-ai/letta-acp@$ACP_VERSION"; else PKGS="@letta-ai/letta-acp@$ACP_VERSION @letta-ai/letta-agent-sdk@0.7.2 @agentclientprotocol/sdk@1.3.0"; fi
+          if ! npm install --no-audit --no-fund $PKGS > install.log 2>&1; then
+            reason="$(grep -E 'npm error' install.log | grep -E 'make|gyp|code' | tail -1 | tr -d '"' | cut -c1-200)"
+            echo "RESULT_JSON:{\"cell\":\"$CELL\",\"column\":\"$COLUMN\",\"status\":\"fail\",\"level\":\"clean-room install\",\"detail\":\"npm install failed: $reason\"}"
+            exit 0
+          fi
+          BIN="$W/node_modules/.bin/letta-acp"; [ "$RUNNER_OS" = Windows ] && BIN="$W/node_modules/.bin/letta-acp.cmd"
+          node "$GITHUB_WORKSPACE/e2e/platform/platform-smoke.mjs" --out "$W/out" -- "$BIN" > smoke.log 2>&1
+          code=$?
+          if [ -f "$W/out/result.json" ]; then node "$GITHUB_WORKSPACE/e2e/platform/emit-result.mjs" "$W/out/result.json" "$CELL" "$COLUMN"
+          else echo "RESULT_JSON:{\"cell\":\"$CELL\",\"column\":\"$COLUMN\",\"status\":\"fail\",\"level\":\"clean-room install\",\"detail\":\"no result produced: $(tail -c 200 smoke.log | tr -d '\"\n')\"}"; fi
+          exit 0
+
+  musl:
+    name: ${{ matrix.cell }} / ${{ matrix.column }}
+    runs-on: ${{ matrix.os }}
+    container: node:${{ matrix.node }}-alpine
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { cell: n22-musl-x64, os: ubuntu-24.04, node: "22", column: published }
+          - { cell: n22-musl-x64, os: ubuntu-24.04, node: "22", column: lock-pinned }
+          - { cell: n24-musl-x64, os: ubuntu-24.04, node: "24", column: published }
+          - { cell: n24-musl-x64, os: ubuntu-24.04, node: "24", column: lock-pinned }
+          - { cell: n22-musl-arm64, os: ubuntu-24.04-arm, node: "22", column: published }
+          - { cell: n22-musl-arm64, os: ubuntu-24.04-arm, node: "22", column: lock-pinned }
+          - { cell: n24-musl-arm64, os: ubuntu-24.04-arm, node: "24", column: published }
+          - { cell: n24-musl-arm64, os: ubuntu-24.04-arm, node: "24", column: lock-pinned }
+    steps:
+      - name: Fetch the smoke script (no git in the stock image)
+        run: |
+          mkdir -p e2e/platform
+          for f in platform-smoke.mjs emit-result.mjs; do wget -q -O "e2e/platform/$f" "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/e2e/platform/$f"; done
+      - name: Install and smoke (${{ matrix.column }})
+        shell: sh
         env:
           ACP_VERSION: "0.1.11"
           COLUMN: ${{ matrix.column }}
