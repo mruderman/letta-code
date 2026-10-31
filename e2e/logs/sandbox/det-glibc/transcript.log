@@ -1,0 +1,9 @@
+[init] protocol v1; auth methods: none
+[session] local-conv-2
+[prompt] Run the deterministic test command.
+[agent text] pong
+[done] stopReason=end_turn
+[result] PASS
+  ok   turn ended normally (stopReason end_turn)
+  ok   local-backend deterministic executor answered over ACP ('pong')
+  ok   no tool calls (none expected from this executor)

@@ -1,0 +1,23 @@
+{
+  "scenario": "deterministic",
+  "expectLibc": "glibc",
+  "agentCommand": "npx -y @letta-ai/letta-acp@0.1.99",
+  "stopReason": "end_turn",
+  "passed": true,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "local-backend deterministic executor answered over ACP ('pong')",
+      "passed": true
+    },
+    {
+      "name": "no tool calls (none expected from this executor)",
+      "passed": true
+    }
+  ],
+  "toolCalls": [],
+  "permissions": []
+}

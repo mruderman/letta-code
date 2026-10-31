@@ -1,5 +1,9 @@
 # Plan: Prove the node-pty fix end-to-end with a live Letta agent, documented to a maintainer standard
 
+> **Correction (after running step 3):** `LETTA_LOCAL_BACKEND_EXECUTOR=deterministic` selects letta-code's
+> `DeterministicPongExecutor`, which answers `pong` and makes no tool calls, so step 3b proves the install and
+> wiring path but not tool execution or approvals; those are covered by the live runs. See README "Findings".
+
 ## Context
 
 The fix for letta-ai/letta-acp#50 (closed PR letta-ai/letta-code#3608) is ported, rebased, and pushed **to the user's forks only**:
