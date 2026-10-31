@@ -1,0 +1,19 @@
+registry commit: b51a87950a7133e351fbacbf5ea2f827ed951934
+entry:
+{
+  "id": "letta-acp",
+  "name": "Letta",
+  "version": "0.1.11",
+  "description": "Stateful coding agent with persistent memory, exposed over ACP.",
+  "repository": "https://github.com/letta-ai/letta-acp",
+  "authors": [
+    "Letta"
+  ],
+  "license": "Apache-2.0",
+  "license_url": "https://github.com/letta-ai/letta-acp/blob/main/LICENSE",
+  "distribution": {
+    "npx": {
+      "package": "@letta-ai/letta-acp@0.1.11"
+    }
+  }
+}

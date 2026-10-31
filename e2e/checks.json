@@ -1,0 +1,493 @@
+{
+ "note": "Denominators are fixed here. A check absent from a results file counts as not run, never as passed. Metric C (platform matrix) is generated from platforms below.",
+ "columns": [
+  "published",
+  "lock-pinned",
+  "node-pty-fix"
+ ],
+ "platforms": [
+  {
+   "id": "n22-glibc-x64",
+   "node": 22,
+   "libc": "glibc",
+   "arch": "x64",
+   "how": "docker"
+  },
+  {
+   "id": "n22-glibc-arm64",
+   "node": 22,
+   "libc": "glibc",
+   "arch": "arm64",
+   "how": "docker-qemu"
+  },
+  {
+   "id": "n22-musl-x64",
+   "node": 22,
+   "libc": "musl",
+   "arch": "x64",
+   "how": "docker"
+  },
+  {
+   "id": "n22-musl-arm64",
+   "node": 22,
+   "libc": "musl",
+   "arch": "arm64",
+   "how": "docker-qemu"
+  },
+  {
+   "id": "n24-glibc-x64",
+   "node": 24,
+   "libc": "glibc",
+   "arch": "x64",
+   "how": "docker"
+  },
+  {
+   "id": "n24-glibc-arm64",
+   "node": 24,
+   "libc": "glibc",
+   "arch": "arm64",
+   "how": "docker-qemu"
+  },
+  {
+   "id": "n24-musl-x64",
+   "node": 24,
+   "libc": "musl",
+   "arch": "x64",
+   "how": "docker"
+  },
+  {
+   "id": "n24-musl-arm64",
+   "node": 24,
+   "libc": "musl",
+   "arch": "arm64",
+   "how": "docker-qemu"
+  },
+  {
+   "id": "macos-arm64-n22",
+   "node": 22,
+   "libc": "darwin",
+   "arch": "arm64",
+   "how": "fork-ci"
+  },
+  {
+   "id": "windows-x64-n22",
+   "node": 22,
+   "libc": "win32",
+   "arch": "x64",
+   "how": "fork-ci"
+  }
+ ],
+ "checks": [
+  {
+   "id": "A01",
+   "metric": "A",
+   "title": "Agent identity persists: restarting the adapter with the same agent id reuses the agent (no new agent), new conversation",
+   "source": "live"
+  },
+  {
+   "id": "A02",
+   "metric": "A",
+   "title": "Self-editing memory: the agent writes a durable fact to its own MemFS via memory tools",
+   "source": "live"
+  },
+  {
+   "id": "A02b",
+   "metric": "A",
+   "title": "The memory write is committed in the agent's MemFS git history",
+   "source": "live"
+  },
+  {
+   "id": "A03",
+   "metric": "A",
+   "title": "Cross-conversation memory: a new conversation after a restart recalls the stored fact",
+   "source": "live"
+  },
+  {
+   "id": "A04",
+   "metric": "A",
+   "title": "session/load restores a past conversation: history replayed and conversation-local context intact",
+   "source": "live"
+  },
+  {
+   "id": "A05",
+   "metric": "A",
+   "title": "Switch model mid-conversation; the agent keeps its conversation state",
+   "source": "live"
+  },
+  {
+   "id": "A06",
+   "metric": "A",
+   "title": "Toolset auto-selection: an OpenAI model gets the codex toolset (exec_command)",
+   "source": "live"
+  },
+  {
+   "id": "A07",
+   "metric": "A",
+   "title": "Switch toolset live with /toolset",
+   "source": "live"
+  },
+  {
+   "id": "A08",
+   "metric": "A",
+   "title": "Project skill (.agents/skills, the harness path) is discovered and obeyed",
+   "source": "live"
+  },
+  {
+   "id": "A08b",
+   "metric": "A",
+   "title": "Project skill in .claude/skills, the path the adapter advertises as slash commands, is obeyed",
+   "source": "live"
+  },
+  {
+   "id": "A09",
+   "metric": "A",
+   "title": "Subagents: the Task/Agent tool launches a subagent and its result returns",
+   "source": "live"
+  },
+  {
+   "id": "A09b",
+   "metric": "A",
+   "title": "The subagent tool call reaches a terminal status in the client's view",
+   "source": "live"
+  },
+  {
+   "id": "A10",
+   "metric": "A",
+   "title": "Past-conversation recall via the recall subagent when the fact is not in memory",
+   "source": "live"
+  },
+  {
+   "id": "A10b",
+   "metric": "A",
+   "title": "A10 again with the installed letta CLI on PATH (isolates the PATH problem from the feature)",
+   "source": "live"
+  },
+  {
+   "id": "A11",
+   "metric": "A",
+   "title": "/remember saves a fact to memory",
+   "source": "live"
+  },
+  {
+   "id": "A12",
+   "metric": "A",
+   "title": "/compact summarises the conversation and the agent still recalls facts",
+   "source": "live"
+  },
+  {
+   "id": "A13",
+   "metric": "A",
+   "title": "Sleep-time reflection (dreaming) runs in the background and works on a MemFS branch",
+   "source": "live"
+  },
+  {
+   "id": "A14",
+   "metric": "A",
+   "title": "Cross-agent memory guard: an agent's shell cannot read another agent's memory",
+   "source": "live"
+  },
+  {
+   "id": "A15",
+   "metric": "A",
+   "title": "Agent-to-agent messaging between two agents on one machine",
+   "source": "live"
+  },
+  {
+   "id": "A15b",
+   "metric": "A",
+   "title": "A15 again with the installed letta CLI on PATH",
+   "source": "live"
+  },
+  {
+   "id": "A16",
+   "metric": "A",
+   "title": "Letta Cloud backend end to end (login OAuth, cloud agent creation, memory, a turn)",
+   "source": "not_covered",
+   "why": "needs Cloud credentials and a throwaway Cloud org; no key was provided"
+  },
+  {
+   "id": "A17",
+   "metric": "A",
+   "title": "Reflection result merged into main memory (A13 proves the reflection run, not the merge)",
+   "source": "not_covered",
+   "why": "reflection merge timing not yet instrumented"
+  },
+  {
+   "id": "A18",
+   "metric": "A",
+   "title": "Memory and identity through the Letta Cloud backend across restarts (A01-A04 ran on the local backend)",
+   "source": "not_covered",
+   "why": "same as A16"
+  },
+  {
+   "id": "D01",
+   "metric": "D",
+   "title": "initialize: protocol version, loadSession, session list, image, embeddedContext, MCP capabilities",
+   "source": "live"
+  },
+  {
+   "id": "D02",
+   "metric": "D",
+   "title": "session/new returns a session id, model and permission config options",
+   "source": "live"
+  },
+  {
+   "id": "D03",
+   "metric": "D",
+   "title": "Streaming: several agent_message_chunk updates before end_turn",
+   "source": "live"
+  },
+  {
+   "id": "D04",
+   "metric": "D",
+   "title": "Permission request shows allow/reject options; allow_once runs the command",
+   "source": "live"
+  },
+  {
+   "id": "D05",
+   "metric": "D",
+   "title": "Permission reject_once blocks the command and the turn ends cleanly",
+   "source": "live"
+  },
+  {
+   "id": "D06",
+   "metric": "D",
+   "title": "allow_always suppresses later prompts for the same tool",
+   "source": "live"
+  },
+  {
+   "id": "D07",
+   "metric": "D",
+   "title": "Switching the permission mode to unrestricted skips prompts",
+   "source": "live"
+  },
+  {
+   "id": "D08",
+   "metric": "D",
+   "title": "Cancel mid-command: stopReason cancelled and the process is killed",
+   "source": "live"
+  },
+  {
+   "id": "D08b",
+   "metric": "D",
+   "title": "The turn after a cancel works normally (no stale interrupt)",
+   "source": "live"
+  },
+  {
+   "id": "D09",
+   "metric": "D",
+   "title": "Cancel while a permission request is pending",
+   "source": "live"
+  },
+  {
+   "id": "D10",
+   "metric": "D",
+   "title": "Client file-system delegation: fs/read_text_file is used when the client advertises it",
+   "source": "live"
+  },
+  {
+   "id": "D11",
+   "metric": "D",
+   "title": "Client-supplied MCP server: the tool is called and its result used",
+   "source": "live"
+  },
+  {
+   "id": "D12",
+   "metric": "D",
+   "title": "Image content block understood by the model",
+   "source": "live"
+  },
+  {
+   "id": "D13",
+   "metric": "D",
+   "title": "session/load replays prior user and agent messages",
+   "source": "live"
+  },
+  {
+   "id": "D14",
+   "metric": "D",
+   "title": "session/list returns the known sessions",
+   "source": "live"
+  },
+  {
+   "id": "D15",
+   "metric": "D",
+   "title": "session/set_config_option echoes the requested model variant",
+   "source": "live"
+  },
+  {
+   "id": "D16",
+   "metric": "D",
+   "title": "Embedded resource content block understood",
+   "source": "live"
+  },
+  {
+   "id": "D17",
+   "metric": "D",
+   "title": "Shell tool runs under a PTY (ISATTY) where node-pty is available",
+   "source": "live"
+  },
+  {
+   "id": "D18",
+   "metric": "D",
+   "title": "Errors: unknown session and unknown method return JSON-RPC errors and the adapter keeps working",
+   "source": "live"
+  },
+  {
+   "id": "D19",
+   "metric": "D",
+   "title": "Slash commands advertised via available_commands_update",
+   "source": "live"
+  },
+  {
+   "id": "D20",
+   "metric": "D",
+   "title": "tool_call_update.rawOutput is a JSON object (strict clients such as Toad reject strings)",
+   "source": "live"
+  },
+  {
+   "id": "D21",
+   "metric": "D",
+   "title": "Shell tool calls are reported with kind execute",
+   "source": "live"
+  },
+  {
+   "id": "D22",
+   "metric": "D",
+   "title": "File edits are reported with a structured diff content block",
+   "source": "live"
+  },
+  {
+   "id": "D23",
+   "metric": "D",
+   "title": "Clean exit on stdin EOF",
+   "source": "live"
+  },
+  {
+   "id": "D24",
+   "metric": "D",
+   "title": "Back-to-back prompts sent immediately after end_turn: each reply arrives in its own turn",
+   "source": "live"
+  },
+  {
+   "id": "D25",
+   "metric": "D",
+   "title": "Two concurrent sessions in one adapter do not cross-talk",
+   "source": "live"
+  },
+  {
+   "id": "D26",
+   "metric": "D",
+   "title": "Session cwd is honoured by the shell tool",
+   "source": "live"
+  },
+  {
+   "id": "D27",
+   "metric": "D",
+   "title": "Client terminal delegation (terminal/create) used for shell commands",
+   "source": "not_covered",
+   "why": "letta-acp runs commands itself; documented gap"
+  },
+  {
+   "id": "D28",
+   "metric": "D",
+   "title": "authenticate() flow executed end to end (letta-login terminal auth); only the advertised method is checked at initialize",
+   "source": "not_covered",
+   "why": "needs a Cloud account"
+  },
+  {
+   "id": "D29",
+   "metric": "D",
+   "title": "Windows via ACP with a real client (fork CI covers the PTY artifact, not an ACP session)",
+   "source": "not_covered",
+   "why": "no Windows host with ACP client"
+  },
+  {
+   "id": "K01",
+   "metric": "D",
+   "title": "acpx real session (install via npx, prompt turn, tool call)",
+   "source": "client"
+  },
+  {
+   "id": "K02",
+   "metric": "D",
+   "title": "Toad real session including its own permission dialog",
+   "source": "client"
+  },
+  {
+   "id": "K03",
+   "metric": "D",
+   "title": "Python ACP SDK client: full turn",
+   "source": "client"
+  },
+  {
+   "id": "K04",
+   "metric": "D",
+   "title": "TypeScript SDK 2.x client: full turn",
+   "source": "client"
+  },
+  {
+   "id": "K05",
+   "metric": "D",
+   "title": "Zed session",
+   "source": "not_covered",
+   "why": "manual checklist only; needs the editor"
+  },
+  {
+   "id": "K06",
+   "metric": "D",
+   "title": "JetBrains session",
+   "source": "not_covered",
+   "why": "manual checklist only"
+  },
+  {
+   "id": "K07",
+   "metric": "D",
+   "title": "Obsidian ACP plugin session",
+   "source": "not_covered",
+   "why": "manual checklist only"
+  },
+  {
+   "id": "R1",
+   "metric": "B",
+   "title": "build_registry.py --dry-run: schema, required fields, icon",
+   "source": "registry"
+  },
+  {
+   "id": "R2",
+   "metric": "B",
+   "title": "license_url returns HTTP 200",
+   "source": "registry"
+  },
+  {
+   "id": "R3",
+   "metric": "B",
+   "title": "verify_agents.py --auth-check on a CI-like host",
+   "source": "registry"
+  },
+  {
+   "id": "R4",
+   "metric": "B",
+   "title": "verify_agents.py --auth-check inside the registry's no-make Docker image",
+   "source": "registry"
+  },
+  {
+   "id": "R5",
+   "metric": "B",
+   "title": "protocol_matrix.py on a CI-like host",
+   "source": "registry"
+  },
+  {
+   "id": "R6",
+   "metric": "B",
+   "title": "protocol_matrix.py inside the registry's no-make Docker image",
+   "source": "registry"
+  },
+  {
+   "id": "R7",
+   "metric": "B",
+   "title": "One real prompt turn through the entry as listed (not a registry gate; the registry stops at initialize)",
+   "source": "registry"
+  }
+ ]
+}

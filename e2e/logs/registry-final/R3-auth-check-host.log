@@ -1,0 +1,33 @@
+Platform: linux-x86_64
+Registry: /tmp/e2e-work/e2e-work-main/wt-final-entry
+Sandbox:  /tmp/e2e-work/e2e-work-main/wt-final-entry/.sandbox
+
+  ⊘ Quarantined agoragentic-acp: Postinstall script
+  ⊘ Quarantined crow-cli: ACP initialize fails in crow-cli 0.1.25
+  ⊘ Quarantined deepagents: Missing npm dependency
+  ⊘ Quarantined fast-agent: Timeout after 120s waiting for initialize response
+  ⊘ Quarantined minion-code: Python dependency issue
+  ⊘ Quarantined qoder: ACP initialize fails in qodercli 0.2.15/0.2.16
+  ⊘ Quarantined vtcode: Missing windows builds
+  (7 agent(s) quarantined)
+
+Found 38 agents
+
+Verifying 1 agent(s): letta-acp
+
+[1/1] letta-acp (npx)
+  Testing npx...
+    → Auth check: npx --prefix /tmp/e2e-work/e2e-work-main/wt-final-entry/.sandbox/npx/letta-acp...
+    ✓ Success: Auth OK: letta-login(terminal)
+    Sandbox: /tmp/e2e-work/e2e-work-main/wt-final-entry/.sandbox/npx/letta-acp
+
+==================================================
+Summary
+==================================================
+  Passed:  1
+  Failed:  0
+  Skipped: 0
+
+All tests passed!
+
+Sandboxes available at: /tmp/e2e-work/e2e-work-main/wt-final-entry/.sandbox

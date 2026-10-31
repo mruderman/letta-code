@@ -1,0 +1,9 @@
+{
+  "name": "letta-acp-e2e-live",
+  "private": true,
+  "type": "module",
+  "description": "Live scenario suite for letta-acp. Dependencies are pinned exactly so client behavior is reproducible.",
+  "dependencies": {
+    "@agentclientprotocol/sdk": "1.3.0"
+  }
+}

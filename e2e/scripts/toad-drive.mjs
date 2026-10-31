@@ -53,13 +53,25 @@ try {
   await page.keyboard.press("Enter");
   const prompt = await waitFor(() => findRequest("session/prompt"), "Toad to send session/prompt", 60_000);
   result.steps.push("Toad sent the typed prompt as session/prompt");
+  if (args.permission) {
+    // A real permission dialog: the agent asks, Toad's own UI shows it, we press the key that
+    // accepts the highlighted option, and the wire must show Toad answering with a selection.
+    const ask = await waitFor(() => wire().find((e) => e.direction === "agent->client" && e.message.method === "session/request_permission"), "the agent's permission request", 180_000);
+    result.permissionRequest = { title: ask.message.params?.toolCall?.title, options: ask.message.params?.options?.map((o) => `${o.kind}:${o.optionId}`) };
+    await sleep(2500);
+    await page.screenshot({ path: join(args.out, "toad-3-permission-dialog.png") });
+    await page.keyboard.press(args["permission-key"] ?? "Enter");
+    const answer = await waitFor(() => wire().find((e) => e.direction === "client->agent" && e.message.id === ask.message.id && !e.message.method), "Toad to answer the permission request", 60_000);
+    result.permissionAnswer = answer.message.result ?? answer.message.error;
+    result.steps.push(`Toad answered the permission dialog: ${JSON.stringify(result.permissionAnswer)}`);
+  }
   const done = await waitFor(() => findResponse(prompt.message.id), "the prompt turn to finish", timeoutMs);
   result.stopReason = done.message.result?.stopReason ?? null;
   result.error = done.message.error ?? null;
   result.steps.push(`prompt turn finished: ${JSON.stringify(done.message.result ?? done.message.error)}`);
   await sleep(3000);
   await page.screenshot({ path: join(args.out, "toad-2-turn-finished.png") });
-  result.passed = result.stopReason === "end_turn";
+  result.passed = result.stopReason === "end_turn" && (!args.permission || result.permissionAnswer?.outcome?.outcome === "selected");
 } catch (error) {
   result.passed = false;
   result.error = String(error);

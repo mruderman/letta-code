@@ -1,0 +1,3 @@
+(node:11605) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"returned":false,"note":"session/prompt did not return within 150s","seconds":150,"updates":{"available_commands_update":1,"agent_message_chunk":2},"agentText":"VERIFY_OK"}

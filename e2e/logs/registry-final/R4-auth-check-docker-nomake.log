@@ -1,0 +1,39 @@
+Platform: linux-x86_64
+Registry: /workspace
+Sandbox:  /workspace/.sandbox
+
+  ⊘ Quarantined agoragentic-acp: Postinstall script
+  ⊘ Quarantined crow-cli: ACP initialize fails in crow-cli 0.1.25
+  ⊘ Quarantined deepagents: Missing npm dependency
+  ⊘ Quarantined fast-agent: Timeout after 120s waiting for initialize response
+  ⊘ Quarantined minion-code: Python dependency issue
+  ⊘ Quarantined qoder: ACP initialize fails in qodercli 0.2.15/0.2.16
+  ⊘ Quarantined vtcode: Missing windows builds
+  (7 agent(s) quarantined)
+
+Found 38 agents
+
+Verifying 1 agent(s): letta-acp
+
+[1/1] letta-acp (npx)
+  Testing npx...
+    → Auth check: npx --prefix /workspace/.sandbox/npx/letta-acp...
+      Duration: 35.2s
+      Process exit code: 1
+      stderr: npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+    Retrying...
+      Duration: 17.4s
+      Process exit code: 1
+      stderr: npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+    ✗ Failed: Timeout after 120s waiting for initialize response
+    Sandbox: /workspace/.sandbox/npx/letta-acp
+
+==================================================
+Summary
+==================================================
+  Passed:  0
+  Failed:  1
+  Skipped: 0
+
+Failed tests:
+  - letta-acp (npx): Timeout after 120s waiting for initialize response

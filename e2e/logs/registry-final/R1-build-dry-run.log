@@ -1,0 +1,8 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Added agent: letta-acp v0.1.11
+
+Dry run: validated 1 agents successfully
+  registry.json would contain 1 agents (excluded: github-copilot)
+  registry-for-jetbrains.json would contain 1 agents (excluded: github-copilot-cli)
+  registry-for-jetbrains-preview.json would contain 1 agents (identical to the stable JetBrains registry)
+  registry-for-jetbrains-air.json would contain 1 agents (excluded: gemini)

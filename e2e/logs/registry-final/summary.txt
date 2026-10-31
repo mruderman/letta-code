@@ -1,0 +1,7 @@
+R1-build-dry-run exit=0
+R2-license-url exit=0
+R3-auth-check-host exit=0
+R4-auth-check-docker-nomake exit=1
+R5-protocol-matrix-host exit=0
+R6-protocol-matrix-docker-nomake exit=1
+R7-prompt-turn exit=1
