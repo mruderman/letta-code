@@ -255,6 +255,23 @@ also rejects staged parent-relative imports (`../`); use the `@/` alias.
 11. **biome** — format + lint across source files
 12. **typescript** — full `tsc --noEmit`
 
+### Packaged Artifact Checks (not part of `bun run check`)
+
+These validate the **published npm tarball** rather than the source tree, so
+they need Docker or a global install and are wired into CI separately. `bun run
+check` does *not* cover packaging regressions.
+
+| Command | What it proves | Requirements |
+|---------|----------------|--------------|
+| `check:minimal-linux-npm-artifact` | `npm install` of the packed tarball succeeds in Ubuntu 24.04 with **no** `make`/`python3`, `letta --help` produces output, and node-pty loads a prebuilt binary and allocates a real TTY | Docker; runs on both Linux CI legs |
+| `check:windows-node-pty-artifact` | The globally-installed package ships a Windows node-pty prebuild and its ConPTY actually executes written input | Windows; `npm install -g <tarball>` must have run first |
+
+The Linux check derives its Docker platform from `process.arch`; override with
+`--platform=linux/arm64` or `LETTA_CODE_MINIMAL_LINUX_ARTIFACT_PLATFORM`, and
+pass `--skip-build` to reuse existing build output. In CI it is gated on the
+`packaging_changed` output of the `classify` job — add a path there if you
+introduce a file that can change the packed artifact.
+
 ### Environment Variables
 
 | Variable | Effect |
@@ -280,6 +297,8 @@ directory first. Otherwise the run reads and mutates your real
 - **grep exits 1 on no matches** — pre-commit hooks use `|| true` on grep pipes to prevent false failures on clean commits.
 - **macOS case-insensitive FS** — `existsSync("bash.ts")` returns `true` when `Bash.ts` exists. Rename scripts that use `existsSync` to check kebab-case targets will silently skip single-word PascalCase files. Use `git mv` for renames.
 - **Native modules can behave differently under Bun and Node.** The published package runs the bundled `letta.js` under Node (^22.23.4, ^24.22.1, or ^26.12.1), while `bun run dev` runs the source under Bun. Example: `node-pty` is loaded directly under Node but through a Node bridge process under Bun, because its native handles do not integrate reliably with Bun's event loop (`src/tools/impl/shell-runner.ts`). Test runtime-sensitive code on both paths.
+- **`node-pty` is pinned to an exact prerelease, on purpose.** `1.1.0` (still npm `latest`) ships no `prebuilds/linux-x64`, so `npm install` falls through to `node-gyp rebuild` and fails on minimal Linux images without `make` — this broke public `npx` installs (letta-ai/letta-acp#50). `1.2.0-beta.14` is the first release with Linux prebuilds. Do not "tidy" it back to a caret range or bump it casually; revisit only when upstream `1.2.0` ships stable, and re-run `check:minimal-linux-npm-artifact` when you do. Note `1.2.0` also drops winpty, so Windows now requires build ≥ 18309.
+- **A node-pty prebuild can install cleanly and still be unusable.** node-pty's install script only checks that `prebuilds/<platform>-<arch>/` exists — it never validates the binary, and its presence suppresses the source-build fallback. The linux-x64 prebuild is glibc-linked (GLIBC_2.28), which fails two different ways: on older glibc `require` throws a dynamic-link error, and **on musl (Alpine) `require` succeeds and the first `spawn()` segfaults the process** (verified on `node:22-alpine`). Never `require("node-pty")` directly — go through `requireNodePty()` in `src/utils/node-pty-loader.ts`, which refuses a glibc prebuild on a musl runtime and turns both failures into a tagged error callers degrade on (`exec_command` falls back to a pipe via `spawnPtyOrPipe` in `src/tools/impl/shell-runner.ts`). The one exception is that file's Bun-only `NODE_PTY_BRIDGE_SCRIPT`, which runs in a separate Node child and never executes in the published package.
 - **`setTimeout(fn, 0)` fires on the next tick, not never.** For "no timeout" behavior, check the timeout value before scheduling the timer instead of passing 0.
 - **Extend `@letta-ai/letta-client` types instead of redeclaring them.** Use the SDK's `ToolCall`, `StopReasonType`, and similar wire types directly; do not duplicate wire shapes or cast with `as any`.
 - **Package subpath entrypoints use relative imports and dedicated entry files.** Library entries (`src/agent-presets.ts`, `src/channels-*.ts`, `src/app-server-client.ts`) are bundled separately and their emitted `.d.ts` files go through an alias rewrite in `build.js`; anything reachable from a browser-targeted entry must stay free of node builtins and backend/provider imports. Consumers on `moduleResolution: "node"` resolve subpath types through `typesVersions` in `package.json`, so new subpaths need entries there too.

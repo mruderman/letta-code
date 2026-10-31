@@ -9,9 +9,12 @@ import {
 } from "@/backend";
 import { runWithRuntimeContext } from "@/runtime-context";
 import {
+  type ShellProcessHandle,
+  spawnPtyOrPipe,
   spawnWithLauncher,
   startShellProcess,
 } from "@/tools/impl/shell-runner";
+import { loadNodePtyWith } from "@/utils/node-pty-loader";
 
 function stubbornProcessTreeLauncher(): string[] {
   const descendantScript = [
@@ -87,6 +90,7 @@ describe("shared shell process", () => {
 
     expect(typeof running.process.kill).toBe("function");
     expect(typeof running.terminate).toBe("function");
+    expect(running.tty).toBe(false);
     expect(await running.completion).toEqual({
       stdout: "shared",
       stderr: "",
@@ -132,6 +136,7 @@ describe("shared shell process", () => {
         },
       );
 
+      expect(running.tty).toBe(true);
       running.process.write("hello\n");
       const result = await running.completion;
 
@@ -367,4 +372,71 @@ describe("shared shell process", () => {
     const descendantPid = Number(output.match(/descendant:(\d+)/)?.[1]);
     expectProcessExited(descendantPid);
   }, 10_000);
+});
+
+describe("spawnPtyOrPipe", () => {
+  function stubHandle(): ShellProcessHandle {
+    return { kill() {}, interrupt() {}, write() {} };
+  }
+
+  function nodePtyUnavailableError(): unknown {
+    try {
+      loadNodePtyWith(() => {
+        throw new Error("GLIBC_2.28 not found");
+      });
+    } catch (error) {
+      return error;
+    }
+    throw new Error("expected loadNodePtyWith to throw");
+  }
+
+  test("keeps the PTY when it spawns", () => {
+    const pty = stubHandle();
+    const reports: string[] = [];
+
+    const spawned = spawnPtyOrPipe(
+      () => pty,
+      () => stubHandle(),
+      (message) => reports.push(message),
+    );
+
+    expect(spawned).toEqual({ handle: pty, tty: true });
+    expect(reports).toEqual([]);
+  });
+
+  test("falls back to a pipe and reports why when node-pty is unusable", () => {
+    const pipe = stubHandle();
+    const reports: string[] = [];
+
+    const spawned = spawnPtyOrPipe(
+      () => {
+        throw nodePtyUnavailableError();
+      },
+      () => pipe,
+      (message) => reports.push(message),
+    );
+
+    expect(spawned).toEqual({ handle: pipe, tty: false });
+    expect(reports).toHaveLength(1);
+    expect(reports[0]).toContain("GLIBC_2.28 not found");
+    expect(reports[0]).toContain("Falling back to a non-TTY pipe");
+  });
+
+  test("rethrows spawn failures unrelated to node-pty", () => {
+    let pipeSpawned = false;
+
+    expect(() =>
+      spawnPtyOrPipe(
+        () => {
+          throw new Error("spawn ENOENT");
+        },
+        () => {
+          pipeSpawned = true;
+          return stubHandle();
+        },
+        () => {},
+      ),
+    ).toThrow("spawn ENOENT");
+    expect(pipeSpawned).toBe(false);
+  });
 });

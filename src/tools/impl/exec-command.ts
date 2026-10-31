@@ -664,6 +664,9 @@ async function startExecSession(args: ExecCommandArgs): Promise<ExecSession> {
     execSessions.delete(id);
     throw error;
   }
+  // A requested PTY can degrade to a pipe when node-pty is unusable; record
+  // that so write_stdin rejects input instead of writing to a closed stdin.
+  session.tty = runningProcess.tty;
 
   backgroundProcesses.set(id, {
     process: runningProcess.process,
