@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-31",
+  "generatedAt": "2026-10-31T20:45:30+00:00",
+  "tableMode": "full",
+  "changedOnly": false,
+  "summary": {
+    "agentsProbed": 1,
+    "agentsProbedThisRun": 1,
+    "agentsReused": 0,
+    "initializeSuccess": 0,
+    "sessionNewAuthRequired": 0,
+    "features": {
+      "session/list": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 0,
+        "other": 1
+      },
+      "session/fork": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 0,
+        "other": 1
+      },
+      "session/resume": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 0,
+        "other": 1
+      },
+      "session/stop": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 0,
+        "other": 1
+      },
+      "session/set_model": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 0,
+        "other": 1
+      }
+    }
+  },
+  "agents": [
+    {
+      "id": "letta-acp",
+      "name": "Letta",
+      "registryVersion": "0.1.8",
+      "repository": "https://github.com/letta-ai/letta-acp",
+      "website": null,
+      "distribution": "npx",
+      "initialize": {
+        "status": "process_error",
+        "code": null,
+        "message": "process exited with code 1 before responding to initialize"
+      },
+      "protocolVersion": null,
+      "agentInfoVersion": null,
+      "authMethods": [],
+      "setModelSignal": false,
+      "capabilities": {
+        "loadSession": false,
+        "sessionList": false,
+        "sessionFork": false,
+        "sessionResume": false,
+        "sessionStop": false,
+        "setModel": false
+      },
+      "sessionNew": {
+        "status": "not_probed",
+        "code": null,
+        "message": null
+      },
+      "methodProbes": {
+        "session/list": {
+          "status": "not_probed",
+          "code": null,
+          "message": null
+        },
+        "session/fork": {
+          "status": "not_probed",
+          "code": null,
+          "message": null
+        },
+        "session/resume": {
+          "status": "not_probed",
+          "code": null,
+          "message": null
+        },
+        "session/stop": {
+          "status": "not_probed",
+          "code": null,
+          "message": null
+        },
+        "session/set_model": {
+          "status": "not_probed",
+          "code": null,
+          "message": null
+        }
+      },
+      "stderrTail": "npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead",
+      "commandPreview": "npx --prefix /workspace/.matrix-sandbox/npx/letta-acp --yes",
+      "workspaceCwd": "/workspace/.matrix-sandbox/npx/letta-acp/workspace",
+      "durationSeconds": 13.393,
+      "processExitCode": 1,
+      "probedAt": "2026-10-31T20:45:30+00:00",
+      "reusedFromPrevious": false
+    }
+  ]
+}

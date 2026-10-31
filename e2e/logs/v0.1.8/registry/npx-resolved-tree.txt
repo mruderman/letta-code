@@ -1,0 +1,6 @@
+node_modules/@letta-ai/letta-acp 0.1.8
+node_modules/@letta-ai/letta-agent-sdk 0.5.8
+node_modules/@agentclientprotocol/sdk 1.9.0
+node_modules/@letta-ai/letta-agent-sdk/node_modules/@letta-ai/letta-code 0.29.13
+node_modules/@letta-ai/letta-code 0.29.12
+node_modules/node-pty 1.1.0

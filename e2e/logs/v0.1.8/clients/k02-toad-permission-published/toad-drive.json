@@ -1,0 +1,26 @@
+{
+  "prompt": "Run `echo TOADPERM29054 > /tmp/work/toad-perm.txt` in the shell, then run `cat /tmp/work/toad-perm.txt` and tell me exactly what it printed.",
+  "steps": [
+    "Toad initialized letta-acp and opened a session",
+    "Toad sent the typed prompt as session/prompt",
+    "Toad answered the permission dialog: {\"outcome\":{\"optionId\":\"allow_once\",\"outcome\":\"selected\"}}",
+    "prompt turn finished: {\"stopReason\":\"end_turn\"}"
+  ],
+  "permissionRequest": {
+    "title": "exec_command: Write and read permission test file",
+    "options": [
+      "allow_once:allow_once",
+      "allow_always:allow_always",
+      "reject_once:reject_once"
+    ]
+  },
+  "permissionAnswer": {
+    "outcome": {
+      "optionId": "allow_once",
+      "outcome": "selected"
+    }
+  },
+  "stopReason": "end_turn",
+  "error": null,
+  "passed": true
+}

@@ -1,0 +1,110 @@
+{
+  "scenario": "pty",
+  "expectLibc": "glibc",
+  "agentCommand": "/tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/chains018/published/node_modules/.bin/letta-acp",
+  "stopReason": "end_turn",
+  "passed": false,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "exec_command was called with tty: true for the TTY probe",
+      "passed": true
+    },
+    {
+      "name": "write_stdin was called",
+      "passed": true
+    },
+    {
+      "name": "TTY probe printed PTY_OK (a real PTY was allocated)",
+      "passed": true
+    },
+    {
+      "name": "input written via write_stdin was read (got:hello)",
+      "passed": false
+    }
+  ],
+  "toolCalls": [
+    {
+      "toolCallId": "call_I7Dw3a8yDcwF8RFLroNbgdUL|fc_06a7365cfa9183f9016ae652868dac87d2800619e0d8862493",
+      "title": "exec_command: Check PTY support",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "test -t 0 && echo PTY_OK || echo NO_PTY",
+        "tty": true,
+        "description": "Check PTY support"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: b73ff3\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: b73ff3\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n"
+    },
+    {
+      "toolCallId": "call_9LDw7SzvIsdGKEe9KC6XdR6S|fc_06297149fdb7273d016ae6528797a487d28d96c739ec98ef8c",
+      "title": "exec_command: Read interactive input",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "read x; echo got:$x",
+        "tty": true,
+        "description": "Read interactive input"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: 3ff837\nWall time: 10.0000 seconds\nProcess running with session ID 2\nOriginal token count: 0\nOutput:\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: 3ff837\nWall time: 10.0000 seconds\nProcess running with session ID 2\nOriginal token count: 0\nOutput:\n"
+    },
+    {
+      "toolCallId": "call_feXcJapU6Jfk4wWt5gvy9llN|fc_0ef2a761fad6f5ab016ae65292b2b887d2a076edfc8b726b76",
+      "title": "write_stdin",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "session_id": 2,
+        "chars": "hello\n",
+        "yield_time_ms": 1000
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: ad9b3e\nWall time: 0.0050 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nhello\r\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: ad9b3e\nWall time: 0.0050 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nhello\r\n"
+    }
+  ],
+  "permissions": [
+    {
+      "title": "exec_command: Check PTY support",
+      "toolCallId": "call_I7Dw3a8yDcwF8RFLroNbgdUL|fc_06a7365cfa9183f9016ae652868dac87d2800619e0d8862493"
+    },
+    {
+      "title": "exec_command: Read interactive input",
+      "toolCallId": "call_9LDw7SzvIsdGKEe9KC6XdR6S|fc_06297149fdb7273d016ae6528797a487d28d96c739ec98ef8c"
+    }
+  ]
+}

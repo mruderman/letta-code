@@ -1,0 +1,19 @@
+{
+  "chain": "published-0.1.8",
+  "agentCmd": "/tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/chains018/published/node_modules/.bin/letta-acp",
+  "finishedAt": "2026-10-31T20:31:30.313Z",
+  "node": "v22.23.4",
+  "platform": "linux-x64",
+  "counts": {
+    "pass": 1
+  },
+  "checks": [
+    {
+      "id": "G01",
+      "scenario": "gate",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "agentInfo null; stopReason=end_turn; reply \"GATEI32ROP\""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "updates": [
+    {
+      "agent_id": "letta-acp",
+      "agent_path": "<worktree>/letta-acp/agent.json",
+      "channel": "stable",
+      "current_version": "0.1.8",
+      "latest_version": "0.1.11",
+      "distribution_type": "npx",
+      "source_url": "https://registry.npmjs.org/@letta-ai/letta-acp"
+    }
+  ],
+  "errors": [],
+  "up_to_date": []
+}

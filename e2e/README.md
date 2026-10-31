@@ -1,5 +1,7 @@
 # letta-acp registry listing: end-to-end evidence suite
 
+> **Update 2026-10-31: letta-acp 0.1.8 (the version registry PR 472 pins) was run through the same suite.** It does not hang: every prompt was answered (169 of 169), A 15 of 20, B 5 of 7 with `license_url`, D 27 of 31, and four independent clients finish turns. But the registry's hourly version updater would move the entry to 0.1.11 (a dry run of its own script proposes `0.1.8 -> 0.1.11`), and 0.1.11 hangs. Details: [`RESULTS-0.1.8.md`](RESULTS-0.1.8.md). The rest of this README describes the 0.1.11 run.
+
 **Summary.** This branch holds a live, real-world test suite for listing `letta-acp` in the ACP Registry, exactly as the entry would be listed (`@letta-ai/letta-acp@0.1.11` with `license_url`). It reports four metrics side by side, defined in [`COVERAGE.md`](COVERAGE.md) and generated from the logs into [`COVERAGE-RESULTS.md`](COVERAGE-RESULTS.md): **A** Letta's differentiating features (the headline), **B** the registry's own gates, **C** the platform and install matrix, **D** generic ACP behaviour, including four independent clients. Every result is tagged with the highest validation level it reached (unit, fake app server, real ACP client, live Cloud, live model turn); nothing here reaches *live Cloud*.
 
 **The headline is the published column, and it is not green.** Measured on the local backend with a real model (`openai/gpt-5.6-luna`):

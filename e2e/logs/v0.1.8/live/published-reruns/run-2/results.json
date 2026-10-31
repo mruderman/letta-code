@@ -1,0 +1,82 @@
+{
+  "chain": "published-0.1.8",
+  "agentCmd": "/tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/chains018/published/node_modules/.bin/letta-acp",
+  "finishedAt": "2026-10-31T20:41:16.580Z",
+  "node": "v22.23.4",
+  "platform": "linux-x64",
+  "counts": {
+    "pass": 10
+  },
+  "checks": [
+    {
+      "id": "D08",
+      "scenario": "cancel-and-pty",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "process running before cancel: true; stopReason cancelled after 3016ms; process still alive 3s later: false"
+    },
+    {
+      "id": "D08b",
+      "scenario": "cancel-and-pty",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "first shell call in the turn after a cancel: failed \"Interrupted by user\" | completed \"Chunk ID: fc3a67 Wall time: 0.0270 seconds Process exited with code 0 Original token count: 3 Output: AFTERCANCEL \"; reply \"AFTERCANCEL\""
+    },
+    {
+      "id": "D10",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "client fs requests: [{\"method\":\"fs/read_text_file\",\"path\":\"/tmp/letta-e2e-client-wVNYoR/work/fs-probe.txt\"}]; natural read used the client fs: false; first reply \"`FSPROBE19QP6L`\"; explicit-tool reply \"It returned:\\n\\n`FSPROBE19QP6L`\"; tools: read_editor_buffer: /tmp/letta-e2e-client-wVNYoR/work/fs-probe.txt"
+    },
+    {
+      "id": "D11",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "MCP server called: {\"tool\":\"e2e_secret\"}; reply \"MCPSECRETJSHM4I\"; tools: mcp__e2e__e2e_secret"
+    },
+    {
+      "id": "D12",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "image block (32x32 solid red PNG) -> reply \"Red\""
+    },
+    {
+      "id": "D16",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "resource block -> reply \"EMBEDCO2J84\""
+    },
+    {
+      "id": "D17",
+      "scenario": "cancel-and-pty",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "tty:true requested in the tool call: true; shell reported: \"Chunk ID: b89889 Wall time: 0.0270 seconds Process exited with code 0 Original token count: 2 Output: ISATTY\\r \" (NOTTY after tty:true means the PTY was not available; without node-pty the pipe fallback is documented; criterion fixed after review: the first version never asked for a tty)"
+    },
+    {
+      "id": "D24",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "3 back-to-back prompts sent immediately after each end_turn; replies per turn: [\"=\",\"=\",\"=\"]"
+    },
+    {
+      "id": "D25",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "two concurrent sessions: local-conv-8 -> \"ALPHA8Y1ZQR\"; local-conv-9 -> \"BRAVOKYT44K\""
+    },
+    {
+      "id": "G01",
+      "scenario": "gate",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "agentInfo null; stopReason=end_turn; reply \"GATEUN5FEG\""
+    }
+  ]
+}

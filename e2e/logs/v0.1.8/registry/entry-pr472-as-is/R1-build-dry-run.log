@@ -1,0 +1,5 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Error: letta-acp/agent.json validation failed:
+Error:   - Schema validation error at 'root': 'license_url' is a required property
+
+Build failed due to validation errors

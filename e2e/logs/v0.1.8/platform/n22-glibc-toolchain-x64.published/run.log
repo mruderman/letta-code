@@ -1,0 +1,31 @@
+Unable to find image 'mirror.gcr.io/library/node:22-bookworm' locally
+22-bookworm: Pulling from library/node
+39f6da44c1d8: Pulling fs layer
+c28c2f6c340d: Pulling fs layer
+4d2acb1ce6e6: Pulling fs layer
+a4aa977c0d0e: Pulling fs layer
+25f5fbc9dcfb: Pulling fs layer
+70a1fee6a9cd: Pulling fs layer
+661ef7e1e7b1: Pulling fs layer
+49dd0ae78313: Pulling fs layer
+39f6da44c1d8: Download complete
+4d2acb1ce6e6: Download complete
+49dd0ae78313: Download complete
+70a1fee6a9cd: Download complete
+25f5fbc9dcfb: Download complete
+a4aa977c0d0e: Download complete
+661ef7e1e7b1: Download complete
+55c954c9c6e7: Download complete
+03d6194d1d87: Download complete
+a4aa977c0d0e: Pull complete
+49dd0ae78313: Pull complete
+c28c2f6c340d: Download complete
+661ef7e1e7b1: Pull complete
+4d2acb1ce6e6: Pull complete
+c28c2f6c340d: Pull complete
+39f6da44c1d8: Pull complete
+70a1fee6a9cd: Pull complete
+25f5fbc9dcfb: Pull complete
+Digest: sha256:18a6d90fd60542269850c80ca03b29b1d9b14d6b221ac7ee8e35b0d33ef904bd
+Status: Downloaded newer image for mirror.gcr.io/library/node:22-bookworm
+{"node":"v22.23.4","platform":"linux-x64","libc":"glibc","nonce":"PLATG8IWY4D","nodePty":{"loads":true},"initialize":{"ok":true,"authMethods":[]},"sessionNew":{"ok":true},"turn":{"returned":true,"stopReason":"end_turn","error":null,"toolCalls":1,"nonceSeen":true,"reply":"PLATG8IWY4D"},"status":"pass","seconds":7,"stderrTail":"[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)... | [letta-acp] created agent agent-local-1c8e261e-c539-43f6-8602-6b5daa8dde5a — set LETTA_AGENT_ID=agent-local-1c8e261e-c539-43f6-8602-6b5daa8dde5a to keep using it | [letta-acp] session local-conv-2 -> agent agent-local-1c8e261e-c539-43f6-8602-6b5daa8dde5a (cwd: /tmp/smoke-work-d47lNV) | [letta-acp] advertising 33 slash commands","level":"live model turn"}

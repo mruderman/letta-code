@@ -1,0 +1,17 @@
+Unable to find image 'mirror.gcr.io/library/node:24-alpine' locally
+24-alpine: Pulling from library/node
+c728384fb906: Pulling fs layer
+7b229517ed22: Pulling fs layer
+ef0ad2fdf0fd: Pulling fs layer
+522ca12b284b: Pulling fs layer
+7b229517ed22: Already exists
+ef0ad2fdf0fd: Download complete
+c728384fb906: Download complete
+519821c542ed: Download complete
+d3d23350b799: Download complete
+522ca12b284b: Download complete
+522ca12b284b: Pull complete
+ef0ad2fdf0fd: Pull complete
+c728384fb906: Pull complete
+Digest: sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85
+Status: Downloaded newer image for mirror.gcr.io/library/node:24-alpine

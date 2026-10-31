@@ -1,0 +1,5 @@
+bin: /tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/chains018/published/node_modules/.bin/letta-acp
+node: v22.23.4
+scenario: pty expect: glibc
+Linux 6.18.44-fc-v185 x86_64
+ldd (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39

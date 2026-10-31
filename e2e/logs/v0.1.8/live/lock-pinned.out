@@ -1,0 +1,21 @@
+[gate] G01=pass  (5s)
+[model-switch] A05=pass D15=fail  (9s)
+[skills] A08=pass A08b=fail  (12s)
+[toolsets] A06=pass A07=fail  (13s)
+[subagents] A09=pass A09b=fail  (10s)
+[dreaming] A13=pass  (11s)
+[slash-commands] A11=pass A12=pass  (18s)
+[memory-identity] A02=pass A02b=pass D23=pass A01=pass A03=pass A04=pass D13=pass D14=pass  (32s)
+[conversation-search] A10=pass  (32s)
+[handshake] D01=pass D02=pass D19=pass  (5s)
+[error-handling] D18=pass  (7s)
+[conversation-search-letta-on-path] A10b=pass  (33s)
+[protocol-shape] D03=pass D26=pass D20=fail D21=fail  (10s)
+[multi-agent] A14=pass A15=fail  (39s)
+[multi-agent-letta-on-path] A15b=pass  (47s)
+[cancel-and-pty] D08=pass D08b=pass D17=pass  (21s)
+[edit-diff] D22=fail  (11s)
+[client-features] D10=pass D11=pass D12=pass D16=pass D24=pass D25=error  (37s)  ERROR: Internal error
+[permissions] D04=pass D05=pass D06=pass D07=pass D09=pass  (44s)
+
+lock-pinned-0.1.8: {"pass":39,"fail":8,"error":1} -> /home/user/letta-code/e2e/logs/v0.1.8/live/lock-pinned/results.json

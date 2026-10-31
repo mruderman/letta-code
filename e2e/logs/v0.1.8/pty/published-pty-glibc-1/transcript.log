@@ -1,0 +1,31 @@
+[init] protocol v1; auth methods: none
+[session] local-conv-2
+[prompt] This is an automated test of terminal support. Use your exec_command tool for both steps, exactly as written, and do not use any other shell tool. Step 1: call exec_command with tty set to true and cmd: test -t 0 && echo PTY_OK || echo NO_PTY Step 2: call exec_command with tty set to true and cmd: read x; echo got:$x then call write_stdin on that session with chars set to hello followed by a newline, and read its output. Finally, reply with the outputs you saw.
+[tool_call] exec_command: Check PTY support status=in_progress input={"cmd":"test -t 0 && echo PTY_OK || echo NO_PTY","tty":true,"description":"Check PTY support"}
+[permission] exec_command: Check PTY support -> allow_once
+[tool_call_update] exec_command: Check PTY support status=completed output="PTY_OK"
+[tool_call_update] exec_command: Check PTY support status=completed output="Chunk ID: 878762\nWall time: 0.0310 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n"
+[tool_call] exec_command: Read interactive PTY input status=in_progress input={"cmd":"read x; echo got:$x","tty":true,"description":"Read interactive PTY input","yield_time_ms":1000}
+[permission] exec_command: Read interactive PTY input -> allow_once
+[tool_call_update] exec_command: Read interactive PTY input status=completed output="Chunk ID: 6417d2\nWall time: 1.0150 seconds\nProcess running with session ID 2\nOriginal token count: 0\nOutput:\n"
+[tool_call] write_stdin status=in_progress input={"session_id":2,"chars":"hello\n","yield_time_ms":1000}
+[tool_call_update] write_stdin status=completed output="hello"
+[tool_call_update] write_stdin status=completed output="hello\ngot:hello"
+[tool_call_update] write_stdin status=completed output="Chunk ID: 716c79\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 5\nOutput:\nhello\r\ngot:hello\r\n"
+[agent text] Step 1 output:
+```text
+PTY_OK
+```
+
+Step 2 output:
+```text
+hello
+got:hello
+```
+[done] stopReason=end_turn
+[result] PASS
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   TTY probe printed PTY_OK (a real PTY was allocated)
+  ok   input written via write_stdin was read (got:hello)

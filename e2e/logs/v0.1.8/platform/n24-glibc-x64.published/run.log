@@ -1,0 +1,20 @@
+Unable to find image 'mirror.gcr.io/library/node:24-bookworm-slim' locally
+24-bookworm-slim: Pulling from library/node
+3c5439d0ae62: Pulling fs layer
+fc18cf736957: Pulling fs layer
+71cba37e8e97: Pulling fs layer
+c82672318514: Pulling fs layer
+e95aa4763e73: Pulling fs layer
+3c5439d0ae62: Already exists
+cf583716216c: Download complete
+e51401588838: Download complete
+fc18cf736957: Download complete
+71cba37e8e97: Download complete
+71cba37e8e97: Pull complete
+e95aa4763e73: Download complete
+c82672318514: Download complete
+c82672318514: Pull complete
+fc18cf736957: Pull complete
+e95aa4763e73: Pull complete
+Digest: sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+Status: Downloaded newer image for mirror.gcr.io/library/node:24-bookworm-slim

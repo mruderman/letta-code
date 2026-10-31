@@ -1,0 +1,29 @@
+[init] protocol v1; auth methods: none
+[session] local-conv-2
+[prompt] This is an automated test of terminal support. Use your exec_command tool for both steps, exactly as written, and do not use any other shell tool. Step 1: call exec_command with tty set to true and cmd: test -t 0 && echo PTY_OK || echo NO_PTY Step 2: call exec_command with tty set to true and cmd: read x; echo got:$x then call write_stdin on that session with chars set to hello followed by a newline, and read its output. Finally, reply with the outputs you saw.
+[tool_call] exec_command: Check PTY support status=in_progress input={"cmd":"test -t 0 && echo PTY_OK || echo NO_PTY","tty":true,"description":"Check PTY support"}
+[permission] exec_command: Check PTY support -> allow_once
+[tool_call_update] exec_command: Check PTY support status=completed output="PTY_OK"
+[tool_call_update] exec_command: Check PTY support status=completed output="Chunk ID: b73ff3\nWall time: 0.0260 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n"
+[tool_call] exec_command: Read interactive input status=in_progress input={"cmd":"read x; echo got:$x","tty":true,"description":"Read interactive input"}
+[permission] exec_command: Read interactive input -> allow_once
+[tool_call_update] exec_command: Read interactive input status=completed output="Chunk ID: 3ff837\nWall time: 10.0000 seconds\nProcess running with session ID 2\nOriginal token count: 0\nOutput:\n"
+[tool_call] write_stdin status=in_progress input={"session_id":2,"chars":"hello\n","yield_time_ms":1000}
+[tool_call_update] write_stdin status=completed output="hello"
+[tool_call_update] write_stdin status=completed output="Chunk ID: ad9b3e\nWall time: 0.0050 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nhello\r\n"
+[agent text] Step 1 output:
+```text
+PTY_OK
+```
+
+Step 2 output after sending `hello`:
+```text
+hello
+```
+[done] stopReason=end_turn
+[result] FAIL
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   TTY probe printed PTY_OK (a real PTY was allocated)
+  FAIL input written via write_stdin was read (got:hello)

@@ -1,0 +1,14 @@
+== logs/v0.1.8/pty/published-pty-glibc-1
+[wire check] PASS (3 tool calls, stopReason=end_turn)
+== logs/v0.1.8/pty/published-pty-glibc-2
+[wire check] PASS (3 tool calls, stopReason=end_turn)
+== logs/v0.1.8/pty/published-pty-glibc-3
+[wire check] FAIL (3 tool calls, stopReason=end_turn)
+== logs/v0.1.8/pty/published-pty-glibc-4
+[wire check] PASS (3 tool calls, stopReason=end_turn)
+== logs/v0.1.8/pty/published-pty-glibc-5
+[wire check] FAIL (4 tool calls, stopReason=end_turn)
+== logs/v0.1.8/pty/published-pty-glibc-6
+[wire check] PASS (3 tool calls, stopReason=end_turn)
+== logs/v0.1.8/clients/toad-pty-published (pre-approved)
+[wire check] PASS (3 tool calls, stopReason=end_turn)

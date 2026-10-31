@@ -1,0 +1,7 @@
+(node:21823) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)...
+[letta-acp] created agent agent-local-5f69a351-cf7f-4316-90a0-33c8ac8fc8e6 — set LETTA_AGENT_ID=agent-local-5f69a351-cf7f-4316-90a0-33c8ac8fc8e6 to keep using it
+[letta-acp] session local-conv-6 -> agent agent-local-5f69a351-cf7f-4316-90a0-33c8ac8fc8e6 (cwd: /tmp/letta-e2e-multi-cbcrwY/work)
+[letta-acp] advertising 33 slash commands
+[letta-acp] auto-allowing exec_command (mode unrestricted)

@@ -1,0 +1,27 @@
+___ ____ _  _ ___ _  _ ____ _       ____ ____ ____ _  _ ____ 
+ |  |___  \/   |  |  | |__| |    __ [__  |___ |__/ |  | |___ 
+ |  |___ _/\_  |  |__| |  | |___    ___] |___ |  \  \/  |___ v1.1.3
+
+Serving "/tmp/uv-bin/toad acp 'node /e2e-scripts/acp-tap.mjs --log 
+/e2e-out/wire.ndjson -- /chain/node_modules/.bin/letta-acp'" on 
+http://127.0.0.1:8001
+
+Press Ctrl+C to quit
+INFO     127.0.0.1 [31/Oct/2026:20:45:00 +0000] "GET / HTTP/1.1" 200 4569 "-"   
+         "curl/8.5.0"                                                           
+INFO     127.0.0.1 [31/Oct/2026:20:45:01 +0000] "GET / HTTP/1.1" 200 4569 "-"   
+         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
+         HeadlessChrome/153.0.8010.12 Safari/537.36"                            
+INFO     127.0.0.1 [31/Oct/2026:20:45:01 +0000] "GET /static/js/textual.js      
+         HTTP/1.1" 200 247 "http://127.0.0.1:8001/" "Mozilla/5.0 (X11; Linux    
+         x86_64) AppleWebKit/537.36 (KHTML, like Gecko)                         
+         HeadlessChrome/153.0.8010.12 Safari/537.36"                            
+INFO     127.0.0.1 [31/Oct/2026:20:45:01 +0000] "GET /static/css/xterm.css      
+         HTTP/1.1" 200 237 "http://127.0.0.1:8001/" "Mozilla/5.0 (X11; Linux    
+         x86_64) AppleWebKit/537.36 (KHTML, like Gecko)                         
+         HeadlessChrome/153.0.8010.12 Safari/537.36"                            
+INFO     127.0.0.1 [31/Oct/2026:20:45:01 +0000] "GET                            
+         /static/images/background.png HTTP/1.1" 200 239                        
+         "http://127.0.0.1:8001/" "Mozilla/5.0 (X11; Linux x86_64)              
+         AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12    
+         Safari/537.36"                                                         

@@ -1,0 +1,10 @@
+{
+ "returned": true,
+ "stopReason": "end_turn",
+ "seconds": 33,
+ "updates": {
+  "available_commands_update": 1,
+  "agent_message_chunk": 2
+ },
+ "agentText": "VERIFY_OK"
+}

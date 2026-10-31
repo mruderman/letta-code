@@ -1,0 +1,7 @@
+Registry main @ bee0da3, worktree with e2e/registry/letta-acp-entry-0.1.8 copied in as letta-acp/.
+Command (no --apply, nothing written or pushed):
+  python3 .github/workflows/update_versions.py --agents letta-acp --json
+Result: update-versions-dry-run.json -> letta-acp stable 0.1.8 -> 0.1.11 (npx).
+.github/workflows/update-versions.yml runs this hourly (cron "17 * * * *"); on main it applies the bump,
+checks it with verify_agents.py --auth-check (initialize only, which 0.1.11 passes) and commits it.
+Agents listed in quarantine.json are skipped.

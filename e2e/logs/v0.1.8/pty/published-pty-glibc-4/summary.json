@@ -1,0 +1,110 @@
+{
+  "scenario": "pty",
+  "expectLibc": "glibc",
+  "agentCommand": "/tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/chains018/published/node_modules/.bin/letta-acp",
+  "stopReason": "end_turn",
+  "passed": true,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "exec_command was called with tty: true for the TTY probe",
+      "passed": true
+    },
+    {
+      "name": "write_stdin was called",
+      "passed": true
+    },
+    {
+      "name": "TTY probe printed PTY_OK (a real PTY was allocated)",
+      "passed": true
+    },
+    {
+      "name": "input written via write_stdin was read (got:hello)",
+      "passed": true
+    }
+  ],
+  "toolCalls": [
+    {
+      "toolCallId": "call_gMH8GEbEbQ8ER0f5Oox5NTIb|fc_08364a8deaa4ee31016ae652a84e2087d2b0a64d830988e6d1",
+      "title": "exec_command: Check terminal PTY support",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "test -t 0 && echo PTY_OK || echo NO_PTY",
+        "tty": true,
+        "description": "Check terminal PTY support"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: eacd11\nWall time: 0.0310 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: eacd11\nWall time: 0.0310 seconds\nProcess exited with code 0\nOriginal token count: 2\nOutput:\nPTY_OK\r\n"
+    },
+    {
+      "toolCallId": "call_VItTA6gUBJyiIq71iWajL11m|fc_0946c3b77ec86b6f016ae652a99b4887d28bd15ff1df745d3a",
+      "title": "exec_command: Read terminal input interactively",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "cmd": "read x; echo got:$x",
+        "tty": true,
+        "description": "Read terminal input interactively"
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: 0f7623\nWall time: 10.0190 seconds\nProcess running with session ID 2\nOriginal token count: 0\nOutput:\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: 0f7623\nWall time: 10.0190 seconds\nProcess running with session ID 2\nOriginal token count: 0\nOutput:\n"
+    },
+    {
+      "toolCallId": "call_bR3DxSWi5tieWdxbbjCiqiGU|fc_05366474e3721038016ae652b4b78087d2a1e14bfd9a47d160",
+      "title": "write_stdin",
+      "kind": "other",
+      "status": "completed",
+      "locations": [],
+      "rawInput": {
+        "session_id": 2,
+        "chars": "hello\n",
+        "yield_time_ms": 1000
+      },
+      "sessionUpdate": "tool_call_update",
+      "content": [
+        {
+          "content": {
+            "text": "Chunk ID: 7ef60b\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 5\nOutput:\nhello\r\ngot:hello\r\n",
+            "type": "text"
+          },
+          "type": "content"
+        }
+      ],
+      "rawOutput": "Chunk ID: 7ef60b\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 5\nOutput:\nhello\r\ngot:hello\r\n"
+    }
+  ],
+  "permissions": [
+    {
+      "title": "exec_command: Check terminal PTY support",
+      "toolCallId": "call_gMH8GEbEbQ8ER0f5Oox5NTIb|fc_08364a8deaa4ee31016ae652a84e2087d2b0a64d830988e6d1"
+    },
+    {
+      "title": "exec_command: Read terminal input interactively",
+      "toolCallId": "call_VItTA6gUBJyiIq71iWajL11m|fc_0946c3b77ec86b6f016ae652a99b4887d28bd15ff1df745d3a"
+    }
+  ]
+}

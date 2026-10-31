@@ -1,0 +1,16 @@
+  ⊘ Quarantined agoragentic-acp: Postinstall script
+  ⊘ Quarantined crow-cli: ACP initialize fails in crow-cli 0.1.25
+  ⊘ Quarantined deepagents: Missing npm dependency
+  ⊘ Quarantined fast-agent: Timeout after 120s waiting for initialize response
+  ⊘ Quarantined minion-code: Python dependency issue
+  ⊘ Quarantined qoder: ACP initialize fails in qodercli 0.2.15/0.2.16
+  ⊘ Quarantined vtcode: Missing windows builds
+  (7 agent(s) quarantined)
+
+Processing 1 agent(s)
+[1/1] letta-acp
+Wrote: /workspace/.protocol-matrix/snapshots/2026-10-31.json
+Wrote: /workspace/.protocol-matrix/snapshots/2026-10-31.md
+Wrote: /workspace/.protocol-matrix/latest.json
+Wrote: /workspace/.protocol-matrix/latest.md
+initialize=process_error session/new=not_probed process exited with code 1 before responding to initialize

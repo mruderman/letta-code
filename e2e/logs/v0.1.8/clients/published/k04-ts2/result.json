@@ -1,0 +1,17 @@
+{
+ "client": "@agentclientprotocol/sdk 2.2.0 client()/connectWith",
+ "nonce": "TS2I4PQQYRV",
+ "initialize": {
+  "protocolVersion": 1,
+  "loadSession": true
+ },
+ "stopReason": "end_turn",
+ "passed": true,
+ "reply": "TS2I4PQQYRV",
+ "tools": {
+  "call_ai65NQ7jT8PsQuzLjQVJMBD2|fc_004b554d5d80e33c016ae651d7bd4487d2989659cefa8000ce": {
+   "status": "completed"
+  }
+ },
+ "permissions": []
+}

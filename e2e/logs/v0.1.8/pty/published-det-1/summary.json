@@ -1,0 +1,23 @@
+{
+  "scenario": "deterministic",
+  "expectLibc": "glibc",
+  "agentCommand": "/tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/chains018/published/node_modules/.bin/letta-acp",
+  "stopReason": "end_turn",
+  "passed": true,
+  "checks": [
+    {
+      "name": "turn ended normally (stopReason end_turn)",
+      "passed": true
+    },
+    {
+      "name": "local-backend deterministic executor answered over ACP ('pong')",
+      "passed": true
+    },
+    {
+      "name": "no tool calls (none expected from this executor)",
+      "passed": true
+    }
+  ],
+  "toolCalls": [],
+  "permissions": []
+}

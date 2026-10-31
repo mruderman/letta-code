@@ -1,0 +1,5 @@
+{
+ "status": "fail",
+ "level": "clean-room install",
+ "detail": "[local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell in CI (node:alpine container, no make): fail"
+}

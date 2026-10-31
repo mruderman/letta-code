@@ -1,0 +1,33 @@
+{
+ "note": "letta-acp 0.1.8 as npm resolves it today (published column). K01/K03/K04 from clients/run-clients.sh, K02 from scripts/71-toad-permission.sh; Toad PTY run (pre-approved) in toad-pty-published/.",
+ "checks": [
+  {
+   "id": "K03",
+   "chain": "published",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "agent-client-protocol 0.12.1 (Python) stop end_turn reply PY03AHL69H"
+  },
+  {
+   "id": "K04",
+   "chain": "published",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "@agentclientprotocol/sdk 2.2.0 client()/connectWith stop end_turn reply TS2I4PQQYRV"
+  },
+  {
+   "id": "K01",
+   "chain": "published",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "acpx 0.21.1: end_turn, shell tool output and reply contain ACPX17827"
+  },
+  {
+   "id": "K02",
+   "chain": "published",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "Toad 0.6.20 showed its own permission dialog for exec_command (standard mode); Toad answered allow_once, turn ended end_turn, output TOADPERM29054 in the tool result. Toad also answered two tool_call_update messages with -32602 (rawOutput is a string): see k02-toad-permission-published/wire.ndjson"
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+{
+ "client": "agent-client-protocol 0.12.1 (Python)",
+ "nonce": "PY03AHL69H",
+ "initialize": {
+  "protocolVersion": 1,
+  "loadSession": true
+ },
+ "stopReason": "end_turn",
+ "reply": "PY03AHL69H",
+ "tools": {
+  "call_2FHe07GKa0Dmkp6nMJrSfpYB|fc_0c833f89970cfac6016ae651d0a5ec87d28dac0c800045a501": {
+   "title": null,
+   "status": "completed"
+  }
+ },
+ "permissions": [],
+ "updateTypes": {
+  "AvailableCommandsUpdate": 1,
+  "ToolCallStart": 1,
+  "ToolCallProgress": 2,
+  "AgentMessageChunk": 6
+ },
+ "passed": true
+}

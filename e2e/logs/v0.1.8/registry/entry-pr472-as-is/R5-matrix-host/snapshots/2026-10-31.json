@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-31",
+  "generatedAt": "2026-10-31T20:44:52+00:00",
+  "tableMode": "full",
+  "changedOnly": false,
+  "summary": {
+    "agentsProbed": 1,
+    "agentsProbedThisRun": 1,
+    "agentsReused": 0,
+    "initializeSuccess": 1,
+    "sessionNewAuthRequired": 0,
+    "features": {
+      "session/list": {
+        "supported": 1,
+        "authRequired": 0,
+        "methodNotFound": 0,
+        "other": 0
+      },
+      "session/fork": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 1,
+        "other": 0
+      },
+      "session/resume": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 1,
+        "other": 0
+      },
+      "session/stop": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 1,
+        "other": 0
+      },
+      "session/set_model": {
+        "supported": 0,
+        "authRequired": 0,
+        "methodNotFound": 1,
+        "other": 0
+      }
+    }
+  },
+  "agents": [
+    {
+      "id": "letta-acp",
+      "name": "Letta",
+      "registryVersion": "0.1.8",
+      "repository": "https://github.com/letta-ai/letta-acp",
+      "website": null,
+      "distribution": "npx",
+      "initialize": {
+        "status": "success",
+        "code": null,
+        "message": null
+      },
+      "protocolVersion": 1,
+      "agentInfoVersion": null,
+      "authMethods": [
+        "terminal"
+      ],
+      "setModelSignal": false,
+      "capabilities": {
+        "loadSession": true,
+        "sessionList": true,
+        "sessionFork": false,
+        "sessionResume": false,
+        "sessionStop": false,
+        "setModel": false
+      },
+      "sessionNew": {
+        "status": "success",
+        "code": null,
+        "message": null
+      },
+      "methodProbes": {
+        "session/list": {
+          "status": "success",
+          "code": null,
+          "message": null
+        },
+        "session/fork": {
+          "status": "method_not_found",
+          "code": -32601,
+          "message": "\"Method not found\": session/fork"
+        },
+        "session/resume": {
+          "status": "method_not_found",
+          "code": -32601,
+          "message": "\"Method not found\": session/resume"
+        },
+        "session/stop": {
+          "status": "method_not_found",
+          "code": -32601,
+          "message": "\"Method not found\": session/stop"
+        },
+        "session/set_model": {
+          "status": "method_not_found",
+          "code": -32601,
+          "message": "\"Method not found\": session/set_model"
+        }
+      },
+      "stderrTail": "npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead [letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)... [letta-acp] created agent agent-local-2c1932dd-d0c4-4b8b-808b-5722fc7454f3 \u2014 set LETTA_AGENT_ID=agent-local-2c1932dd-d0c4-4b8b-808b-5722fc7454f3 to keep using it [letta-acp] editor fs tools enabled: read_editor_buffer, write_via_editor [letta-acp] session local-conv-2 -> agent agent-local-2c1932dd-d0c4-4b8b-808b-5722fc7454f3 (cwd: /tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/gw2/matrix-host/npx/letta-acp/workspace) [letta-acp] advertising 33 slash commands",
+      "commandPreview": "npx --prefix /tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/gw2/matrix-host/npx/letta-acp --yes",
+      "workspaceCwd": "/tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/gw2/matrix-host/npx/letta-acp/workspace",
+      "durationSeconds": 36.905,
+      "processExitCode": -15,
+      "probedAt": "2026-10-31T20:44:52+00:00",
+      "reusedFromPrevious": false
+    }
+  ]
+}

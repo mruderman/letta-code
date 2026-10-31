@@ -1,0 +1,61 @@
+{
+  "chain": "lock-pinned-0.1.8",
+  "agentCmd": "/tmp/claude-0/-home-user/9441f5ac-8ca5-5a97-9b5f-fd85607c2551/scratchpad/chains018/lock-pinned/node_modules/.bin/letta-acp",
+  "finishedAt": "2026-10-31T20:42:41.909Z",
+  "node": "v22.23.4",
+  "platform": "linux-x64",
+  "counts": {
+    "pass": 7
+  },
+  "checks": [
+    {
+      "id": "D10",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "client fs requests: [{\"method\":\"fs/read_text_file\",\"path\":\"/tmp/letta-e2e-client-GlWKOg/work/fs-probe.txt\"}]; natural read used the client fs: false; first reply \"FSPROBEEWZ824\"; explicit-tool reply \"It returned:\\n\\n`FSPROBEEWZ824`\"; tools: read_editor_buffer: /tmp/letta-e2e-client-GlWKOg/work/fs-probe.txt"
+    },
+    {
+      "id": "D11",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "MCP server called: {\"tool\":\"e2e_secret\"}; reply \"`MCPSECRETXKRAO1`\"; tools: mcp__e2e__e2e_secret"
+    },
+    {
+      "id": "D12",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "image block (32x32 solid red PNG) -> reply \"red\""
+    },
+    {
+      "id": "D16",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "resource block -> reply \"EMBEDIKG3HL\""
+    },
+    {
+      "id": "D24",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "3 back-to-back prompts sent immediately after each end_turn; replies per turn: [\"=\",\"=\",\"=\"]"
+    },
+    {
+      "id": "D25",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "two concurrent sessions: local-conv-8 -> \"ALPHANU58YY\"; local-conv-9 -> \"BRAVOB19SI1\""
+    },
+    {
+      "id": "G01",
+      "scenario": "gate",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "agentInfo null; stopReason=end_turn; reply \"GATE6WV6S1\""
+    }
+  ]
+}
