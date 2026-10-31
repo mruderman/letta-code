@@ -1,0 +1,7 @@
+{
+ "cell": "n22-musl-x64",
+ "column": "published",
+ "status": "fail",
+ "level": "clean-room install",
+ "detail": "[fork CI runner, toolchain absent (alpine container)] npm install failed: npm error gyp ERR! not ok"
+}

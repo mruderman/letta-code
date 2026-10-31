@@ -1,0 +1,17 @@
+(node:101) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)...
+[letta-acp] created agent agent-local-740b0c7b-ce3e-4b54-a360-d2a953a4c748 — set LETTA_AGENT_ID=agent-local-740b0c7b-ce3e-4b54-a360-d2a953a4c748 to keep using it
+[letta-acp] editor fs tools enabled: read_editor_buffer, write_via_editor
+[letta-acp] session local-conv-2 -> agent agent-local-740b0c7b-ce3e-4b54-a360-d2a953a4c748 (cwd: /workspace)
+[letta-acp] advertising 34 slash commands
+[letta-acp] stream error: {
+  "error": {
+    "error": {
+      "type": "llm_error",
+      "message": "Provider is not configured: openai",
+      "detail": "Provider is not configured: openai"
+    },
+    "run_id": "local-run-1"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "prompt": "Run `echo TOADPERM16793 > /tmp/work/toad-perm.txt` in the shell, then run `cat /tmp/work/toad-perm.txt` and tell me exactly what it printed.",
+  "steps": [
+    "Toad initialized letta-acp and opened a session",
+    "Toad sent the typed prompt as session/prompt"
+  ],
+  "passed": false,
+  "error": "Error: timed out waiting for the agent's permission request"
+}

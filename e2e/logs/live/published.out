@@ -1,0 +1,19 @@
+[gate] G01=fail  (94s)
+[memory-identity] blocked by model gate
+[model-switch] blocked by model gate
+[toolsets] blocked by model gate
+[skills] blocked by model gate
+[subagents] blocked by model gate
+[conversation-search] blocked by model gate
+[slash-commands] blocked by model gate
+[dreaming] blocked by model gate
+[multi-agent] blocked by model gate
+[conversation-search-letta-on-path] blocked by model gate
+[multi-agent-letta-on-path] blocked by model gate
+[protocol-shape] blocked by model gate
+[permissions] blocked by model gate
+[cancel-and-pty] blocked by model gate
+[client-features] blocked by model gate
+[edit-diff] blocked by model gate
+
+published: {"fail":1,"blocked":47} -> /tmp/e2e-work/final2/published/results.json

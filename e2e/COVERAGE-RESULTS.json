@@ -1,0 +1,274 @@
+{
+ "summary": {
+  "A": {
+   "passing": 14,
+   "failing": 6,
+   "notRun": 0,
+   "notCovered": 3,
+   "total": 23
+  },
+  "B": {
+   "passing": 5,
+   "failing": 2,
+   "notRun": 0,
+   "notCovered": 0,
+   "total": 7
+  },
+  "D": {
+   "passing": 23,
+   "failing": 8,
+   "notRun": 0,
+   "notCovered": 6,
+   "total": 37
+  },
+  "C": {
+   "passing": 12,
+   "failing": 12,
+   "notRun": 6,
+   "total": 30,
+   "passingWithModelTurn": 4
+  }
+ },
+ "platformCells": [
+  {
+   "id": "n22-glibc-x64",
+   "column": "published",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: pass (real ACP client)"
+  },
+  {
+   "id": "n22-glibc-x64",
+   "column": "lock-pinned",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: pass (real ACP client)"
+  },
+  {
+   "id": "n22-glibc-x64",
+   "column": "node-pty-fix",
+   "how": "docker",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "[local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] v22.23.4 linux-x64 glibc; initialize=ok session/new=ok; turn returned=True stop=end_turn nonce=True; node-pty loads=True (); "
+  },
+  {
+   "id": "n22-glibc-arm64",
+   "column": "published",
+   "how": "docker-qemu",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v22.23.4 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "n22-glibc-arm64",
+   "column": "lock-pinned",
+   "how": "docker-qemu",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v22.23.4 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "n22-glibc-arm64",
+   "column": "node-pty-fix",
+   "how": "docker-qemu",
+   "status": "not run",
+   "level": "-",
+   "detail": ""
+  },
+  {
+   "id": "n22-musl-x64",
+   "column": "published",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: fail (clean-room install)"
+  },
+  {
+   "id": "n22-musl-x64",
+   "column": "lock-pinned",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: fail (clean-room install)"
+  },
+  {
+   "id": "n22-musl-x64",
+   "column": "node-pty-fix",
+   "how": "docker",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "[local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] v22.23.4 linux-x64 musl; initialize=ok session/new=ok; turn returned=True stop=end_turn nonce=True; node-pty loads=True (); "
+  },
+  {
+   "id": "n22-musl-arm64",
+   "column": "published",
+   "how": "docker-qemu",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[fork CI runner, toolchain absent (alpine container)] npm install failed: npm error gyp ERR! not ok"
+  },
+  {
+   "id": "n22-musl-arm64",
+   "column": "lock-pinned",
+   "how": "docker-qemu",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[fork CI runner, toolchain absent (alpine container)] npm install failed: npm error gyp ERR! not ok"
+  },
+  {
+   "id": "n22-musl-arm64",
+   "column": "node-pty-fix",
+   "how": "docker-qemu",
+   "status": "not run",
+   "level": "-",
+   "detail": ""
+  },
+  {
+   "id": "n24-glibc-x64",
+   "column": "published",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: pass (real ACP client)"
+  },
+  {
+   "id": "n24-glibc-x64",
+   "column": "lock-pinned",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: pass (real ACP client)"
+  },
+  {
+   "id": "n24-glibc-x64",
+   "column": "node-pty-fix",
+   "how": "docker",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "[local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] v24.22.2 linux-x64 glibc; initialize=ok session/new=ok; turn returned=True stop=end_turn nonce=True; node-pty loads=True (); "
+  },
+  {
+   "id": "n24-glibc-arm64",
+   "column": "published",
+   "how": "docker-qemu",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v24.22.1 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "n24-glibc-arm64",
+   "column": "lock-pinned",
+   "how": "docker-qemu",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v24.22.1 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "n24-glibc-arm64",
+   "column": "node-pty-fix",
+   "how": "docker-qemu",
+   "status": "not run",
+   "level": "-",
+   "detail": ""
+  },
+  {
+   "id": "n24-musl-x64",
+   "column": "published",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: fail (clean-room install)"
+  },
+  {
+   "id": "n24-musl-x64",
+   "column": "lock-pinned",
+   "how": "docker",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cell on a CI runner that HAS make and gcc: fail (clean-room install)"
+  },
+  {
+   "id": "n24-musl-x64",
+   "column": "node-pty-fix",
+   "how": "docker",
+   "status": "pass",
+   "level": "live model turn",
+   "detail": "[local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] v24.22.2 linux-x64 musl; initialize=ok session/new=ok; turn returned=True stop=end_turn nonce=True; node-pty loads=True (); "
+  },
+  {
+   "id": "n24-musl-arm64",
+   "column": "published",
+   "how": "docker-qemu",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[fork CI runner, toolchain absent (alpine container)] npm install failed: npm error gyp ERR! not ok"
+  },
+  {
+   "id": "n24-musl-arm64",
+   "column": "lock-pinned",
+   "how": "docker-qemu",
+   "status": "fail",
+   "level": "clean-room install",
+   "detail": "[fork CI runner, toolchain absent (alpine container)] npm install failed: npm error gyp ERR! not ok"
+  },
+  {
+   "id": "n24-musl-arm64",
+   "column": "node-pty-fix",
+   "how": "docker-qemu",
+   "status": "not run",
+   "level": "-",
+   "detail": ""
+  },
+  {
+   "id": "macos-arm64-n22",
+   "column": "published",
+   "how": "fork-ci",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v22.23.2 darwin-arm64 darwin; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "macos-arm64-n22",
+   "column": "lock-pinned",
+   "how": "fork-ci",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v22.23.2 darwin-arm64 darwin; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "macos-arm64-n22",
+   "column": "node-pty-fix",
+   "how": "fork-ci",
+   "status": "not run",
+   "level": "-",
+   "detail": ""
+  },
+  {
+   "id": "windows-x64-n22",
+   "column": "published",
+   "how": "fork-ci",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v22.23.4 win32-x64 win32; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "windows-x64-n22",
+   "column": "lock-pinned",
+   "how": "fork-ci",
+   "status": "pass",
+   "level": "real ACP client (initialize + session/new, no model)",
+   "detail": "[fork CI runner, toolchain present] v22.23.4 win32-x64 win32; initialize=ok session/new=ok; node-pty loads=true"
+  },
+  {
+   "id": "windows-x64-n22",
+   "column": "node-pty-fix",
+   "how": "fork-ci",
+   "status": "not run",
+   "level": "-",
+   "detail": ""
+  }
+ ]
+}

@@ -1,0 +1,4 @@
+  +-- @agentclientprotocol/sdk@1.9.0
+  +-- @letta-ai/letta-agent-sdk@0.8.64
+  `-- @letta-ai/letta-code@0.34.99
+`-- @letta-ai/letta-acp@0.1.99

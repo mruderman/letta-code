@@ -215,12 +215,17 @@ async function slashCommands(ctx) {
   const agentId = a.agentId();
   await a.prompt(session.sessionId, `My favourite fruit is ${fruit}.`);
   const remember = await a.prompt(session.sessionId, "/remember my favourite fruit", { timeoutMs: 300_000 });
-  const hits = filesContaining(memoryDir(state, agentId), fruit);
+  // /remember hands the write to a background step ("Memory request submitted"), so allow it time to land.
+  let hits = filesContaining(memoryDir(state, agentId), fruit);
+  for (let i = 0; i < 18 && hits.length === 0; i++) {
+    await sleep(5000);
+    hits = filesContaining(memoryDir(state, agentId), fruit);
+  }
   ctx.add("A11", remember.stopReason === "end_turn" && hits.length > 0,
     `/remember ended ${remember.stopReason}; memory files with the fact: ${hits.map((h) => h.replace(memoryDir(state, agentId), "")).join(", ") || "none"}; reply ${JSON.stringify(remember.text.slice(0, 120))}`);
   const compact = await a.prompt(session.sessionId, "/compact", { timeoutMs: 300_000 });
   const after = await a.prompt(session.sessionId, "What is my favourite fruit? Answer with only the value.");
-  ctx.add("A12", !/failed|Unknown command/i.test(compact.text) && compact.stopReason === "end_turn" && after.text.includes(fruit),
+  ctx.add("A12", /Compaction completed/i.test(compact.text) && !/^\/compact failed/i.test(compact.text.trim()) && compact.stopReason === "end_turn" && after.text.includes(fruit),
     `/compact replied ${JSON.stringify(compact.text.slice(0, 160))}; recall afterwards: ${JSON.stringify(after.text.slice(0, 80))}`);
   await a.stop();
 }

@@ -1,0 +1,7 @@
+{
+ "cell": "windows-x64-n22",
+ "column": "published",
+ "status": "pass",
+ "level": "real ACP client (initialize + session/new, no model)",
+ "detail": "[fork CI runner, toolchain present] v22.23.4 win32-x64 win32; initialize=ok session/new=ok; node-pty loads=true"
+}

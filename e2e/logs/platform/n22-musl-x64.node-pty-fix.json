@@ -1,0 +1,5 @@
+{
+ "status": "pass",
+ "level": "live model turn",
+ "detail": "[local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] v22.23.4 linux-x64 musl; initialize=ok session/new=ok; turn returned=True stop=end_turn nonce=True; node-pty loads=True (); "
+}

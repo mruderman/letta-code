@@ -1,0 +1,349 @@
+{
+  "chain": "lock-pinned",
+  "agentCmd": "/tmp/e2e-work/chains/lock-pinned/node_modules/.bin/letta-acp",
+  "finishedAt": "2026-10-31T09:32:58.140Z",
+  "node": "v22.23.4",
+  "platform": "linux-x64",
+  "counts": {
+    "pass": 34,
+    "fail": 14
+  },
+  "checks": [
+    {
+      "id": "A01",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "agent agent-local-de122f23-d248-4262-97a3-39a4d6c4143a; restart reused it (no create log): true; new conversation local-conv-3 vs local-conv-2"
+    },
+    {
+      "id": "A02",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "memory tool calls: memory_apply_patch; files containing the fact: /system/human.md"
+    },
+    {
+      "id": "A02b",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "MemFS git log: 43aa555 Remember user's favorite colour / afa172f chore: initialize local memory; HEAD contains fact in: HEAD:system/human.md"
+    },
+    {
+      "id": "A03",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "new conversation after restart answered: \"COLOURO063ZO\""
+    },
+    {
+      "id": "A04",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "replayed 4 updates (types: tool_call,tool_call_update,agent_message_chunk,available_commands_update); replay includes code word: true; follow-up: \"CODEWORDBJBL3Q\""
+    },
+    {
+      "id": "A05",
+      "scenario": "model-switch",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "requested gpt-5.6-terra-low; model gpt-5.6-luna-none -> gpt-5.6-terra-none; code word recalled after the switch: \"SWITCHQ2QP8I\""
+    },
+    {
+      "id": "A06",
+      "scenario": "toolsets",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "auto toolset for gpt-5.6-luna-none: exec_command: Run toolset probe"
+    },
+    {
+      "id": "A07",
+      "scenario": "toolsets",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "/toolset default replied \"/toolset failed: Unknown command: toolset\"; afterwards tools: exec_command: Run toolset probe"
+    },
+    {
+      "id": "A08",
+      "scenario": "skills",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "skill dir .agents/skills; advertised as a slash command: false; reply \"SKILLACKDVY65S\"; tools: Skill"
+    },
+    {
+      "id": "A08b",
+      "scenario": "skills",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "skill dir .claude/skills; advertised as a slash command: true; reply \"I’m here. What would you like to work on?\"; tools: "
+    },
+    {
+      "id": "A09",
+      "scenario": "subagents",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "Task call: Agent: Compute simple sum input={\"subagent_type\":\"general-purpose\",\"description\":\"Compute simple sum\",\"prompt\":\"Compute 17 + 25 and answer with just the number.\",\"run_in_background\":false}; reply \"42\""
+    },
+    {
+      "id": "A09b",
+      "scenario": "subagents",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "final status of the subagent tool call as the client sees it: in_progress"
+    },
+    {
+      "id": "A10",
+      "scenario": "conversation-search",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "codename in memory files before recall: false; replies \"1. **Direct answer:** I couldn’t locate the project codename in the available past conversation transcripts.\\n\\n2. **Key findings:** The local transcript search only surfaced the current recall request \"; tools: Agent: Recall project codename | Search past messages for codename | Scan local conversation transcripts for project references | ?"
+    },
+    {
+      "id": "A10b",
+      "scenario": "conversation-search-letta-on-path",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "codename in memory files before recall: false; replies \"I’m searching my past conversations for it now.\\n1. **Direct answer:** ZEBRAKT0722\\n\\n2. **Key findings:** In an earlier conversation, you wrote: “My project codename is ZEBRAKT0722.”\\n\\n3. **When discusse\"; tools: Agent: Recall project codename | Search conversation history for codename; workaround: /tmp/e2e-work/chains/lock-pinned/node_modules/.bin prepended to PATH"
+    },
+    {
+      "id": "A11",
+      "scenario": "slash-commands",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "/remember ended end_turn; memory files with the fact: /system/human.md; reply \"Remembered: your favourite fruit is **PINEAPPLE1JGYML**, stored in your human memory.Memory request submitted\""
+    },
+    {
+      "id": "A12",
+      "scenario": "slash-commands",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "/compact replied \"Compaction completed. Message buffer length reduced from 6 to 6.\\n\\nSummary: 1. **High level goals**: The user provided a personal fact to retain: their favorite \"; recall afterwards: \"PINEAPPLE1JGYML\""
+    },
+    {
+      "id": "A13",
+      "scenario": "dreaming",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "evidence: extra MemFS branch + letta/reflection/20261031093128-d220ed36; new MemFS commits after the turn: none; branches: + letta/reflection/20261031093128-d220ed36 * main"
+    },
+    {
+      "id": "A14",
+      "scenario": "multi-agent",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "agents agent-local-0adb0116-5016-4cbb-bacd-0c93b02e84a1 / agent-local-13deb201-e901-47d4-a755-2e08832af891; shell call targeted the other agent's memory: true; other agent memory exposed: true; bwrap on host: true; LETTA_SANDBOX seen by the shell tool: SANDBOX=un; outputs: \"Chunk ID: 1ce3dd\\nWall time: 0.0270 seconds\\nProcess exited with code 0\\nOriginal token count: 343\\nOutput:\\n---\\ndescription: What I'm learning about the pers"
+    },
+    {
+      "id": "A15",
+      "scenario": "multi-agent",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "reply \"I couldn’t send the message: the `letta` command was not found (`/bin/bash: line 1: letta: command not found`).\"; tools: Skill | exec_command: Ask another agent for codename"
+    },
+    {
+      "id": "A15b",
+      "scenario": "multi-agent-letta-on-path",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "reply \"SECRETWORD8ZYBTP\"; tools: Skill | exec_command: Ask target agent for codename; workaround: /tmp/e2e-work/chains/lock-pinned/node_modules/.bin prepended to PATH"
+    },
+    {
+      "id": "D01",
+      "scenario": "protocol-shape",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "protocolVersion=1; agentCapabilities={\"loadSession\":true,\"sessionCapabilities\":{\"list\":{}},\"mcpCapabilities\":{\"http\":true,\"sse\":true},\"promptCapabilities\":{\"image\":true,\"embeddedContext\":true}}; agentInfo=null; authMethods=[]"
+    },
+    {
+      "id": "D02",
+      "scenario": "protocol-shape",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "sessionId=local-conv-2; configOptions=permissions=unrestricted, model=gpt-5.6-luna-none"
+    },
+    {
+      "id": "D03",
+      "scenario": "protocol-shape",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "23 agent_message_chunk updates before end_turn; text \"1 2 3 4 5 6 7 8 9 10 11 12\""
+    },
+    {
+      "id": "D04",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "permission requests: exec_command: Write permission test marker options=allow_once/allow_always/reject_once answered=allow_once; file written: true"
+    },
+    {
+      "id": "D05",
+      "scenario": "permissions",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "permission requests answered: ; deny.txt exists: false; stopReason end_turn; reply \"I can’t run that command because shell execution is currently unavailable in this conversation.\""
+    },
+    {
+      "id": "D06",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "first turn prompted 1x (answered allow_always); second turn prompted 0x and ran: true"
+    },
+    {
+      "id": "D07",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "after switching permissions -> unrestricted: 0 prompts; command ran: true"
+    },
+    {
+      "id": "D08",
+      "scenario": "cancel-and-pty",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "process running before cancel: true; stopReason cancelled after 3028ms; process still alive 3s later: false"
+    },
+    {
+      "id": "D08b",
+      "scenario": "cancel-and-pty",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "first shell call in the turn after a cancel: failed \"Interrupted by user\"; reply \"\""
+    },
+    {
+      "id": "D09",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "stopReason after cancel during a pending permission request: cancelled; command ran: false"
+    },
+    {
+      "id": "D10",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "client fs requests: [{\"method\":\"fs/read_text_file\",\"path\":\"/tmp/letta-e2e-client-UsWSOy/work/fs-probe.txt\"}]; natural read used the client fs: false; first reply \"`FSPROBE42DD7Y`\"; explicit-tool reply \"It returned:\\n\\n`FSPROBE42DD7Y`\"; tools: read_editor_buffer: /tmp/letta-e2e-client-UsWSOy/work/fs-probe.txt"
+    },
+    {
+      "id": "D11",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "MCP server called: {\"tool\":\"e2e_secret\"}; reply \"MCPSECRETERZRFI\"; tools: mcp__e2e__e2e_secret"
+    },
+    {
+      "id": "D12",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "image block (32x32 solid red PNG) -> reply \"Red\""
+    },
+    {
+      "id": "D13",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "session/load replay contained the earlier user message: true"
+    },
+    {
+      "id": "D14",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "session/list returned local-conv-2, local-conv-3"
+    },
+    {
+      "id": "D15",
+      "scenario": "model-switch",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "requested gpt-5.6-terra-low, session/set_config_option returned currentValue=gpt-5.6-terra-none"
+    },
+    {
+      "id": "D16",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "resource block -> reply \"EMBEDP2CMJP\""
+    },
+    {
+      "id": "D17",
+      "scenario": "cancel-and-pty",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "shell reported: \"Chunk ID: 092afc Wall time: 0.0270 seconds Process exited with code 0 Original token count: 2 Output: NOTTY \" (ISATTY needs node-pty; NOTTY is the documented pipe fallback)"
+    },
+    {
+      "id": "D18",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "unknown session -> -32603 Internal error; unknown method -> -32601; adapter still answers afterwards: true"
+    },
+    {
+      "id": "D19",
+      "scenario": "protocol-shape",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "34 commands advertised, including: model, clear, compact, init, doctor, remember, context-limit, reload, toolset, memory, search, skills"
+    },
+    {
+      "id": "D20",
+      "scenario": "protocol-shape",
+      "status": "fail",
+      "level": "real ACP client",
+      "detail": "2 tool_call_update messages carried rawOutput; 2 were not JSON objects (types: string). Toad 0.6.20 rejects non-object rawOutput with -32602"
+    },
+    {
+      "id": "D21",
+      "scenario": "protocol-shape",
+      "status": "fail",
+      "level": "real ACP client",
+      "detail": "shell tool \"exec_command: Print working directory\" reported kind=other"
+    },
+    {
+      "id": "D22",
+      "scenario": "edit-diff",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "file edited: true; tools: SetWorkingDirectory: /tmp/letta-e2e-diff-sh3GwF/work | ApplyPatch; updates with a diff content block: 0; kinds: other"
+    },
+    {
+      "id": "D23",
+      "scenario": "memory-identity",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "adapter exit after stdin EOF: code=0 signal=null"
+    },
+    {
+      "id": "D24",
+      "scenario": "client-features",
+      "status": "fail",
+      "level": "live model turn",
+      "detail": "3 back-to-back prompts sent immediately after each end_turn; replies per turn: [\"=\",\"(empty)\",\"RV64VZW\"]"
+    },
+    {
+      "id": "D25",
+      "scenario": "client-features",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "two concurrent sessions: local-conv-8 -> \"ALPHAWW7KIG\"; local-conv-9 -> \"BRAVOB2W09Y\""
+    },
+    {
+      "id": "D26",
+      "scenario": "protocol-shape",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "session cwd /tmp/letta-e2e-shape-g80VbH/work; tool outputs: \"Chunk ID: e03512\\nWall time: 0.0260 seconds\\nProcess exited with code 0\\nOriginal token count: 9\\nOutput:\\n/tmp/letta-e"
+    },
+    {
+      "id": "G01",
+      "scenario": "gate",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "agentInfo null; stopReason=end_turn; reply \"GATEXBGZZM\""
+    }
+  ]
+}

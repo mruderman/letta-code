@@ -1,0 +1,56 @@
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @pierre/diffs@1.2.2
+npm warn Found: react@18.2.0
+npm warn node_modules/@letta-ai/letta-code/node_modules/react
+npm warn   react@"18.2.0" from @letta-ai/letta-code@0.34.99
+npm warn   node_modules/@letta-ai/letta-code
+npm warn     @letta-ai/letta-code@"0.34.99" from @letta-ai/letta-acp@0.1.99
+npm warn     node_modules/@letta-ai/letta-acp
+npm warn     2 more (@letta-ai/letta-agent-sdk, @letta-ai/letta-agent-sdk)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer react@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn   @pierre/diffs@"1.2.2" from @letta-ai/letta-code@0.34.99
+npm warn   node_modules/@letta-ai/letta-code
+npm warn
+npm warn Conflicting peer dependency: react@19.3.1
+npm warn node_modules/react
+npm warn   peer react@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn   node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn     @pierre/diffs@"1.2.2" from @letta-ai/letta-code@0.34.99
+npm warn     node_modules/@letta-ai/letta-code
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-dom@19.3.1
+npm warn Found: react@18.2.0
+npm warn node_modules/@letta-ai/letta-code/node_modules/react
+npm warn   react@"18.2.0" from @letta-ai/letta-code@0.34.99
+npm warn   node_modules/@letta-ai/letta-code
+npm warn     @letta-ai/letta-code@"0.34.99" from @letta-ai/letta-acp@0.1.99
+npm warn     node_modules/@letta-ai/letta-acp
+npm warn     2 more (@letta-ai/letta-agent-sdk, @letta-ai/letta-agent-sdk)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer react@"^19.3.1" from react-dom@19.3.1
+npm warn node_modules/@letta-ai/letta-code/node_modules/react-dom
+npm warn   peer react-dom@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn   node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn
+npm warn Conflicting peer dependency: react@19.3.1
+npm warn node_modules/react
+npm warn   peer react@"^19.3.1" from react-dom@19.3.1
+npm warn   node_modules/@letta-ai/letta-code/node_modules/react-dom
+npm warn     peer react-dom@"^18.3.1 || ^19.0.0" from @pierre/diffs@1.2.2
+npm warn     node_modules/@letta-ai/letta-code/node_modules/@pierre/diffs
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+
+added 346 packages in 30s
+npm warn install-scripts 6 packages have install scripts not yet covered by allowScripts:
+npm warn install-scripts   @letta-ai/letta-code@0.34.99 (postinstall: node scripts/postinstall-patches.js || echo letta: vendor patches skipped && node -e "try{require('fs').chmodSync(require('path').join(require.resolve('node-pty/package.json'),'../prebuilds/darwin-arm64/spawn-helper'),0o755)}catch(e){}" || true)
+npm warn install-scripts   @scarf/scarf@1.4.0 (postinstall: node ./report.js)
+npm warn install-scripts   node-pty@1.2.0-beta.14 (install: node scripts/prebuild.js || node-gyp rebuild; postinstall: node scripts/post-install.js)
+npm warn install-scripts   sharp@0.34.5 (install: node install/check.js || npm run build)
+npm warn install-scripts   @google/genai@2.21.0 (preinstall: echo 'preinstall: no-op')
+npm warn install-scripts   protobufjs@7.6.6 (postinstall: node scripts/postinstall)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.

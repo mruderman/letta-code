@@ -79,8 +79,23 @@ for (const p of platforms) for (const col of spec.columns) {
 }
 const cpass = pcells.filter((c) => c.status === "pass").length;
 summary.C = { passing: cpass, failing: pcells.filter((c) => c.status === "fail").length, notRun: pcells.filter((c) => c.status === "not run").length, total: pcells.length };
-lines.push(`| C. Platform/install matrix (cell × column) | ${cpass} | ${summary.C.failing} | ${summary.C.notRun} | 0 | ${pcells.length} |`, "");
+const cturn = pcells.filter((c) => c.status === "pass" && c.level === "live model turn").length;
+summary.C.passingWithModelTurn = cturn;
+lines.push(`| C. Platform/install matrix (cell × column; ${cturn} of the passing cells include a live model turn, the rest stop at initialize + session/new) | ${cpass} | ${summary.C.failing} | ${summary.C.notRun} | 0 | ${pcells.length} |`, "");
 lines.push("A check counts as passing if it passed on at least one chain; the per-chain tables below show where. Failures are findings, not hidden.", "");
+// Per-chain view of the same metrics, so "passed on at least one chain" cannot hide that the entry as listed passes nothing that needs a model.
+lines.push("### The same metrics, one install chain at a time", "", `| Metric | ${chains.join(" | ")} |`, `|---|${chains.map(() => "---").join("|")}|`);
+for (const m of ["A", "B", "D"]) {
+  const items = spec.checks.filter((c) => c.metric === m && c.source !== "not_covered");
+  const per = chains.map((ch) => {
+    const n = items.filter((c) => status[c.id]?.[ch]?.status === "pass").length;
+    const blocked = items.filter((c) => status[c.id]?.[ch]?.status === "blocked").length;
+    const ran = items.filter((c) => status[c.id]?.[ch]).length;
+    return ran ? `${n} of ${items.length} pass${blocked ? ` (${blocked} blocked at the model gate)` : ""}` : "not run";
+  });
+  lines.push(`| ${names[m].replace(" (headline)", "")} | ${per.join(" | ")} |`);
+}
+lines.push("");
 
 for (const m of ["A", "D", "B"]) {
   lines.push(`## ${names[m]}`, "", `| Check | What | ${chains.join(" | ")} | Level reached |`, `|---|---|${chains.map(() => "---").join("|")}|---|`);
@@ -94,10 +109,13 @@ for (const m of ["A", "D", "B"]) {
 lines.push("## C. Platform/install matrix", "", "| Cell | Column | How | Result | Level | Detail |", "|---|---|---|---|---|---|");
 for (const c of pcells) lines.push(`| ${c.id} | ${c.column} | ${c.how} | ${c.status} | ${c.level} | ${String(c.detail).slice(0, 140)} |`);
 lines.push("", "## Failure details", "");
+const blockedByChain = {}; const blockedDetail = {};
 for (const c of spec.checks) for (const ch of chains) {
   const s = status[c.id]?.[ch];
+  if (s && s.status === "blocked") { blockedByChain[ch] = (blockedByChain[ch] ?? 0) + 1; blockedDetail[ch] ??= String(s.detail); continue; }
   if (s && s.status !== "pass") lines.push(`- **${c.id}** (${ch}, ${s.status}): ${String(s.detail).replace(/\n/g, " ").slice(0, 420)}`);
 }
+for (const [ch, n] of Object.entries(blockedByChain)) lines.push(`- **${n} checks blocked on ${ch}**: ${blockedDetail[ch].replace(/\n/g, " ").slice(0, 420)}`);
 writeFileSync(out, `${lines.join("\n")}\n`);
 writeFileSync(out.replace(/\.md$/, ".json"), `${JSON.stringify({ summary, platformCells: pcells }, null, 1)}\n`);
 console.log(JSON.stringify(summary));

@@ -1,0 +1,7 @@
+{
+ "R4": {
+  "status": "pass",
+  "detail": "Registry no-make Docker image, fix chain (letta-code 0.34.99): from an earlier Verdaccio run, e2e/logs/head-9b2e784/registry-after.log; not re-run against the final entry with license_url",
+  "level": "real registry script"
+ }
+}

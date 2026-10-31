@@ -1,0 +1,54 @@
+{
+  "chain": "lock-pinned",
+  "agentCmd": "/tmp/e2e-work/chains/lock-pinned/node_modules/.bin/letta-acp",
+  "finishedAt": "2026-10-31T09:37:00.259Z",
+  "node": "v22.23.4",
+  "platform": "linux-x64",
+  "counts": {
+    "pass": 6
+  },
+  "checks": [
+    {
+      "id": "D04",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "permission requests: exec_command: Write authorization marker options=allow_once/allow_always/reject_once answered=allow_once; file written: true"
+    },
+    {
+      "id": "D05",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "permission requests answered: reject_once; deny.txt exists: false; stopReason end_turn; reply \"The shell command was blocked because the tool call was rejected, so `deny.txt` was not written.\""
+    },
+    {
+      "id": "D06",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "first turn prompted 1x (answered allow_always); second turn prompted 0x and ran: true"
+    },
+    {
+      "id": "D07",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "after switching permissions -> unrestricted: 0 prompts; command ran: true"
+    },
+    {
+      "id": "D09",
+      "scenario": "permissions",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "stopReason after cancel during a pending permission request: cancelled; command ran: false"
+    },
+    {
+      "id": "G01",
+      "scenario": "gate",
+      "status": "pass",
+      "level": "live model turn",
+      "detail": "agentInfo null; stopReason=end_turn; reply \"GATENH2ZWP\""
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+ "cell": "n24-glibc-arm64",
+ "column": "published",
+ "status": "pass",
+ "level": "real ACP client (initialize + session/new, no model)",
+ "detail": "[fork CI runner, toolchain present] v24.22.1 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true"
+}

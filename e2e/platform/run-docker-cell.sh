@@ -14,14 +14,17 @@ case "$column" in
   node-pty-fix) pkgs="@letta-ai/letta-acp@${TEST_ACP_VERSION:-0.1.99}"; registry="http://${VERDACCIO_HOST:-172.17.0.1}:${VERDACCIO_PORT:-4873}/" ;;
   *) echo "unknown column $column" >&2; exit 2 ;;
 esac
-cell="n$node-$libc-x64"; dir="$out/$cell.$column"; mkdir -p "$dir"; chmod 777 "$dir"
-registry="${registry:-}"
+cell="n$node-$libc-x64"; dir="$out/$cell.$column"; rm -rf "$dir"; mkdir -p "$dir"; chmod 777 "$dir"
+registry="${registry:-}"; regflag=""; [ -n "$registry" ] && regflag="--registry $registry"
 proxy=(); if [ -n "${HTTPS_PROXY:-}" ]; then proxy=(-e HTTPS_PROXY -e https_proxy -e NO_PROXY="${NO_PROXY:-},${VERDACCIO_HOST:-172.17.0.1}" -e no_proxy="${no_proxy:-},${VERDACCIO_HOST:-172.17.0.1}" -e NODE_EXTRA_CA_CERTS=/ca.crt -v "${EXTRA_CA_BUNDLE:-/root/.ccr/ca-bundle.crt}:/ca.crt:ro"); fi
 docker run --rm --network host "${proxy[@]}" -e OPENAI_API_KEY="${OPENAI_API_KEY:-proxy-injected}" -e SMOKE_TIMEOUT_MS="${SMOKE_TIMEOUT_MS:-120000}" \
   -v "$here:/smoke:ro" -v "$dir:/out" "$image" sh -c '
     echo "image: node $(node --version) $(uname -m); make: $(command -v make || echo absent); gcc: $(command -v gcc || echo absent)" > /out/env.txt
+    # git is a hard runtime requirement (MemFS): the stock images lack it and session/new fails with "spawn git ENOENT".
+    # Installing it adds no compiler or make, so the no-toolchain condition under test is unchanged.
+    if command -v apt-get >/dev/null; then (apt-get update -qq && apt-get install -y -qq git) >/out/git-install.log 2>&1; else apk add --no-cache git bash >/out/git-install.log 2>&1; fi
     mkdir -p /w && cd /w && npm init -y >/dev/null
-    if ! npm install --no-audit --no-fund ${registry:+--registry '"$registry"'} '"$pkgs"' > /out/install.log 2>&1; then echo INSTALL_FAILED > /out/install-status.txt; exit 3; fi
+    if ! npm install --no-audit --no-fund '"$regflag"' '"$pkgs"' > /out/install.log 2>&1; then echo INSTALL_FAILED > /out/install-status.txt; exit 3; fi
     npm ls --all --depth=1 2>/dev/null | grep -E "letta-acp|letta-agent-sdk|letta-code|agentclientprotocol|node-pty" | sort -u > /out/versions.txt
     node /smoke/platform-smoke.mjs --out /out --turn -- /w/node_modules/.bin/letta-acp
   ' > "$dir/run.log" 2>&1
