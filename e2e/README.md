@@ -1,38 +1,46 @@
 # letta-acp registry listing: end-to-end evidence suite
 
-**Summary.** This branch holds a live, real-world test suite for listing `letta-acp` in the ACP Registry, exactly as the entry would be listed (`@letta-ai/letta-acp@0.1.11` with `license_url`). It reports four metrics side by side, defined in [`e2e/COVERAGE.md`](COVERAGE.md) and generated from the logs into [`COVERAGE-RESULTS.md`](COVERAGE-RESULTS.md): **A** Letta's differentiating features (the headline), **B** the registry's own gates, **C** the platform and install matrix, **D** generic ACP behaviour, including four independent clients. Every result is tagged with the highest validation level it reached (unit, fake app server, real ACP client, live Cloud, live model turn); nothing here reaches *live Cloud*.
+**Summary.** This branch holds a live, real-world test suite for listing `letta-acp` in the ACP Registry, exactly as the entry would be listed (`@letta-ai/letta-acp@0.1.11` with `license_url`). It reports four metrics side by side, defined in [`COVERAGE.md`](COVERAGE.md) and generated from the logs into [`COVERAGE-RESULTS.md`](COVERAGE-RESULTS.md): **A** Letta's differentiating features (the headline), **B** the registry's own gates, **C** the platform and install matrix, **D** generic ACP behaviour, including four independent clients. Every result is tagged with the highest validation level it reached (unit, fake app server, real ACP client, live Cloud, live model turn); nothing here reaches *live Cloud*.
 
-**The headline is not green.** Measured on the local backend with a real model (`openai/gpt-5.6-luna`):
+**The headline is the published column, and it is not green.** Measured on the local backend with a real model (`openai/gpt-5.6-luna`):
 
-| | published (as listed) | lock-pinned | node-pty-fix |
+| | published, as listed | lock-pinned (pins users do not get) | node-pty-fix (unreleased) |
 |---|---|---|---|
-| A. Letta differentiators | 0 of 20 (all blocked: no turn completes) | 14 of 20 | not run |
-| B. Registry gates | 4 of 7 | not run | 1 of 7 (R4 only) |
-| D. Generic ACP and clients | 0 of 31 (blocked) | 23 of 31 | not run |
+| A. Letta differentiators | **0 of 20** (all blocked: no turn completes) | 16 of 20 | not run |
+| B. Registry gates | **4 of 7** | not run | not run |
+| D. Generic ACP and clients | **4 of 31** (the model-free ones; 23 blocked, the 3 clients that ran time out, 1 not run) | 25 of 31 | not run |
 
-(Three A entries and six D entries are listed as *not covered*, and are outside those denominators. Metric C is in `COVERAGE-RESULTS.md`; on the six cells whose stock image has no `make` (glibc x64 and musl x64 on Node 22 and 24, plus musl arm64 in CI), published and lock-pinned fail to install; the fix column installs and completes a live model turn on all four x64 cells and was not run on arm64, macOS or Windows.)
+Three A entries and six D entries are listed as *not covered* and sit outside those denominators. Metric C is in `COVERAGE-RESULTS.md`: published and lock-pinned install only where a C toolchain is present (macOS, Windows and glibc arm64 in CI) and fail to install on the six no-`make` cells (glibc x64 and musl x64 on Node 22 and 24, plus musl arm64 in CI); the fix column installs and completes a live model turn on all four x64 cells and was not run on arm64, macOS or Windows. The lock-pinned column exists to show where the failures come from. Its passes are not what the listing delivers, so the any-chain aggregate in `COVERAGE-RESULTS.md` is labelled for reference only.
 
 What the suite found, each reproduced live and logged under `e2e/logs/`:
 
-- **The published install never completes a prompt turn.** Reply text streams but `session/prompt` does not return (`logs/live/published`, gate G01). Pinning `@letta-ai/letta-agent-sdk` to 0.7.2 and the ACP SDK to 1.3.0 (letta-acp's own lockfile) works; letta-acp's own test suite also fails (17 tests) with newer SDKs on this host (`logs/sdk-drift/`).
-- Registry gates R4 and R6 (the registry's no-make Docker image) fail without the node-pty fix; R4 passes with it.
+- **The published install never completes a prompt turn.** Reply text streams but `session/prompt` does not return (`logs/live/published`, gate G01). The cause is `@letta-ai/letta-agent-sdk` 0.7.8, which a fresh install resolves (letta-acp declares `^0.7.2`, its own lockfile holds 0.7.2); a reviewer isolated the hang to that package alone, with 0.7.2 working under ACP SDK 1.9.0. The lock-pinned chain here pins both SDKs, so its second pin is not what removes the hang. letta-acp's own test suite also fails (17 tests) with newer SDKs on this host (`logs/sdk-drift/`).
+- Registry gates R4 and R6 (the registry's no-make Docker image) fail for the entry as listed; R7, one real prompt turn, fails because of the hang.
 - **Toad 0.6.20 rejects letta-acp's `tool_call_update` messages with -32602** because `rawOutput` is a string (D20; wire evidence in `logs/clients/k02-toad-permission/wire.ndjson`). Toad's own permission dialog otherwise works (K02).
 - A prompt sent immediately after `end_turn` is answered with an empty turn and replies shift by one (D24); the first tool call after a cancel fails "Interrupted by user" (D08b).
-- Skills in `.claude/skills` are advertised but not found by the harness (A08b); `/toolset` is advertised but "Unknown command" (A07); `set_config_option` echoes `-none` for a requested `-low` variant (D15); a subagent tool call stays `in_progress` (A09b); shell tool kind is `other` (D21); `ApplyPatch` carries no diff (D22).
-- Without the `letta` CLI on the shell tool's PATH, past-conversation recall (A10) and agent-to-agent messaging (A15) fail; both pass when it is on PATH (A10b, A15b).
-- The cross-agent memory guard did not stop a shell from reading another agent's memory, even with bwrap present (A14).
+- Skills in `.claude/skills` are advertised but not found by the harness (A08b); `/toolset` is advertised but "Unknown command" (A07); `session/set_config_option` echoes `-none` for a requested `-low` variant (D15); a subagent tool call stays `in_progress` (A09b); shell tool kind is `other` (D21); `ApplyPatch` carries no diff (D22).
 - Stock images need `git` (and `bash` on Alpine) for the local backend.
+
+**Findings the first version of this suite got wrong, now corrected.** A reviewer found four failures that were test artifacts, not Letta bugs. They are not in the list above.
+
+- *Cross-agent memory guard (A14).* The first version reported another agent's memory as readable and blamed the guard. In letta-code 0.30.28, the version letta-acp 0.1.11 pins, the shell sandbox is opt-in (`LETTA_FS_SANDBOX=1`) and the cross-agent guard skips shell tools by design, so a shell reading another agent's memory is that version's default behaviour. The test also never set the opt-in, its "bwrap on host" check only tested that the file exists, and its `SANDBOX=un` was a regex that stopped at the `s` of `unset`. A14 now runs with the opt-in set, probes whether bwrap can create a user namespace, and passes (the shell was denied, `LETTA_SANDBOX=bwrap`). The default-configuration exposure is recorded in the detail. This says nothing about a security failure; it says the sandbox is off unless the user turns it on.
+- *`letta` not on PATH (A10, A15).* The harness launched the adapter by path. The registry launches the entry through `npx`, which puts `letta` on PATH, so A10b and A15b are the results that apply to listing; A10 and A15 are relabelled as the direct-install variant and stay in the denominator. (A10 passed in the latest run and failed in the two before it; it uses a live model.)
+- *No PTY (D17).* The first version never asked for `tty: true`, so `NOTTY` was expected. It now asks, and passes where node-pty loads.
+- *Published column under-reported.* D01, D02, D18 and D19 need no model but shared scenarios with checks that do, so they showed as blocked. They now run on their own and pass on published.
+
+Every criterion change after the first full results is recorded in `checks.json` under `revisions`; no check was removed from a denominator. The earlier run is kept in `logs/live/earlier-run-efc8424/`.
 
 **Disclosures.**
 
-1. A check counts as passing if *any* install chain passed it. That is generous, so the per-chain table above is printed beside it.
+1. `COVERAGE-RESULTS.md` leads with one column per install chain; the any-chain aggregate (a check passes if any chain passed it) is printed below it for reference only.
 2. The R5 and R6 lines of `logs/registry-final/summary.txt` were edited by hand: `protocol_matrix.py` exits 0 even when the agent fails, so the verdict was taken from its `latest.json`.
-3. R4's fix-column result comes from an earlier run (`logs/head-9b2e784/registry-after.log`), not from the final entry with `license_url`. R6 was not run for the fix.
-4. The platform cells for arm64, macOS and Windows ran in fork CI with no model key, so they reach *real ACP client* level only, and the fix column has no evidence there. Those "published" cells ran with a toolchain present (or an Alpine container without one, where install fails).
-5. The local Docker cells install `git`, and `bash` on Alpine, because the stock images lack them.
-6. D05 failed once in the full lock-pinned run (the model answered that shell execution was unavailable) and passed three times in isolation (`logs/live/lock-pinned-d05-reruns/`). The full run is the one counted; the live model makes some checks nondeterministic.
-7. The first Toad permission attempt failed only because my harness had not passed the placeholder API key (the model call returned "Provider is not configured"); the run counted is the second (`logs/clients/k02-toad-permission/`), and the failed one is kept beside it.
-8. Nothing was sent to any `letta-ai` repository, and no registry change was made. Zed, JetBrains and Obsidian were not run; manual checklist: install the entry's command (`npx @letta-ai/letta-acp@0.1.11`) in the editor's ACP settings, open a throwaway project, send one prompt that runs a shell command, approve the permission dialog, and confirm the reply and tool result render.
+3. B has no node-pty-fix column. An earlier fix-chain registry run (`logs/head-9b2e784/registry-after.log`, R4 only) used a different entry without `license_url`, so it is not counted. R2's PASS rests on the raw license URL; the entry's `blob` URL returned 403 through this environment's proxy, so its passing on the registry's runners is inferred.
+4. The platform cells for arm64, macOS and Windows ran in fork CI with no model key, so they reach *real ACP client* level only, and the fix column has no evidence there. The arm64 cells ran on native arm64 runners. The CI run is [41187004892](https://github.com/mruderman/letta-code/actions/runs/41187004892) (head `5c77029`); its 20 `RESULT_JSON` lines and toolchain lines are saved in `logs/platform/ci-run-41187004892.txt`, because CI logs expire. Every job exits 0 by design, so pass or fail is in the line, not the job colour.
+5. The local Docker glibc cells use `node:*-bookworm-slim`, and the musl cells use `node:*-alpine`. They install `git`, and `bash` on Alpine, because the stock images lack them.
+6. Live checks are nondeterministic. D05 failed once in an earlier full lock-pinned run and passed three times in isolation (`logs/live/earlier-run-efc8424/lock-pinned-d05-reruns/`); it passed in the latest run. A10 flipped as noted above.
+7. K01 to K04 passed on the lock-pinned install. Against the published install, three independent clients (acpx, the Python SDK client, the TypeScript SDK 2.x client) all fail by timeout on their first turn, the same hang seen by the scripted client (`logs/clients/published/`); Toad (K02) was not run there. The first Toad permission attempt failed only because my harness had not passed the placeholder API key; the run counted is the second, and the failed one is kept beside it.
+8. A11 waits up to 90 s for the memory write, a wait added after the first full results. A13's evidence is a reflection branch with no commits. D10 passes only when the prompt names the editor-buffer tool. See `COVERAGE.md`, "Known weaknesses".
+9. Nothing was sent to any `letta-ai` repository, and no registry change was made. Zed, JetBrains and Obsidian were not run; manual checklist: install the entry's command (`npx @letta-ai/letta-acp@0.1.11`) in the editor's ACP settings, open a throwaway project, send one prompt that runs a shell command, approve the permission dialog, and confirm the reply and tool result render.
 
 Layout: `live/` (runner, scenarios), `checks.json` (fixed denominators), `registry/`, `clients/`, `platform/` with [`.github/workflows/e2e-platform-matrix.yml`](../.github/workflows/e2e-platform-matrix.yml), `chains/make-chains.sh`, and the logs. Reproduction commands are at the end of `COVERAGE.md`.
 

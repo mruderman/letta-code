@@ -41,9 +41,9 @@ function solidPng(r, g, b, size = 32) {
   return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk("IHDR", header), chunk("IDAT", deflateSync(raw)), chunk("IEND", Buffer.alloc(0))]);
 }
 
-/** D01-D03, D19, D20, D21, D26: handshake, streaming, tool-call shapes, cwd. */
-async function protocolShape(ctx) {
-  const state = freshHome("shape");
+/** D01, D02, D19: handshake and session setup. No model is needed, so these also run on a chain whose turns hang. */
+async function handshake(ctx) {
+  const state = freshHome("handshake");
   const a = await ctx.launch({ name: "run", state, permissionMode: "unrestricted" });
   const init = await a.initialize();
   const caps = init.agentCapabilities ?? {};
@@ -54,6 +54,49 @@ async function protocolShape(ctx) {
     `sessionId=${session.sessionId}; configOptions=${session.configOptions?.map((o) => `${o.id}=${o.currentValue}`).join(", ")}`, "real ACP client");
   const commands = a.updates.filter((u) => u.sessionUpdate === "available_commands_update").flatMap((u) => u.availableCommands.map((c) => c.name));
   ctx.add("D19", commands.length > 5 && ["model", "compact", "remember"].every((n) => commands.includes(n)), `${commands.length} commands advertised, including: ${commands.slice(0, 12).join(", ")}`, "real ACP client");
+  await a.stop();
+}
+
+/** D18: errors are JSON-RPC errors and the adapter keeps working. No model is needed. */
+async function errorHandling(ctx) {
+  const state = freshHome("errors");
+  const a = await ctx.launch({ name: "run", state, permissionMode: "unrestricted" });
+  await a.initialize();
+  const s1 = await a.newSession(state.work);
+  const errors = [];
+  try {
+    await a.conn.prompt({ sessionId: "local-conv-99999", prompt: [{ type: "text", text: "hi" }] });
+    errors.push("prompt on an unknown session succeeded");
+  } catch (error) {
+    errors.push(`unknown session -> ${error.code ?? "?"} ${String(error.message).slice(0, 60)}`);
+  }
+  let methodError;
+  try {
+    await a.conn.extMethod("e2e/not-a-method", {});
+  } catch (error) {
+    methodError = error;
+  }
+  errors.push(`unknown method -> ${methodError?.code ?? "no error"}`);
+  let alive = false;
+  let aliveDetail = "";
+  try {
+    const again = await a.newSession(state.work);
+    alive = /^local-conv-\d+$/.test(again.sessionId) && again.sessionId !== s1.sessionId;
+    aliveDetail = again.sessionId;
+  } catch (error) {
+    aliveDetail = String(error.message).slice(0, 80);
+  }
+  ctx.add("D18", errors[0].includes("->") && methodError?.code === -32601 && alive,
+    `${errors.join("; ")}; session/new still works afterwards: ${alive} (${aliveDetail}); criterion changed from "answers a prompt afterwards" so it needs no model`, "real ACP client");
+  await a.stop();
+}
+
+/** D03, D20, D21, D26: streaming, tool-call shapes, cwd. */
+async function protocolShape(ctx) {
+  const state = freshHome("shape");
+  const a = await ctx.launch({ name: "run", state, permissionMode: "unrestricted" });
+  await a.initialize();
+  const session = await a.newSession(state.work);
   const turn = await a.prompt(session.sessionId, "Count from 1 to 12, separated by spaces, then stop.");
   const chunks = turn.updates.filter((u) => u.sessionUpdate === "agent_message_chunk").length;
   ctx.add("D03", turn.stopReason === "end_turn" && chunks >= 3 && turn.text.includes("12"), `${chunks} agent_message_chunk updates before end_turn; text ${JSON.stringify(turn.text.slice(0, 60))}`);
@@ -156,13 +199,14 @@ async function cancelAndPty(ctx) {
   const b = await ctx.launch({ name: "tty", state: fresh, permissionMode: "unrestricted" });
   await b.initialize();
   const sb = await b.newSession(fresh.work);
-  const tty = await b.prompt(sb.sessionId, "Run `test -t 1 && echo ISATTY || echo NOTTY` in the shell and tell me the output.");
-  ctx.add("D17", tty.toolCalls.some((c) => /ISATTY/.test(outputText(c))),
-    `shell reported: ${tty.toolCalls.map((c) => outputText(c).replace(/\\n/g, " ").slice(0, 200)).join(" | ")} (ISATTY needs node-pty; NOTTY is the documented pipe fallback)`);
+  const tty = await b.prompt(sb.sessionId, "Call your exec_command tool with tty set to true to run `test -t 1 && echo ISATTY || echo NOTTY`, and tell me the output.");
+  const asked = tty.toolCalls.some((c) => c.rawInput?.tty === true);
+  ctx.add("D17", asked && tty.toolCalls.some((c) => /ISATTY/.test(outputText(c))),
+    `tty:true requested in the tool call: ${asked}; shell reported: ${tty.toolCalls.map((c) => outputText(c).replace(/\\n/g, " ").slice(0, 200)).join(" | ")} (NOTTY after tty:true means the PTY was not available; without node-pty the pipe fallback is documented; criterion fixed after review: the first version never asked for a tty)`);
   await b.stop();
 }
 
-/** D10, D11, D12, D16, D18, D24, D25: client fs, MCP, image, embedded context, errors, races, concurrency. */
+/** D10, D11, D12, D16, D24, D25: client fs, MCP, image, embedded context, races, concurrency. */
 async function clientFeatures(ctx) {
   const state = freshHome("client");
   const secret = nonce("MCPSECRET");
@@ -202,22 +246,6 @@ async function clientFeatures(ctx) {
   ]);
   ctx.add("D16", embedded.text.includes(fact), `resource block -> reply ${JSON.stringify(embedded.text.slice(0, 80))}`);
 
-  const errors = [];
-  try {
-    await mcp.conn.prompt({ sessionId: "local-conv-99999", prompt: [{ type: "text", text: "hi" }] });
-    errors.push("prompt on an unknown session succeeded");
-  } catch (error) {
-    errors.push(`unknown session -> ${error.code ?? "?"} ${String(error.message).slice(0, 60)}`);
-  }
-  let methodError;
-  try {
-    await mcp.conn.extMethod("e2e/not-a-method", {});
-  } catch (error) {
-    methodError = error;
-  }
-  errors.push(`unknown method -> ${methodError?.code ?? "no error"}`);
-  const alive = await mcp.prompt(s2.sessionId, "Reply with the single word ALIVE.");
-  ctx.add("D18", errors[0].includes("->") && methodError?.code === -32601 && alive.text.includes("ALIVE"), `${errors.join("; ")}; adapter still answers afterwards: ${alive.text.includes("ALIVE")}`, "real ACP client");
   await mcp.stop();
 
   const race = await ctx.launch({ name: "race", state, permissionMode: "unrestricted" });
@@ -264,9 +292,11 @@ async function editDiff(ctx) {
 }
 
 export const genericScenarios = [
-  { name: "protocol-shape", declares: ["D01", "D02", "D03", "D19", "D20", "D21", "D26"], needsModel: true, run: protocolShape },
+  { name: "handshake", declares: ["D01", "D02", "D19"], needsModel: false, run: handshake },
+  { name: "error-handling", declares: ["D18"], needsModel: false, run: errorHandling },
+  { name: "protocol-shape", declares: ["D03", "D20", "D21", "D26"], needsModel: true, run: protocolShape },
   { name: "permissions", declares: ["D04", "D05", "D06", "D07", "D09"], needsModel: true, run: permissions },
   { name: "cancel-and-pty", declares: ["D08", "D08b", "D17"], needsModel: true, run: cancelAndPty },
-  { name: "client-features", declares: ["D10", "D11", "D12", "D16", "D18", "D24", "D25"], needsModel: true, run: clientFeatures, timeoutMs: 1_200_000 },
+  { name: "client-features", declares: ["D10", "D11", "D12", "D16", "D24", "D25"], needsModel: true, run: clientFeatures, timeoutMs: 1_200_000 },
   { name: "edit-diff", declares: ["D22"], needsModel: true, run: editDiff },
 ];

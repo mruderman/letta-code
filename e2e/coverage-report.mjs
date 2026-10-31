@@ -62,15 +62,23 @@ const cell = (id, chain) => {
 };
 const lines = [];
 lines.push("# Coverage results", "", `Generated ${new Date().toISOString()} from the results files named on the command line. \`·\` = not run on that chain.`, "");
-lines.push("## The four metrics, side by side", "", "| Metric | Passing | Failing | Not run | Not covered (by design) | Denominator |", "|---|---|---|---|---|---|");
 const names = { A: "A. Letta-differentiator coverage (headline)", B: "B. Registry-gate coverage", D: "D. Generic ACP + client coverage" };
 const summary = {};
+const chainLabel = { published: "published, as listed (what `npx` gives a registry user)", "lock-pinned": "lock-pinned (adapter logic with dependency pins users do not get)", "node-pty-fix": "node-pty-fix (unreleased)" };
+const perChain = {};
 for (const m of ["A", "B", "D"]) {
   const r = metric(m);
   summary[m] = { passing: r.covered.length, failing: r.failing.length, notRun: r.notRun.length, notCovered: r.nc.length, total: r.items.length };
-  lines.push(`| ${names[m]} | ${r.covered.length} | ${r.failing.length} | ${r.notRun.length} | ${r.nc.length} | ${r.items.length} |`);
+  const items = r.items.filter((c) => c.source !== "not_covered");
+  perChain[m] = {};
+  for (const ch of chains) {
+    const row = { pass: 0, fail: 0, blocked: 0, error: 0, notRun: 0 };
+    for (const c of items) { const st = status[c.id]?.[ch]?.status; if (st === "pass") row.pass++; else if (st === "fail") row.fail++; else if (st === "blocked") row.blocked++; else if (st) row.error++; else row.notRun++; }
+    row.of = items.length;
+    perChain[m][ch] = row;
+  }
 }
-// Metric C
+// Metric C, needed for the headline table
 const platforms = spec.platforms;
 const pcells = [];
 for (const p of platforms) for (const col of spec.columns) {
@@ -79,22 +87,17 @@ for (const p of platforms) for (const col of spec.columns) {
 }
 const cpass = pcells.filter((c) => c.status === "pass").length;
 summary.C = { passing: cpass, failing: pcells.filter((c) => c.status === "fail").length, notRun: pcells.filter((c) => c.status === "not run").length, total: pcells.length };
-const cturn = pcells.filter((c) => c.status === "pass" && c.level === "live model turn").length;
-summary.C.passingWithModelTurn = cturn;
-lines.push(`| C. Platform/install matrix (cell × column; ${cturn} of the passing cells include a live model turn, the rest stop at initialize + session/new) | ${cpass} | ${summary.C.failing} | ${summary.C.notRun} | 0 | ${pcells.length} |`, "");
-lines.push("A check counts as passing if it passed on at least one chain; the per-chain tables below show where. Failures are findings, not hidden.", "");
-// Per-chain view of the same metrics, so "passed on at least one chain" cannot hide that the entry as listed passes nothing that needs a model.
-lines.push("### The same metrics, one install chain at a time", "", `| Metric | ${chains.join(" | ")} |`, `|---|${chains.map(() => "---").join("|")}|`);
-for (const m of ["A", "B", "D"]) {
-  const items = spec.checks.filter((c) => c.metric === m && c.source !== "not_covered");
-  const per = chains.map((ch) => {
-    const n = items.filter((c) => status[c.id]?.[ch]?.status === "pass").length;
-    const blocked = items.filter((c) => status[c.id]?.[ch]?.status === "blocked").length;
-    const ran = items.filter((c) => status[c.id]?.[ch]).length;
-    return ran ? `${n} of ${items.length} pass${blocked ? ` (${blocked} blocked at the model gate)` : ""}` : "not run";
-  });
-  lines.push(`| ${names[m].replace(" (headline)", "")} | ${per.join(" | ")} |`);
-}
+summary.C.passingWithModelTurn = pcells.filter((c) => c.status === "pass" && c.level === "live model turn").length;
+const cell1 = (m, ch) => { const r = perChain[m][ch]; const bits = [`**${r.pass} of ${r.of}** pass`]; if (r.fail) bits.push(`${r.fail} fail`); if (r.blocked) bits.push(`${r.blocked} blocked (no turn completes)`); if (r.error) bits.push(`${r.error} error`); if (r.notRun === r.of) return "not run"; if (r.notRun) bits.push(`${r.notRun} not run`); return bits.join(", "); };
+const ccell = (ch) => { const cs = pcells.filter((c) => c.column === ch); const n = cs.filter((c) => c.status === "pass").length; const t = cs.filter((c) => c.status === "pass" && c.level === "live model turn").length; const nr = cs.filter((c) => c.status === "not run").length; return `**${n} of ${cs.length}** pass (${t} with a live model turn; the rest stop at initialize + session/new)${nr ? `, ${nr} not run` : ""}`; };
+lines.push("## Headline: the entry as listed, then the other install chains", "",
+  "Read the **published** column first. It is what `npx @letta-ai/letta-acp@0.1.11` resolves today, and so what a registry user gets. The other columns say where the failures come from; they are not what the listing delivers.", "",
+  `| Metric | ${chains.map((ch) => chainLabel[ch]).join(" | ")} |`, `|---|${chains.map(() => "---").join("|")}|`);
+for (const m of ["A", "B", "D"]) lines.push(`| ${names[m]} | ${chains.map((ch) => cell1(m, ch)).join(" | ")} |`);
+lines.push(`| C. Platform/install matrix (${platforms.length} cells per column) | ${chains.map(ccell).join(" | ")} |`, "");
+lines.push("Denominators exclude the checks listed as *not covered*; those are named in `COVERAGE.md`. In C the published and lock-pinned columns pass only where a C toolchain is present (macOS, Windows, glibc arm64 in CI); on the stock images without `make` they fail to install. B's node-pty-fix column is empty on purpose: the one earlier fix-chain registry result ran against a different entry (see the README) and is not counted.", "");
+lines.push("### Any-chain aggregate (for reference only)", "", "A check counts here if it passed on **at least one** chain. That is more generous than anything a registry user gets, because every A and D pass in it comes from the lock-pinned chain. Do not quote this table on its own.", "", "| Metric | Passing | Failing | Not run | Not covered (by design) | Denominator |", "|---|---|---|---|---|---|");
+for (const m of ["A", "B", "D"]) { const x = summary[m]; lines.push(`| ${names[m].replace(" (headline)", "")} | ${x.passing} | ${x.failing} | ${x.notRun} | ${x.notCovered} | ${x.total} |`); }
 lines.push("");
 
 for (const m of ["A", "D", "B"]) {

@@ -1,4 +1,4 @@
-[gate] G01=fail  (94s)
+[gate] G01=fail  (98s)
 [memory-identity] blocked by model gate
 [model-switch] blocked by model gate
 [toolsets] blocked by model gate
@@ -15,5 +15,7 @@
 [cancel-and-pty] blocked by model gate
 [client-features] blocked by model gate
 [edit-diff] blocked by model gate
+[handshake] D01=pass D02=pass D19=pass  (4s)
+[error-handling] D18=pass  (6s)
 
-published: {"fail":1,"blocked":47} -> /tmp/e2e-work/final2/published/results.json
+published: {"fail":1,"blocked":43,"pass":4} -> /tmp/e2e-work/final3/published/results.json

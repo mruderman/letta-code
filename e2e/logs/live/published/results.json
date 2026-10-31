@@ -1,12 +1,13 @@
 {
   "chain": "published",
   "agentCmd": "/tmp/e2e-work/chains/published/node_modules/.bin/letta-acp",
-  "finishedAt": "2026-10-31T09:34:32.384Z",
+  "finishedAt": "2026-10-31T10:00:56.862Z",
   "node": "v22.23.4",
   "platform": "linux-x64",
   "counts": {
     "fail": 1,
-    "blocked": 47
+    "blocked": 43,
+    "pass": 4
   },
   "checks": [
     {
@@ -14,336 +15,336 @@
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A02",
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A02b",
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A03",
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A04",
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A05",
       "scenario": "model-switch",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A06",
       "scenario": "toolsets",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A07",
       "scenario": "toolsets",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A08",
       "scenario": "skills",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A08b",
       "scenario": "skills",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A09",
       "scenario": "subagents",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A09b",
       "scenario": "subagents",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A10",
       "scenario": "conversation-search",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A10b",
       "scenario": "conversation-search-letta-on-path",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A11",
       "scenario": "slash-commands",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A12",
       "scenario": "slash-commands",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A13",
       "scenario": "dreaming",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A14",
       "scenario": "multi-agent",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A15",
       "scenario": "multi-agent",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "A15b",
       "scenario": "multi-agent-letta-on-path",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D01",
-      "scenario": "protocol-shape",
-      "status": "blocked",
-      "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "scenario": "handshake",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "protocolVersion=1; agentCapabilities={\"loadSession\":true,\"sessionCapabilities\":{\"list\":{}},\"mcpCapabilities\":{\"http\":true,\"sse\":true},\"promptCapabilities\":{\"image\":true,\"embeddedContext\":true}}; agentInfo=null; authMethods=[]"
     },
     {
       "id": "D02",
-      "scenario": "protocol-shape",
-      "status": "blocked",
-      "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "scenario": "handshake",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "sessionId=local-conv-2; configOptions=permissions=unrestricted, model=gpt-5.6-luna-none"
     },
     {
       "id": "D03",
       "scenario": "protocol-shape",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D04",
       "scenario": "permissions",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D05",
       "scenario": "permissions",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D06",
       "scenario": "permissions",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D07",
       "scenario": "permissions",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D08",
       "scenario": "cancel-and-pty",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D08b",
       "scenario": "cancel-and-pty",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D09",
       "scenario": "permissions",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D10",
       "scenario": "client-features",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D11",
       "scenario": "client-features",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D12",
       "scenario": "client-features",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D13",
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D14",
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D15",
       "scenario": "model-switch",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D16",
       "scenario": "client-features",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D17",
       "scenario": "cancel-and-pty",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D18",
-      "scenario": "client-features",
-      "status": "blocked",
-      "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "scenario": "error-handling",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "unknown session -> -32603 Internal error; unknown method -> -32601; session/new still works afterwards: true (local-conv-3); criterion changed from \"answers a prompt afterwards\" so it needs no model"
     },
     {
       "id": "D19",
-      "scenario": "protocol-shape",
-      "status": "blocked",
-      "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "scenario": "handshake",
+      "status": "pass",
+      "level": "real ACP client",
+      "detail": "34 commands advertised, including: model, clear, compact, init, doctor, remember, context-limit, reload, toolset, memory, search, skills"
     },
     {
       "id": "D20",
       "scenario": "protocol-shape",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D21",
       "scenario": "protocol-shape",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D22",
       "scenario": "edit-diff",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D23",
       "scenario": "memory-identity",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D24",
       "scenario": "client-features",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D25",
       "scenario": "client-features",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "D26",
       "scenario": "protocol-shape",
       "status": "blocked",
       "level": "live model turn",
-      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "model gate failed on this chain: agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     },
     {
       "id": "G01",
       "scenario": "gate",
       "status": "fail",
       "level": "live model turn",
-      "detail": "agentInfo null; prompt timed out after 90000ms; stderr tail: cal-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 — set LETTA_AGENT_ID=agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-acabc1a5-1fcc-40ea-991f-87bf62b4aaa9 (cwd: /tmp/letta-e2e-gate-GKvrbz/work) [letta-acp] advertising 34 slash commands "
+      "detail": "agentInfo null; prompt timed out after 90000ms; stderr tail: cal-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 — set LETTA_AGENT_ID=agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 to keep using it [letta-acp] session local-conv-2 -> agent agent-local-d0a68b3d-b5db-4ca5-9c9e-2e5ec7a723d8 (cwd: /tmp/letta-e2e-gate-aF6g1z/work) [letta-acp] advertising 34 slash commands "
     }
   ]
 }

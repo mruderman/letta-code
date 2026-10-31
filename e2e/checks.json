@@ -18,7 +18,7 @@
    "node": 22,
    "libc": "glibc",
    "arch": "arm64",
-   "how": "docker-qemu"
+   "how": "native-arm64-ci"
   },
   {
    "id": "n22-musl-x64",
@@ -32,7 +32,7 @@
    "node": 22,
    "libc": "musl",
    "arch": "arm64",
-   "how": "docker-qemu"
+   "how": "native-arm64-ci"
   },
   {
    "id": "n24-glibc-x64",
@@ -46,7 +46,7 @@
    "node": 24,
    "libc": "glibc",
    "arch": "arm64",
-   "how": "docker-qemu"
+   "how": "native-arm64-ci"
   },
   {
    "id": "n24-musl-x64",
@@ -60,7 +60,7 @@
    "node": 24,
    "libc": "musl",
    "arch": "arm64",
-   "how": "docker-qemu"
+   "how": "native-arm64-ci"
   },
   {
    "id": "macos-arm64-n22",
@@ -153,13 +153,13 @@
   {
    "id": "A10",
    "metric": "A",
-   "title": "Past-conversation recall via the recall subagent when the fact is not in memory",
+   "title": "Past-conversation recall via the recall subagent, adapter launched by path (a global or direct install: `letta` is not on the shell tool's PATH). Not how the registry launches it",
    "source": "live"
   },
   {
    "id": "A10b",
    "metric": "A",
-   "title": "A10 again with the installed letta CLI on PATH (isolates the PATH problem from the feature)",
+   "title": "A10 as the registry launches the entry (npx puts `letta` on PATH); this is the result that applies to listing",
    "source": "live"
   },
   {
@@ -183,19 +183,19 @@
   {
    "id": "A14",
    "metric": "A",
-   "title": "Cross-agent memory guard: an agent's shell cannot read another agent's memory",
+   "title": "Cross-agent memory guard with the shell sandbox switched on (LETTA_FS_SANDBOX=1, the documented opt-in): a shell cannot read another agent's memory",
    "source": "live"
   },
   {
    "id": "A15",
    "metric": "A",
-   "title": "Agent-to-agent messaging between two agents on one machine",
+   "title": "Agent-to-agent messaging, adapter launched by path (`letta` not on PATH). Not how the registry launches it",
    "source": "live"
   },
   {
    "id": "A15b",
    "metric": "A",
-   "title": "A15 again with the installed letta CLI on PATH",
+   "title": "A15 as the registry launches the entry (npx puts `letta` on PATH); this is the result that applies to listing",
    "source": "live"
   },
   {
@@ -324,13 +324,13 @@
   {
    "id": "D17",
    "metric": "D",
-   "title": "Shell tool runs under a PTY (ISATTY) where node-pty is available",
+   "title": "Shell tool called with tty:true runs under a PTY (ISATTY) where node-pty is available",
    "source": "live"
   },
   {
    "id": "D18",
    "metric": "D",
-   "title": "Errors: unknown session and unknown method return JSON-RPC errors and the adapter keeps working",
+   "title": "Errors: unknown session and unknown method return JSON-RPC errors and session/new still works afterwards (no model needed)",
    "source": "live"
   },
   {
@@ -488,6 +488,18 @@
    "metric": "B",
    "title": "One real prompt turn through the entry as listed (not a registry gate; the registry stops at initialize)",
    "source": "registry"
+  }
+ ],
+ "revisions": [
+  {
+   "after": "first full results (efc8424)",
+   "reason": "verifier review",
+   "changes": [
+    "A14: the first version never set LETTA_FS_SANDBOX=1, which letta-code 0.30.28 requires for the shell sandbox, and parsed LETTA_SANDBOX with a truncating regex. A14 is now decided by a run with the opt-in set; the default-configuration observation is kept in the detail.",
+    "D17: the first version never asked for tty:true. It now does, and requires the tool call to carry it.",
+    "A10 and A15: titles relabelled. They stay in the denominator as the direct-install variant; A10b and A15b are the registry-relevant results. No check was removed.",
+    "D18: no longer needs a model (checks session/new after the errors instead of a prompt). D01, D02, D18 and D19 now run in model-free scenarios so a chain whose turns hang still reports them."
+   ]
   }
  ]
 }

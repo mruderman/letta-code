@@ -27,6 +27,27 @@
    "status": "pass",
    "level": "live model turn",
    "detail": "Toad 0.6.20 showed its own permission dialog for exec_command (standard mode); Toad answered allow_once, turn ended end_turn. Toad also answered two tool_call_update messages with -32602 (rawOutput is a string): see k02-toad-permission/wire.ndjson"
+  },
+  {
+   "id": "K03",
+   "chain": "published",
+   "status": "fail",
+   "level": "live model turn",
+   "detail": ""
+  },
+  {
+   "id": "K04",
+   "chain": "published",
+   "status": "fail",
+   "level": "live model turn",
+   "detail": "gent-local-ffd0ac2f-188d-4460-ad9c-e990837db7f3 \u2014 set LETTA_AGENT_ID=agent-local-ffd0ac2f-188d-4460-ad9c-e990837db7f3 to keep using it\n[letta-acp] session local-conv-2 -> agent agent-local-ffd0ac2f-188d-4460-ad9c-e990837db7f3 (cwd: /tmp/ts2-client-Stg9AD)\n[letta-acp] advertising 34 slash commands"
+  },
+  {
+   "id": "K01",
+   "chain": "published",
+   "status": "fail",
+   "level": "live model turn",
+   "detail": "no end_turn or nonce in acpx output"
   }
  ]
 }
