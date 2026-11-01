@@ -1,5 +1,5 @@
 {
  "status": "pass",
  "level": "real ACP client (initialize + session/new, no model)",
- "detail": "[fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v24.22.1 x86_64; make: /usr/bin/make; gcc: /usr/bin/gcc; python3: /usr/bin/python3] v24.22.1 linux-x64 glibc; initialize=ok session/new=ok; node-pty loads=true"
+ "detail": "[fork CI run 41264328909, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v24.22.1 x86_64; make: /usr/bin/make; gcc: /usr/bin/gcc; python3: /usr/bin/python3] v24.22.1 linux-x64 glibc; initialize=ok session/new=ok; node-pty loads=true"
 }

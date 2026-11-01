@@ -1,5 +1,5 @@
 {
  "status": "pass",
  "level": "real ACP client (initialize + session/new, no model)",
- "detail": "[fork CI run 41263351337, image: node v22.23.4 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bin/gcc; python3: /usr/bin/python3] v22.23.4 linux-arm64 musl; initialize=ok session/new=ok; no turn requested; node-pty loads=True (); "
+ "detail": "[fork CI run 41264328909, image: node v22.23.4 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bin/gcc; python3: /usr/bin/python3] v22.23.4 linux-arm64 musl; initialize=ok session/new=ok; no turn requested; node-pty loads=True (); "
 }
