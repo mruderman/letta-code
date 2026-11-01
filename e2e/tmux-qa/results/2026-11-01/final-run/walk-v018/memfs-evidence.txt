@@ -1,0 +1,4 @@
+MemFS files containing the durable fact (AMBER05352):
+letta-local-backend/memfs/agent-local-30fca004-345a-4bb1-a231-99052137b67e/memory/system/human.md
+
+MemFS git log:

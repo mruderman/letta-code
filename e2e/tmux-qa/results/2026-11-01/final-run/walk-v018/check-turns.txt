@@ -1,0 +1,4 @@
+ok         1/1  walk-v018/restart-wire.ndjson
+ok         13/13  walk-v018/wire.ndjson
+
+2 wire logs; session/prompt answered 14/14; stopReasons {"end_turn":12,"error:-32603":1,"cancelled":1}; logs with an unanswered prompt: 0

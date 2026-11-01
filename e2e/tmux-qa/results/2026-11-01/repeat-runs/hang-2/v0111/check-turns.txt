@@ -1,0 +1,3 @@
+UNANSWERED 0/1  /tmp/letta-tmux-qa/runs/hang-2/v0111/wire.ndjson  (1 session/prompt never answered)
+
+1 wire logs; session/prompt answered 0/1; stopReasons {}; logs with an unanswered prompt: 1

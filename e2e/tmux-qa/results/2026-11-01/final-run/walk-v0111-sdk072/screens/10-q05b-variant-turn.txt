@@ -1,0 +1,45 @@
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  ⌛ New Session
+  ▼ Plan                               ▎ ╸━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                       ▎  ▌   exec_command with tty set to true and cmd: read x; echo got:$x then call write_stdin on
+ No plan yet                           ▎  ▌   that session with chars set to hello followed by a newline, and read its output. Finally,
+                                       ▎  ▌   reply with the outputs you saw.
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  ▌
+  ▼ Project                            ▎  ▌
+                                       ▎  ▌ ▶ 🔧 exec_command: Check PTY allocation
+ 📂 work                               ▎  ▌ ▶ 🔧 exec_command: Read interactive input
+ └─ 📄 marker_a.txt                    ▎  ▌ ▶ 🔧 write_stdin
+                                       ▎  ▌
+                                       ▎  ▌PTY_OK
+                                       ▎  ▌
+                                       ▎  ▌hello
+                                       ▎  ▌got:hello
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ /model openai/gpt-5.6-terra
+                                       ▎  ▌                                                                                              ▃▃
+                                       ▎  ▌
+                                       ▎  ▌Model switched to openai/gpt-5.6-terra.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ What code word did I give you for this conversation only? Answer with only the code word.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌KESTREL05352
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ /model openai/gpt-5.6-terra-low
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌Model switched to openai/gpt-5.6-terra-low.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Reply with exactly: VARIANT_OK
+                                       ▎  ▌
+                                       ▎
+                                       ▎ ▊▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+                                       ▎ ▊ ❯ How can I help you today?       ▌!▐ shell ▌/▐ commands ▌@▐ files                              ▎
+                                       ▎ ▊▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▎
+                                       ▎
+                                       ▎   Letta  /tmp/letta-tmux-qa-verify/runs/final/walk-v0111-sdk072/work             Ask before edits
+                                       ▎
+ ⏎ Send  ⇧+⏎ Line  alt+↑ alt+↓ Cursor  ^f Focus  ^o Modes  ^b Sidebar  ^h Home  ^[ ^] Sessions  ^s Sessions  f1 Help  f2 Setti▏ ^p palette

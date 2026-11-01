@@ -1,0 +1,7 @@
+  ok   turn ended normally (stopReason end_turn)
+  ok   exec_command was called with tty: true for the TTY probe
+  ok   write_stdin was called
+  ok   TTY probe printed PTY_OK (a real PTY was allocated)
+  ok   input written via write_stdin was read (got:hello)
+  ok   agent requested permission to run the TTY probe (standard mode)
+[wire check] PASS (3 tool calls, stopReason=end_turn)

@@ -1,0 +1,11 @@
+{
+  "id": 3,
+  "text": "Reply with exactly the word: pong",
+  "stopReason": "end_turn",
+  "error": null,
+  "agentText": "pong",
+  "toolCalls": [],
+  "permissions": [],
+  "sentAt": "2026-11-01T03:31:59.387Z",
+  "answeredAt": "2026-11-01T03:32:00.998Z"
+}

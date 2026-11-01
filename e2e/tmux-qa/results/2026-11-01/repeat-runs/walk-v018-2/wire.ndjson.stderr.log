@@ -1,0 +1,25 @@
+(node:10666) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)...
+[letta-acp] created agent agent-local-8a9428bf-bc2b-49bc-bef3-ccfa4d06a4f7 — set LETTA_AGENT_ID=agent-local-8a9428bf-bc2b-49bc-bef3-ccfa4d06a4f7 to keep using it
+[letta-acp] editor fs tools enabled: read_editor_buffer, write_via_editor
+[letta-acp] session local-conv-2 -> agent agent-local-8a9428bf-bc2b-49bc-bef3-ccfa4d06a4f7 (cwd: /tmp/letta-tmux-qa/runs/walk-v018-2/work)
+[letta-acp] advertising 33 slash commands
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+Got response to unknown request null
+Got response to unknown request null

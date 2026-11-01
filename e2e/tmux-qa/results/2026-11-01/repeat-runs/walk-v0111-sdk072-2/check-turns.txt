@@ -1,0 +1,3 @@
+ok         10/10  /tmp/letta-tmux-qa/runs/walk-v0111-sdk072-2/wire.ndjson
+
+1 wire logs; session/prompt answered 10/10; stopReasons {"end_turn":9,"cancelled":1}; logs with an unanswered prompt: 0

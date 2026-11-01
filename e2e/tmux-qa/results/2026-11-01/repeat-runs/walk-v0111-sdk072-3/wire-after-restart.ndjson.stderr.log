@@ -1,0 +1,6 @@
+(node:17941) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[letta-acp] using existing agent agent-local-43852ed1-9278-4426-b4c7-a6f134a03c88
+[letta-acp] editor fs tools enabled: read_editor_buffer, write_via_editor
+[letta-acp] session local-conv-3 -> agent agent-local-43852ed1-9278-4426-b4c7-a6f134a03c88 (cwd: /tmp/letta-tmux-qa/runs/walk-v0111-sdk072-3/work)
+[letta-acp] advertising 34 slash commands

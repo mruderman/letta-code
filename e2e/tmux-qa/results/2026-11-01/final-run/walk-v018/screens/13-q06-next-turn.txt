@@ -1,0 +1,45 @@
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  New Session
+  ▼ Plan                               ▎ ╸━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                       ▎  ▌• Click the dropdown, select "Install"
+ No plan yet                           ▎  ▌• Click the GO button
+                                       ▎  ▌• Repeat the process to install an ACP adapter (if required)
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  ▌
+  ▼ Project                            ▎  ▌Some agents may require you to restart your shell (open a new terminal) after installing.
+                                       ▎  ▌
+ 📂 work                               ▎  ▌If that fails, ask for help in Discussions!
+ └─ 📄 marker_a.txt                    ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ /model openai/gpt-5.6-terra
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌Model switched to openai/gpt-5.6-terra.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Reply with exactly: BACK_OK
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌BACK_OK
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Run this with your exec_command tool: sleep 152 && echo CANCEL_SLEEP_05352 . Then keep
+                                       ▎  ▌   polling that session with write_stdin (empty chars) until you have seen
+                                       ▎  ▌   CANCEL_SLEEP_05352 in its output. Do not reply before you have seen it.                    ▄▄
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ▶ 🔧 exec_command: Wait for cancellation marker
+                                       ▎  ▌ ▶ 🔧 write_stdin
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Reply with exactly: ALIVE_AFTER_CANCEL
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ALIVE_AFTER_CANCEL
+                                       ▎
+                                       ▎ ▊▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+                                       ▎ ▊ ❯ How can I help you today?       ▌!▐ shell ▌/▐ commands ▌@▐ files                              ▎
+                                       ▎ ▊▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▎
+                                       ▎
+                                       ▎   Letta  /tmp/letta-tmux-qa-verify/runs/final/walk-v018/work                     Ask before edits
+                                       ▎
+ ⏎ Send  ⇧+⏎ Line  alt+↑ alt+↓ Cursor  ^f Focus  ^o Modes  ^b Sidebar  ^h Home  ^[ ^] Sessions  ^s Sessions  f1 Help  f2 Setti▏ ^p palette

@@ -1,0 +1,45 @@
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  ❯ New Session
+  ▼ Plan                               ▎ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                       ▎
+ No plan yet                           ▎
+                                       ▎
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+  ▼ Project                            ▎
+                                       ▎
+ 📂 work                               ▎
+ └─ 📄 marker_a.txt                    ▎  ▌
+                                       ▎  ▌ ❯ Two things. (1) Save this durable fact to your long-term memory: my favourite colour is
+                                       ▎  ▌   AMBER05352. (2) For this conversation only, remember the code word KESTREL05352. Confirm
+                                       ▎  ▌   both in one short sentence.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ▶ 🔧 memory_apply_patch
+                                       ▎  ▌
+                                       ▎  ▌Saved your favourite colour as AMBER05352; I’ll remember KESTREL05352 for this conversation
+                                       ▎  ▌only.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Use your shell tool to run exactly: touch marker_a.txt && echo CREATED
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ▶ 🔧 exec_command: Create marker file
+                                       ▎  ▌
+                                       ▎  ▌CREATED
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Use your shell tool to run exactly: touch marker_b.txt && echo SECOND
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ▶ 🔧 exec_command: Create second marker file
+                                       ▎
+                                       ▎ ▊▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+                                       ▎ ▊ exec_command: Create second marker file                                                         ▎
+                                       ▎ ▊                                                                                                 ▎
+                                       ▎ ▊  ❯ a Allow exec_command once                                                                    ▎
+                                       ▎ ▊    A Always allow exec_command this session                                                     ▎
+                                       ▎ ▊    r Reject                                                                                     ▎
+                                       ▎ ▊▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▎
+                                       ▎
+                                       ▎   Letta  /tmp/letta-tmux-qa-verify/runs/final/walk-v018/work                     Ask before edits
+                                       ▎
+ ↑↓ Cursor  ⏎ Select  aA Allow once/always  r Reject once  alt+↑ alt+↓ Cursor  ^f Focus  ^o Modes  ^c Interrupt  ^b Sidebar  ^▏ ^p palette

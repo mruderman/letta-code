@@ -1,0 +1,45 @@
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  New Session
+  ▼ Plan                               ▎ ╸━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                       ▎  ▌only.
+ No plan yet                           ▎  ▌
+                                       ▎  ▌
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  ▌ ❯ Use your shell tool to run exactly: touch marker_a.txt && echo CREATED
+  ▼ Project                            ▎  ▌
+                                       ▎  ▌
+ 📂 work                               ▎  ▌ ▶ 🔧 exec_command: Create marker file
+ └─ 📄 marker_a.txt                    ▎  ▌                                                                                              ▂▂
+                                       ▎  ▌CREATED
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Use your shell tool to run exactly: touch marker_b.txt && echo SECOND
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ▶ 🔧 exec_command: Create second marker file
+                                       ▎  ▌
+                                       ▎  ▌I wasn’t able to run the command because the shell tool call was rejected.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ This is an automated test of terminal support. Use your exec_command tool for both steps,
+                                       ▎  ▌   exactly as written, and do not use any other shell tool. Step 1: call exec_command with
+                                       ▎  ▌   tty set to true and cmd: test -t 0 && echo PTY_OK || echo NO_PTY Step 2: call
+                                       ▎  ▌   exec_command with tty set to true and cmd: read x; echo got:$x then call write_stdin on
+                                       ▎  ▌   that session with chars set to hello followed by a newline, and read its output. Finally,
+                                       ▎  ▌   reply with the outputs you saw.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ▶ 🔧 exec_command: Check PTY allocation
+                                       ▎  ▌ ▶ 🔧 exec_command: Read interactive input
+                                       ▎  ▌ ▶ 🔧 write_stdin
+                                       ▎  ▌
+                                       ▎  ▌PTY_OK
+                                       ▎  ▌
+                                       ▎  ▌hello
+                                       ▎  ▌got:hello
+                                       ▎
+                                       ▎ ▊▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+                                       ▎ ▊ ❯ How can I help you today?       ▌!▐ shell ▌/▐ commands ▌@▐ files                              ▎
+                                       ▎ ▊▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▎
+                                       ▎
+                                       ▎   Letta  /tmp/letta-tmux-qa-verify/runs/final/walk-v0111-sdk072/work             Ask before edits
+                                       ▎
+ ⏎ Send  ⇧+⏎ Line  alt+↑ alt+↓ Cursor  ^f Focus  ^o Modes  ^b Sidebar  ^h Home  ^[ ^] Sessions  ^s Sessions  f1 Help  f2 Setti▏ ^p palette

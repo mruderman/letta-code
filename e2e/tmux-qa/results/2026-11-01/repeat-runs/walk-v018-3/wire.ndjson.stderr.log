@@ -1,0 +1,46 @@
+(node:15125) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)...
+[letta-acp] created agent agent-local-dcd95ad5-ba47-4a8d-98cb-4c30df9283da — set LETTA_AGENT_ID=agent-local-dcd95ad5-ba47-4a8d-98cb-4c30df9283da to keep using it
+[letta-acp] editor fs tools enabled: read_editor_buffer, write_via_editor
+[letta-acp] session local-conv-2 -> agent agent-local-dcd95ad5-ba47-4a8d-98cb-4c30df9283da (cwd: /tmp/letta-tmux-qa/runs/walk-v018-3/work)
+[letta-acp] advertising 33 slash commands
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+Got response to unknown request null
+[letta-acp] stream error: {
+  "error": {
+    "error": {
+      "type": "llm_error",
+      "message": "Unknown model \"gpt-5.6-terra-low\" for provider \"openai\". Choose an available model with /model.",
+      "detail": "Unknown model \"gpt-5.6-terra-low\" for provider \"openai\". Choose an available model with /model."
+    },
+    "run_id": "local-run-12"
+  }
+}
+[letta-acp] stream error: Unknown model "gpt-5.6-terra-low" for provider "openai". Choose an available model with /model.
+[letta-acp] stream error: {
+  "error": {
+    "error": {
+      "type": "llm_error",
+      "message": "Unknown model \"gpt-5.6-terra-low\" for provider \"openai\". Choose an available model with /model.",
+      "detail": "Unknown model \"gpt-5.6-terra-low\" for provider \"openai\". Choose an available model with /model."
+    },
+    "run_id": "local-run-12"
+  }
+}
+[letta-acp] permission requested for exec_command
+Got response to unknown request null
+Got response to unknown request null
+Got response to unknown request null
+Got response to unknown request null

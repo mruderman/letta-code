@@ -1,0 +1,8 @@
+  `-- @letta-ai/letta-code@0.30.28 deduped
++-- @letta-ai/letta-acp@0.1.11
+`-- @letta-ai/letta-agent-sdk@0.7.2
+v0111-sdk072@1.0.0 /tmp/letta-tmux-qa/variants/v0111-sdk072
+|   `-- node-pty@1.1.0
+| +-- @agentclientprotocol/sdk@1.9.0
+| +-- @letta-ai/letta-agent-sdk@0.7.2 deduped
+| `-- @letta-ai/letta-code@0.30.28

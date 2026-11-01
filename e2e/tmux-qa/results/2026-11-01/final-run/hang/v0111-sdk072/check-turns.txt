@@ -1,0 +1,3 @@
+ok         1/1  /tmp/letta-tmux-qa-verify/runs/final/hang/v0111-sdk072/wire.ndjson
+
+1 wire logs; session/prompt answered 1/1; stopReasons {"end_turn":1}; logs with an unanswered prompt: 0

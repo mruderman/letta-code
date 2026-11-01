@@ -1,0 +1,45 @@
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  New Session
+  ▼ Plan                               ▎ ╸━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                       ▎
+ No plan yet                           ▎
+                                       ▎
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+  ▼ Project                            ▎
+                                       ▎
+ 📂 work                               ▎
+ └─ 📄 marker_a.txt                    ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎
+                                       ▎  ▌
+                                       ▎  ▌ ❯ What is my favourite colour, and what code word did I give you earlier? Answer on one line,
+                                       ▎  ▌   and write UNKNOWN for anything you do not know.
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌AMBER05352; UNKNOWN
+                                       ▎
+                                       ▎ ▊▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+                                       ▎ ▊ ❯ How can I help you today?       ▌!▐ shell ▌/▐ commands ▌@▐ files                              ▎
+                                       ▎ ▊▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▎
+                                       ▎
+                                       ▎   Letta  /tmp/letta-tmux-qa-verify/runs/final/walk-v018/work                     Ask before edits
+                                       ▎
+ ⏎ Send  ⇧+⏎ Line  alt+↑ alt+↓ Cursor  ^f Focus  ^o Modes  ^b Sidebar  ^h Home  ^[ ^] Sessions  ^s Sessions  f1 Help  f2 Setti▏ ^p palette

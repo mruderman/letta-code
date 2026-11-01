@@ -1,0 +1,45 @@
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  ⌛ New Session
+  ▼ Plan                               ▎ ╸━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                       ▎  ▌KESTREL05352
+ No plan yet                           ▎  ▌
+                                       ▎  ▌
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎  ▌ ❯ /model openai/gpt-5.6-terra-low
+  ▼ Project                            ▎  ▌
+                                       ▎  ▌
+ 📂 work                               ▎  ▌Model switched to openai/gpt-5.6-terra-low.
+ └─ 📄 marker_a.txt                    ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌ ❯ Reply with exactly: VARIANT_OK
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+                                       ▎  ▌┃Failed to send prompt — Letta returned an error                                             ┃
+                                       ▎  ▌┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+                                       ▎  ▌
+                                       ▎  ▌
+                                       ▎  ▌Agent failed to run
+                                       ▎  ▌
+                                       ▎  ▌The agent failed to start.
+                                       ▎  ▌
+                                       ▎  ▌Check that the agent is installed and up-to-date.                                             ▅▅
+                                       ▎  ▌
+                                       ▎  ▌Note that some agents require an ACP adapter to be installed to work with Toad.
+                                       ▎  ▌
+                                       ▎  ▌• Exit the app, and run toad again
+                                       ▎  ▌• Select the agent and hit ENTER
+                                       ▎  ▌• Click the dropdown, select "Install"
+                                       ▎  ▌• Click the GO button
+                                       ▎  ▌• Repeat the process to install an ACP adapter (if required)
+                                       ▎  ▌
+                                       ▎  ▌Some agents may require you to restart your shell (open a new terminal) after installing.
+                                       ▎  ▌
+                                       ▎  ▌If that fails, ask for help in Discussions!
+                                       ▎  ▌
+                                       ▎
+                                       ▎ ▊▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▎
+                                       ▎ ▊ ❯ How can I help you today?       ▌!▐ shell ▌/▐ commands ▌@▐ files                              ▎
+                                       ▎ ▊▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁╭──────────────────────────────────────────────────────────╮▁▎
+                                       ▎                                      │ Agent failure                                            │
+                                       ▎   Letta  /tmp/letta-tmux-qa-verify/ru│ Failed to send prompt                                    │
+                                       ▎                                      ╰──────────────────────────────────────────────────────────╯
+ ⏎ Send  ⇧+⏎ Line  alt+↑ alt+↓ Cursor  ^f Focus  ^o Modes  ^b Sidebar  ^h Home  ^[ ^] Sessions  ^s Sessions  f1 Help  f2 Setti▏ ^p palette
