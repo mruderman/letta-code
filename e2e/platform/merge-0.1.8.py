@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Merge the 0.1.8 platform cells into <cell>.<column>.json files for coverage-report.mjs.
 x64 cells: the local Docker stock image (no make), with the same cell on a CI runner (make present)
-noted in the detail. arm64 and Windows: fork CI. macOS: CI cancelled the jobs, so no file (= not run).
+noted in the detail. arm64 and Windows: fork CI. macOS: no file; it is not a registry requirement and was
+dropped (coverage-report.mjs --exclude-platform macos-arm64-n22).
 usage: merge-0.1.8.py <logs/v0.1.8/platform>"""
 import json, re, sys
 from pathlib import Path

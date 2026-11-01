@@ -24,8 +24,8 @@
   "C": {
    "passing": 6,
    "failing": 12,
-   "notRun": 12,
-   "total": 30,
+   "notRun": 9,
+   "total": 27,
    "passingWithModelTurn": 0
   }
  },
@@ -218,30 +218,6 @@
    "id": "n24-musl-arm64",
    "column": "node-pty-fix",
    "how": "native-arm64-ci",
-   "status": "not run",
-   "level": "-",
-   "detail": ""
-  },
-  {
-   "id": "macos-arm64-n22",
-   "column": "published",
-   "how": "fork-ci",
-   "status": "not run",
-   "level": "-",
-   "detail": ""
-  },
-  {
-   "id": "macos-arm64-n22",
-   "column": "lock-pinned",
-   "how": "fork-ci",
-   "status": "not run",
-   "level": "-",
-   "detail": ""
-  },
-  {
-   "id": "macos-arm64-n22",
-   "column": "node-pty-fix",
-   "how": "fork-ci",
    "status": "not run",
    "level": "-",
    "detail": ""

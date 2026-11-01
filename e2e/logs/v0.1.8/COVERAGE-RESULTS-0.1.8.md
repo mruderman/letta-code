@@ -1,6 +1,6 @@
 # Coverage results
 
-Generated 2026-10-31T20:52:27.177Z from the results files named on the command line. `·` = not run on that chain.
+Generated 2026-11-01T01:29:09.139Z from the results files named on the command line. `·` = not run on that chain.
 
 ## Headline: the entry as listed, then the other install chains
 
@@ -11,9 +11,9 @@ Read the **published** column first. It is what `npx @letta-ai/letta-acp@0.1.8` 
 | A. Letta-differentiator coverage (headline) | **15 of 20** pass, 5 fail | **16 of 20** pass, 4 fail | not run |
 | B. Registry-gate coverage | **5 of 7** pass, 2 fail | not run | not run |
 | D. Generic ACP + client coverage | **27 of 31** pass, 4 fail | **22 of 31** pass, 4 fail, 1 error, 4 not run | not run |
-| C. Platform/install matrix (10 cells per column) | **3 of 10** pass (0 with a live model turn; the rest stop at initialize + session/new), 1 not run | **3 of 10** pass (0 with a live model turn; the rest stop at initialize + session/new), 1 not run | **0 of 10** pass (0 with a live model turn; the rest stop at initialize + session/new), 10 not run |
+| C. Platform/install matrix (9 cells per column) | **3 of 9** pass (0 with a live model turn; the rest stop at initialize + session/new) | **3 of 9** pass (0 with a live model turn; the rest stop at initialize + session/new) | **0 of 9** pass (0 with a live model turn; the rest stop at initialize + session/new), 9 not run |
 
-Denominators exclude the checks listed as *not covered*; those are named in `COVERAGE.md`. In C the published column passes on n22-glibc-arm64, n24-glibc-arm64, windows-x64-n22 (CI runners with a C toolchain), fails on n22-glibc-x64, n22-musl-x64, n22-musl-arm64, n24-glibc-x64, n24-musl-x64, n24-musl-arm64 (stock images without `make`, where node-pty has to be compiled; the x64 glibc cells pass on CI runners that have make, see the details), and was not run on macos-arm64-n22. B's node-pty-fix column is empty on purpose: the one earlier fix-chain registry result ran against a different entry (see the README) and is not counted.
+Denominators exclude the checks listed as *not covered*; those are named in `COVERAGE.md`. In C the published column passes on n22-glibc-arm64, n24-glibc-arm64, windows-x64-n22 (CI runners with a C toolchain), fails on n22-glibc-x64, n22-musl-x64, n22-musl-arm64, n24-glibc-x64, n24-musl-x64, n24-musl-arm64 (stock images without `make`, where node-pty has to be compiled; the x64 glibc cells pass on CI runners that have make, see the details). macos-arm64-n22 is left out of C on purpose: not a registry requirement (every registry workflow runs on ubuntu-latest, an npx entry has no platform field, and covering every OS is only recommended for binary entries), so it was dropped for 0.1.8. B's node-pty-fix column is empty on purpose: the one earlier fix-chain registry result ran against a different entry (see the README) and is not counted.
 
 ### Any-chain aggregate (for reference only)
 
@@ -135,9 +135,6 @@ A check counts here if it passed on **at least one** chain. That is more generou
 | n24-musl-arm64 | published | native-arm64-ci | fail | clean-room install | [fork CI run 41240502689] npm install failed: npm error gyp ERR! not ok |
 | n24-musl-arm64 | lock-pinned | native-arm64-ci | fail | clean-room install | [fork CI run 41240502689] npm install failed: npm error gyp ERR! not ok |
 | n24-musl-arm64 | node-pty-fix | native-arm64-ci | not run | - |  |
-| macos-arm64-n22 | published | fork-ci | not run | - |  |
-| macos-arm64-n22 | lock-pinned | fork-ci | not run | - |  |
-| macos-arm64-n22 | node-pty-fix | fork-ci | not run | - |  |
 | windows-x64-n22 | published | fork-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v22.23.4 win32-x64 win32; initialize=ok session/new=ok; node-pty loads=true |
 | windows-x64-n22 | lock-pinned | fork-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v22.23.4 win32-x64 win32; initialize=ok session/new=ok; node-pty loads=true |
 | windows-x64-n22 | node-pty-fix | fork-ci | not run | - |  |

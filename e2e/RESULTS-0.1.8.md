@@ -13,7 +13,7 @@ Published column = what `npx @letta-ai/letta-acp@<version>` installs today. Full
 | A. Letta differentiators | **15 of 20** | 16 of 20 | 0 of 20 (all blocked) |
 | B. Registry gates (entry + `license_url`) | **5 of 7** | not run | 4 of 7 |
 | D. Generic ACP and clients | **27 of 31** | 22 of 31 (clients not run, 1 error) | 4 of 31 |
-| C. Platform cells | **3 of 10** (1 not run) | 3 of 10 (1 not run) | see main README |
+| C. Platform cells (macOS dropped, see below) | **3 of 9** | 3 of 9 | see main README |
 
 C needs a caveat: the cells are not like for like. All 3 passes ran on CI runners that have a C toolchain (glibc arm64 on Node 22 and 24, Windows x64), and all 6 failures ran on stock images without `make` (glibc x64 `bookworm-slim` locally, and every musl cell). The two x64 glibc cells fail locally but pass on CI runners with `make`. So C mostly measures whether a toolchain is present, which is the node-pty issue, not a difference between versions. Plus two contrast cells outside C's denominator: the full `node:22-bookworm` and `node:24-bookworm` images, which have `make`, install 0.1.8 and complete a live model turn (`logs/v0.1.8/platform/n2{2,4}-glibc-toolchain-x64.published/`).
 
@@ -58,7 +58,7 @@ Lock-pinned (0.1.8's own `bun.lock`): agent-sdk 0.5.7, ACP SDK 1.3.0, letta-code
 
 **PTY scenario (`scripts/41-pty-host.sh`, host has make so node-pty 1.1.0 builds).** 4 of 6 runs pass `check-wire.mjs --expect glibc --expect-permission yes` (`logs/v0.1.8/pty/check-wire.txt`). Run 3: `write_stdin` returned the echoed `hello` and "Process exited with code 0" but not the `got:hello` the process printed before exiting, so the final output chunk was lost (1 of 6). Run 5: the checker reads the first TTY-probe call, which the harness rejected for a missing `description` parameter; the model's retry printed `PTY_OK`. Run 5 is a checker limitation; the checker was not changed after seeing it.
 
-**Platform (C).** Published 0.1.8 installs and reaches `initialize` + `session/new` on CI runners that have a C toolchain (glibc x64 and arm64 on Node 22 and 24, Windows x64) and fails to install wherever `make` is missing (stock `bookworm-slim`, every musl cell on x64 and arm64). macOS was not run: both `macos-14` jobs in CI run [41240502689](https://github.com/mruderman/letta-code/actions/runs/41240502689) were cancelled before a runner started, a second push-triggered run, [41241107719](https://github.com/mruderman/letta-code/actions/runs/41241107719), cancelled them the same way (its other 18 cells matched exactly), and this session's GitHub access cannot re-run or dispatch the workflow (403). Re-running the cancelled jobs from the Actions page would fill the macOS cells. Saved lines: `logs/v0.1.8/platform/ci-run-41240502689.txt`.
+**Platform (C).** Published 0.1.8 installs and reaches `initialize` + `session/new` on CI runners that have a C toolchain (glibc x64 and arm64 on Node 22 and 24, Windows x64) and fails to install wherever `make` is missing (stock `bookworm-slim`, every musl cell on x64 and arm64). macOS is dropped from C for 0.1.8 because the registry does not require it: every registry workflow (merge build, auth matrix, hourly updater, nightly protocol matrix, license check) runs on `ubuntu-latest`; an `npx` entry has no platform field at all in `agent.schema.json`; and "builds for all operating systems" is only *recommended* for `binary` entries, where `build_registry.py` prints a warning, not an error, when one is missing (checked on registry main `1c35b86`, 2026-11-01). Before that decision the two `macos-14` jobs were cancelled before a runner started in CI runs [41240502689](https://github.com/mruderman/letta-code/actions/runs/41240502689) and [41241107719](https://github.com/mruderman/letta-code/actions/runs/41241107719), so no macOS result exists for 0.1.8; the cells are now removed from the workflow matrix and passed to `coverage-report.mjs` as `--exclude-platform`. For reference only, the earlier 0.1.11 run did install on a `macos-14` runner (initialize + session/new, node-pty loads; `logs/platform/ci-run-41187004892.txt`). Saved lines: `logs/v0.1.8/platform/ci-run-41240502689.txt`.
 
 ## What this means for 472
 
@@ -91,5 +91,6 @@ node e2e/scripts/check-turns.mjs e2e/logs/v0.1.8
 ACP_VERSION=0.1.8 bash e2e/platform/run-docker-cell.sh 22 glibc published <out>
 node e2e/coverage-report.mjs --acp-version 0.1.8 --live published=e2e/logs/v0.1.8/live/published --live lock-pinned=e2e/logs/v0.1.8/live/lock-pinned \
   --registry e2e/logs/v0.1.8/registry/entry-0.1.8-license-url --platform e2e/logs/v0.1.8/platform/merged --clients e2e/logs/v0.1.8/clients \
+  --exclude-platform "macos-arm64-n22=not a registry requirement (every registry workflow runs on ubuntu-latest, an npx entry has no platform field, and covering every OS is only recommended for binary entries), so it was dropped for 0.1.8" \
   --out e2e/logs/v0.1.8/COVERAGE-RESULTS-0.1.8.md
 ```

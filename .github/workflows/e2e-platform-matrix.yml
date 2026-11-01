@@ -1,10 +1,12 @@
-# Platform cells that cannot run in the local Docker matrix (arm64, macOS, Windows, and the musl
+# Platform cells that cannot run in the local Docker matrix (arm64, Windows, and the musl
 # arm64 images). Installs the PUBLISHED letta-acp (and a lock-pinned variant) clean from npm on each
 # runner and runs e2e/platform/platform-smoke.mjs: initialize + session/new over stdio, plus whether
 # node-pty loads. No model key exists on the fork, so these cells reach "real ACP client" level only.
 # Runs only on the e2e-evidence branch and by hand; it does not touch any other workflow.
 # ACP_VERSION: the dispatch input, else 0.1.8 (the version registry PR 472 pins). The 0.1.11 cells
 # were run with this workflow at 5c77029 (run 41187004892), when the version was hard-coded.
+# macOS cells were removed 2026-11-01: the ACP registry does not require macOS (its CI is Linux-only and
+# npx entries carry no platform field). Run 41187004892 has the last macOS cells.
 name: e2e-platform-matrix
 on:
   push:
@@ -35,8 +37,6 @@ jobs:
           - { cell: n22-glibc-arm64, os: ubuntu-24.04-arm, node: "22", column: lock-pinned }
           - { cell: n24-glibc-arm64, os: ubuntu-24.04-arm, node: "24", column: published }
           - { cell: n24-glibc-arm64, os: ubuntu-24.04-arm, node: "24", column: lock-pinned }
-          - { cell: macos-arm64-n22, os: macos-14, node: "22", column: published }
-          - { cell: macos-arm64-n22, os: macos-14, node: "22", column: lock-pinned }
           - { cell: windows-x64-n22, os: windows-2022, node: "22", column: published }
           - { cell: windows-x64-n22, os: windows-2022, node: "22", column: lock-pinned }
     steps:
