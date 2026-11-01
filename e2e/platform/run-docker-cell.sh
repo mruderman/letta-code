@@ -7,6 +7,9 @@
 #   glibc-full   node:<major>           Debian with gcc, make, python3 (a developer box or CI runner)
 #   musl-slim    node:<major>-alpine    Alpine, no toolchain
 #   musl-full    node:<major>-alpine    plus `apk add build-base python3` (Alpine with a toolchain)
+# Contrast variant (outside C's denominator):
+#   glibc-desktop node:<major>-slim plus python3 only, no make/gcc: like a desktop Ubuntu or Debian
+#                 install without build-essential, the most common state for an editor user
 # Legacy variants (the 2026-10-31 runs; cell id n<node>-<libc>-x64, kept so old commands still work):
 #   glibc = node:<major>-bookworm-slim, musl = node:<major>-alpine, glibc-toolchain = node:<major>-bookworm
 #
@@ -19,7 +22,7 @@ mkdir -p "$out" && out="$(cd "$out" && pwd)"   # docker -v needs an absolute pat
 here="$(cd "$(dirname "$0")" && pwd)"
 prefix="${IMAGE_PREFIX:-mirror.gcr.io/library}"
 case "$(uname -m)" in x86_64|amd64) arch=x64 ;; aarch64|arm64) arch=arm64 ;; *) arch="$(uname -m)" ;; esac
-toolchain_pkgs=""
+toolchain_pkgs="" apt_extra=""
 case "$variant" in
   glibc)           tag="$node-bookworm-slim"; cell="n$node-glibc-x64" ;;
   musl)            tag="$node-alpine";        cell="n$node-musl-x64" ;;
@@ -28,6 +31,7 @@ case "$variant" in
   glibc-full)      tag="$node";               cell="n$node-glibc-full-$arch" ;;
   musl-slim)       tag="$node-alpine";        cell="n$node-musl-slim-$arch" ;;
   musl-full)       tag="$node-alpine";        cell="n$node-musl-full-$arch"; toolchain_pkgs="build-base python3" ;;
+  glibc-desktop)   tag="$node-slim";          cell="n$node-glibc-desktop-$arch"; apt_extra="python3" ;;
   *) echo "unknown variant $variant" >&2; exit 2 ;;
 esac
 image="$prefix/node:$tag"
@@ -49,7 +53,7 @@ docker run --rm --network host "${proxy[@]}" -e OPENAI_API_KEY="${OPENAI_API_KEY
     # git is a hard runtime requirement (MemFS): the stock images lack it and session/new fails with "spawn git ENOENT".
     # Installing it adds no compiler or make, so the no-toolchain condition under test is unchanged.
     # musl-full also installs build-base + python3, the Alpine equivalent of a C toolchain.
-    if command -v apt-get >/dev/null; then (apt-get update -qq && apt-get install -y -qq git) >/out/git-install.log 2>&1; else apk add --no-cache git bash '"$toolchain_pkgs"' >/out/git-install.log 2>&1; fi
+    if command -v apt-get >/dev/null; then (apt-get update -qq && apt-get install -y -qq git '"$apt_extra"') >/out/git-install.log 2>&1; else apk add --no-cache git bash '"$toolchain_pkgs"' >/out/git-install.log 2>&1; fi
     os="$(. /etc/os-release 2>/dev/null && echo "$PRETTY_NAME")"
     libcv="$( (ldd --version 2>&1 || true) | head -1 | sed "s/^ldd //")"
     echo "image: node $(node --version) $(uname -m); os: $os; libc: $libcv; make: $(command -v make || echo absent); gcc: $(command -v gcc || echo absent); python3: $(command -v python3 || echo absent)" > /out/env.txt
@@ -64,7 +68,8 @@ if [ -f "$dir/install-status.txt" ]; then
 import json, sys
 d, cell, column = sys.argv[1:4]
 log = open(f"{d}/install.log").read()
-reason = next((l for l in reversed(log.splitlines()) if "npm error" in l and ("make" in l or "gyp" in l or "code" in l)), log.strip().splitlines()[-1] if log.strip() else "install failed")
+# node-gyp's own cause line ("Could not find any Python", "not found: make") beats the generic "gyp ERR! not ok".
+reason = next((l for l in log.splitlines() if "gyp ERR! stack Error:" in l), None) or next((l for l in reversed(log.splitlines()) if "npm error" in l and ("make" in l or "gyp" in l or "code" in l)), log.strip().splitlines()[-1] if log.strip() else "install failed")
 env = open(f"{d}/env.txt").read().strip() if __import__("os").path.exists(f"{d}/env.txt") else ""
 json.dump({"status": "fail", "level": "clean-room install", "detail": f"npm install failed: {reason[:200]}", "env": env}, open(f"{d}/cell.json", "w"))
 PY

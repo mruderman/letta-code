@@ -1,0 +1,5 @@
+{
+ "status": "pass",
+ "level": "real ACP client (initialize + session/new, no model)",
+ "detail": "[fork CI run 41263351337, image: node v26.13.0 aarch64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: /usr/bin/make; gcc: /usr/bin/gcc; python3: /usr/bin/python3] v26.13.0 linux-arm64 glibc; initialize=ok session/new=ok; no turn requested; node-pty loads=True (); "
+}

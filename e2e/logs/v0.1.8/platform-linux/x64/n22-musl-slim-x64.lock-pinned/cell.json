@@ -1,0 +1,1 @@
+{"status": "fail", "level": "clean-room install", "detail": "npm install failed: npm error gyp ERR! not ok", "env": "image: node v22.23.4 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent"}

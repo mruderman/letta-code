@@ -1,6 +1,6 @@
 # Coverage results
 
-Generated 2026-11-01T01:29:09.139Z from the results files named on the command line. `·` = not run on that chain.
+Generated 2026-11-01T02:11:59.100Z from the results files named on the command line. `·` = not run on that chain.
 
 ## Headline: the entry as listed, then the other install chains
 
@@ -11,9 +11,19 @@ Read the **published** column first. It is what `npx @letta-ai/letta-acp@0.1.8` 
 | A. Letta-differentiator coverage (headline) | **15 of 20** pass, 5 fail | **16 of 20** pass, 4 fail | not run |
 | B. Registry-gate coverage | **5 of 7** pass, 2 fail | not run | not run |
 | D. Generic ACP + client coverage | **27 of 31** pass, 4 fail | **22 of 31** pass, 4 fail, 1 error, 4 not run | not run |
-| C. Platform/install matrix (9 cells per column) | **3 of 9** pass (0 with a live model turn; the rest stop at initialize + session/new) | **3 of 9** pass (0 with a live model turn; the rest stop at initialize + session/new) | **0 of 9** pass (0 with a live model turn; the rest stop at initialize + session/new), 9 not run |
+| C. Platform/install matrix (30 cells per column) | **18 of 30** pass (6 with a live model turn; the rest stop at initialize + session/new) | **18 of 30** pass (6 with a live model turn; the rest stop at initialize + session/new) | **0 of 30** pass (0 with a live model turn; the rest stop at initialize + session/new), 30 not run |
 
-Denominators exclude the checks listed as *not covered*; those are named in `COVERAGE.md`. In C the published column passes on n22-glibc-arm64, n24-glibc-arm64, windows-x64-n22 (CI runners with a C toolchain), fails on n22-glibc-x64, n22-musl-x64, n22-musl-arm64, n24-glibc-x64, n24-musl-x64, n24-musl-arm64 (stock images without `make`, where node-pty has to be compiled; the x64 glibc cells pass on CI runners that have make, see the details). macos-arm64-n22 is left out of C on purpose: not a registry requirement (every registry workflow runs on ubuntu-latest, an npx entry has no platform field, and covering every OS is only recommended for binary entries), so it was dropped for 0.1.8. B's node-pty-fix column is empty on purpose: the one earlier fix-chain registry result ran against a different entry (see the README) and is not counted.
+Denominators exclude the checks listed as *not covered*; those are named in `COVERAGE.md`. C is Linux-only (the registry does not require macOS or Windows). In the published column, cells **with** a C toolchain pass 18 of 18, cells **without** one pass 0 of 12; 6 cells completed a live model turn (the local x64 cells; CI has no model key). The breakdown follows the headline. B's node-pty-fix column is empty on purpose: the one earlier fix-chain registry result ran against a different entry (see the README) and is not counted.
+
+**C, published column by Linux variant** (Node 22, 24 and 26 in every row):
+
+| Variant | x64 | arm64 |
+|---|---|---|
+| glibc, slim image (no toolchain) | 0 of 3: fail on Node 22, 24, 26 | 0 of 3: fail on Node 22, 24, 26 |
+| glibc, full image (toolchain) | 3 of 3: pass on Node 22, 24, 26 | 3 of 3: pass on Node 22, 24, 26 |
+| musl, slim image (no toolchain) | 0 of 3: fail on Node 22, 24, 26 | 0 of 3: fail on Node 22, 24, 26 |
+| musl, full image (toolchain) | 3 of 3: pass on Node 22, 24, 26 | 3 of 3: pass on Node 22, 24, 26 |
+| Ubuntu 24.04 runner (the registry's CI environment) | 3 of 3: pass on Node 22, 24, 26 | 3 of 3: pass on Node 22, 24, 26 |
 
 ### Any-chain aggregate (for reference only)
 
@@ -111,33 +121,96 @@ A check counts here if it passed on **at least one** chain. That is more generou
 
 | Cell | Column | How | Result | Level | Detail |
 |---|---|---|---|---|---|
-| n22-glibc-x64 | published | docker | fail | clean-room install | [local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n22-glibc-x64 | lock-pinned | docker | fail | clean-room install | [local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n22-glibc-x64 | node-pty-fix | docker | not run | - |  |
-| n22-glibc-arm64 | published | native-arm64-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v22.23.4 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true |
-| n22-glibc-arm64 | lock-pinned | native-arm64-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v22.23.4 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true |
-| n22-glibc-arm64 | node-pty-fix | native-arm64-ci | not run | - |  |
-| n22-musl-x64 | published | docker | fail | clean-room install | [local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n22-musl-x64 | lock-pinned | docker | fail | clean-room install | [local Docker stock image, image: node v22.23.4 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n22-musl-x64 | node-pty-fix | docker | not run | - |  |
-| n22-musl-arm64 | published | native-arm64-ci | fail | clean-room install | [fork CI run 41240502689] npm install failed: npm error gyp ERR! not ok |
-| n22-musl-arm64 | lock-pinned | native-arm64-ci | fail | clean-room install | [fork CI run 41240502689] npm install failed: npm error gyp ERR! not ok |
-| n22-musl-arm64 | node-pty-fix | native-arm64-ci | not run | - |  |
-| n24-glibc-x64 | published | docker | fail | clean-room install | [local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n24-glibc-x64 | lock-pinned | docker | fail | clean-room install | [local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n24-glibc-x64 | node-pty-fix | docker | not run | - |  |
-| n24-glibc-arm64 | published | native-arm64-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v24.22.1 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true |
-| n24-glibc-arm64 | lock-pinned | native-arm64-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v24.22.1 linux-arm64 glibc; initialize=ok session/new=ok; node-pty loads=true |
-| n24-glibc-arm64 | node-pty-fix | native-arm64-ci | not run | - |  |
-| n24-musl-x64 | published | docker | fail | clean-room install | [local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n24-musl-x64 | lock-pinned | docker | fail | clean-room install | [local Docker stock image, image: node v24.22.2 x86_64; make: absent; gcc: absent] npm install failed: npm error gyp ERR! not ok || same cel |
-| n24-musl-x64 | node-pty-fix | docker | not run | - |  |
-| n24-musl-arm64 | published | native-arm64-ci | fail | clean-room install | [fork CI run 41240502689] npm install failed: npm error gyp ERR! not ok |
-| n24-musl-arm64 | lock-pinned | native-arm64-ci | fail | clean-room install | [fork CI run 41240502689] npm install failed: npm error gyp ERR! not ok |
-| n24-musl-arm64 | node-pty-fix | native-arm64-ci | not run | - |  |
-| windows-x64-n22 | published | fork-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v22.23.4 win32-x64 win32; initialize=ok session/new=ok; node-pty loads=true |
-| windows-x64-n22 | lock-pinned | fork-ci | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41240502689] v22.23.4 win32-x64 win32; initialize=ok session/new=ok; node-pty loads=true |
-| windows-x64-n22 | node-pty-fix | fork-ci | not run | - |  |
+| n22-glibc-slim-x64 | published | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v22.23.4 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: absent; gcc |
+| n22-glibc-slim-x64 | lock-pinned | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v22.23.4 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: absent; gcc |
+| n22-glibc-slim-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n22-glibc-full-x64 | published | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v22.23.4 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: /usr/bin/ma |
+| n22-glibc-full-x64 | lock-pinned | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v22.23.4 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: /usr/bin/ma |
+| n22-glibc-full-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n22-musl-slim-x64 | published | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v22.23.4 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent] np |
+| n22-musl-slim-x64 | lock-pinned | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v22.23.4 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent] np |
+| n22-musl-slim-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n22-musl-full-x64 | published | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v22.23.4 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: /usr/bin/make; gcc: /usr/bin/gcc; python |
+| n22-musl-full-x64 | lock-pinned | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v22.23.4 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: /usr/bin/make; gcc: /usr/bin/gcc; python |
+| n22-musl-full-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n24-glibc-slim-x64 | published | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v24.22.2 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: absent; gcc |
+| n24-glibc-slim-x64 | lock-pinned | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v24.22.2 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: absent; gcc |
+| n24-glibc-slim-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n24-glibc-full-x64 | published | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v24.22.2 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: /usr/bin/ma |
+| n24-glibc-full-x64 | lock-pinned | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v24.22.2 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: /usr/bin/ma |
+| n24-glibc-full-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n24-musl-slim-x64 | published | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v24.22.2 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent] np |
+| n24-musl-slim-x64 | lock-pinned | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v24.22.2 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent] np |
+| n24-musl-slim-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n24-musl-full-x64 | published | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v24.22.2 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: /usr/bin/make; gcc: /usr/bin/gcc; python |
+| n24-musl-full-x64 | lock-pinned | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v24.22.2 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: /usr/bin/make; gcc: /usr/bin/gcc; python |
+| n24-musl-full-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n26-glibc-slim-x64 | published | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v26.13.0 x86_64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: absent; gcc:  |
+| n26-glibc-slim-x64 | lock-pinned | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v26.13.0 x86_64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: absent; gcc:  |
+| n26-glibc-slim-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n26-glibc-full-x64 | published | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v26.13.0 x86_64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: /usr/bin/make |
+| n26-glibc-full-x64 | lock-pinned | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v26.13.0 x86_64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: /usr/bin/make |
+| n26-glibc-full-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n26-musl-slim-x64 | published | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v26.13.0 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent] np |
+| n26-musl-slim-x64 | lock-pinned | docker, local x64, live model turn | fail | clean-room install | [local Docker, image: node v26.13.0 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent] np |
+| n26-musl-slim-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n26-musl-full-x64 | published | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v26.13.0 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: /usr/bin/make; gcc: /usr/bin/gcc; python |
+| n26-musl-full-x64 | lock-pinned | docker, local x64, live model turn | pass | live model turn | [local Docker, image: node v26.13.0 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: /usr/bin/make; gcc: /usr/bin/gcc; python |
+| n26-musl-full-x64 | node-pty-fix | docker, local x64, live model turn | not run | - |  |
+| n22-glibc-slim-arm64 | published | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n22-glibc-slim-arm64 | lock-pinned | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n22-glibc-slim-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n22-glibc-full-arm64 | published | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n22-glibc-full-arm64 | lock-pinned | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n22-glibc-full-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n22-musl-slim-arm64 | published | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: absent; gcc: absent; python |
+| n22-musl-slim-arm64 | lock-pinned | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: absent; gcc: absent; python |
+| n22-musl-slim-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n22-musl-full-arm64 | published | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bi |
+| n22-musl-full-arm64 | lock-pinned | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v22.23.4 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bi |
+| n22-musl-full-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n24-glibc-slim-arm64 | published | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n24-glibc-slim-arm64 | lock-pinned | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n24-glibc-slim-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n24-glibc-full-arm64 | published | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n24-glibc-full-arm64 | lock-pinned | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: |
+| n24-glibc-full-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n24-musl-slim-arm64 | published | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: absent; gcc: absent; python |
+| n24-musl-slim-arm64 | lock-pinned | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: absent; gcc: absent; python |
+| n24-musl-slim-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n24-musl-full-arm64 | published | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bi |
+| n24-musl-full-arm64 | lock-pinned | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v24.22.2 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bi |
+| n24-musl-full-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n26-glibc-slim-arm64 | published | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: a |
+| n26-glibc-slim-arm64 | lock-pinned | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: a |
+| n26-glibc-slim-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n26-glibc-full-arm64 | published | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: / |
+| n26-glibc-full-arm64 | lock-pinned | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: / |
+| n26-glibc-full-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n26-musl-slim-arm64 | published | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: absent; gcc: absent; python |
+| n26-musl-slim-arm64 | lock-pinned | docker, native arm64 fork CI, no model | fail | clean-room install | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: absent; gcc: absent; python |
+| n26-musl-slim-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| n26-musl-full-arm64 | published | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bi |
+| n26-musl-full-arm64 | lock-pinned | docker, native arm64 fork CI, no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, image: node v26.13.0 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: /usr/bin/make; gcc: /usr/bi |
+| n26-musl-full-arm64 | node-pty-fix | docker, native arm64 fork CI, no model | not run | - |  |
+| ci-ubuntu2404-n22-x64 | published | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v22.23.4 x86_64; make: /usr/bin/make; gcc: |
+| ci-ubuntu2404-n22-x64 | lock-pinned | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v22.23.4 x86_64; make: /usr/bin/make; gcc: |
+| ci-ubuntu2404-n22-x64 | node-pty-fix | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | not run | - |  |
+| ci-ubuntu2404-n24-x64 | published | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v24.22.1 x86_64; make: /usr/bin/make; gcc: |
+| ci-ubuntu2404-n24-x64 | lock-pinned | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v24.22.1 x86_64; make: /usr/bin/make; gcc: |
+| ci-ubuntu2404-n24-x64 | node-pty-fix | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | not run | - |  |
+| ci-ubuntu2404-n26-x64 | published | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v26.13.0 x86_64; make: /usr/bin/make; gcc: |
+| ci-ubuntu2404-n26-x64 | lock-pinned | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v26.13.0 x86_64; make: /usr/bin/make; gcc: |
+| ci-ubuntu2404-n26-x64 | node-pty-fix | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | not run | - |  |
+| ci-ubuntu2404-n22-arm64 | published | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v22.23.4 aarch64; make: /usr/bin/make; gcc |
+| ci-ubuntu2404-n22-arm64 | lock-pinned | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v22.23.4 aarch64; make: /usr/bin/make; gcc |
+| ci-ubuntu2404-n22-arm64 | node-pty-fix | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | not run | - |  |
+| ci-ubuntu2404-n24-arm64 | published | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v24.22.1 aarch64; make: /usr/bin/make; gcc |
+| ci-ubuntu2404-n24-arm64 | lock-pinned | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v24.22.1 aarch64; make: /usr/bin/make; gcc |
+| ci-ubuntu2404-n24-arm64 | node-pty-fix | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | not run | - |  |
+| ci-ubuntu2404-n26-arm64 | published | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v26.13.0 aarch64; make: /usr/bin/make; gcc |
+| ci-ubuntu2404-n26-arm64 | lock-pinned | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | pass | real ACP client (initialize + session/new, no model) | [fork CI run 41263351337, os: Ubuntu 24.04.5 LTS; libc: (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39; node v26.13.0 aarch64; make: /usr/bin/make; gcc |
+| ci-ubuntu2404-n26-arm64 | node-pty-fix | ubuntu-24.04 fork CI runner + setup-node (the registry's CI environment), no model | not run | - |  |
 
 ## Failure details
 

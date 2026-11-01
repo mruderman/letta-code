@@ -1,0 +1,1 @@
+{"status": "pass", "level": "live model turn", "detail": "v26.13.0 linux-x64 glibc; initialize=ok session/new=ok; turn returned=True stop=end_turn nonce=True; node-pty loads=True (); ", "env": "image: node v26.13.0 x86_64; os: Debian GNU/Linux 13 (trixie); libc: (Debian GLIBC 2.41-12+deb13u4) 2.41; make: /usr/bin/make; gcc: /usr/bin/gcc; python3: /usr/bin/python3"}

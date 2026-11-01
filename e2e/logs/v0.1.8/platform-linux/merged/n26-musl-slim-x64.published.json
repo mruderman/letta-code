@@ -1,0 +1,5 @@
+{
+ "status": "fail",
+ "level": "clean-room install",
+ "detail": "[local Docker, image: node v26.13.0 x86_64; os: Alpine Linux v3.24; libc: musl libc (x86_64); make: absent; gcc: absent; python3: absent] npm install failed: npm error gyp ERR! not ok (node-gyp: Could not find any Python installation to use)"
+}

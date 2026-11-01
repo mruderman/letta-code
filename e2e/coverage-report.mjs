@@ -3,7 +3,7 @@
 // checks.json. Anything missing counts as NOT RUN. Usage:
 //   node coverage-report.mjs --live lock-pinned=<dir> --live published=<dir> --live node-pty-fix=<dir> \
 //        --registry <dir> --platform <dir> --clients <dir> [--out COVERAGE-RESULTS.md] [--acp-version 0.1.11]
-//        [--exclude-platform <cell id>=<reason>]...   drops a C cell from the denominators and names why
+//        [--platform-set linux|legacy]   C cells: the Linux matrix (default) or the 10-cell set the 0.1.11 run used
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,7 +13,7 @@ const spec = JSON.parse(readFileSync(join(here, "checks.json"), "utf8"));
 const args = process.argv.slice(2);
 const live = {};
 let registryDir, platformDir, clientsDir, out = join(here, "COVERAGE-RESULTS.md"), acpVersion = "0.1.11";
-const excludedPlatforms = {}; // cell id -> reason
+let platformSet = "linux";
 for (let i = 0; i < args.length; i++) {
   if (args[i] === "--live") { const [n, d] = args[++i].split("="); live[n] = d; }
   else if (args[i] === "--registry") registryDir = args[++i];
@@ -21,7 +21,7 @@ for (let i = 0; i < args.length; i++) {
   else if (args[i] === "--clients") clientsDir = args[++i];
   else if (args[i] === "--out") out = args[++i];
   else if (args[i] === "--acp-version") acpVersion = args[++i];
-  else if (args[i] === "--exclude-platform") { const a = args[++i]; const k = a.indexOf("="); excludedPlatforms[k < 0 ? a : a.slice(0, k)] = k < 0 ? "" : a.slice(k + 1); }
+  else if (args[i] === "--platform-set") platformSet = args[++i];
 }
 const readJson = (p) => (existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : null);
 
@@ -83,7 +83,7 @@ for (const m of ["A", "B", "D"]) {
   }
 }
 // Metric C, needed for the headline table
-const platforms = spec.platforms.filter((p) => !(p.id in excludedPlatforms));
+const platforms = platformSet === "legacy" ? spec.platforms_legacy : spec.platforms;
 const pcells = [];
 for (const p of platforms) for (const col of spec.columns) {
   const r = readJson(join(platformDir ?? "/nonexistent", `${p.id}.${col}.json`));
@@ -99,11 +99,28 @@ lines.push("## Headline: the entry as listed, then the other install chains", ""
   `| Metric | ${chains.map((ch) => chainLabel[ch]).join(" | ")} |`, `|---|${chains.map(() => "---").join("|")}|`);
 for (const m of ["A", "B", "D"]) lines.push(`| ${names[m]} | ${chains.map((ch) => cell1(m, ch)).join(" | ")} |`);
 lines.push(`| C. Platform/install matrix (${platforms.length} cells per column) | ${chains.map(ccell).join(" | ")} |`, "");
-const cText = acpVersion === "0.1.11"
-  ? "In C the published and lock-pinned columns pass only where a C toolchain is present (macOS, Windows, glibc arm64 in CI); on the stock images without `make` they fail to install."
-  : `In C the published column passes on ${pcells.filter((c) => c.column === "published" && c.status === "pass").map((c) => c.id).join(", ") || "no cell"} (CI runners with a C toolchain), fails on ${pcells.filter((c) => c.column === "published" && c.status === "fail").map((c) => c.id).join(", ") || "no cell"} (stock images without \`make\`, where node-pty has to be compiled; the x64 glibc cells pass on CI runners that have make, see the details)${(() => { const nr = pcells.filter((c) => c.column === "published" && c.status === "not run").map((c) => c.id); return nr.length ? `, and was not run on ${nr.join(", ")}` : ""; })()}.`;
-const exText = Object.entries(excludedPlatforms).map(([id, why]) => `${id} is left out of C on purpose${why ? `: ${why}` : ""}.`).join(" ");
-lines.push(`Denominators exclude the checks listed as *not covered*; those are named in \`COVERAGE.md\`. ${cText}${exText ? ` ${exText}` : ""} B's node-pty-fix column is empty on purpose: the one earlier fix-chain registry result ran against a different entry (see the README) and is not counted.`, "");
+// The C sentence. legacy: the wording each earlier report carried. linux: a breakdown of the published column.
+const pub = pcells.filter((c) => c.column === "published");
+const byId = Object.fromEntries(platforms.map((p) => [p.id, p]));
+const group = (pred) => { const cs = pub.filter((c) => pred(byId[c.id])); const ran = cs.filter((c) => c.status !== "not run"); return { n: cs.filter((c) => c.status === "pass").length, ran: ran.length, of: cs.length, turn: cs.filter((c) => c.status === "pass" && c.level === "live model turn").length }; };
+const fmt = (g) => (g.ran ? `${g.n} of ${g.ran}${g.ran < g.of ? ` (${g.of - g.ran} not run)` : ""}` : "not run");
+let cText;
+if (platformSet === "legacy") {
+  cText = acpVersion === "0.1.11"
+    ? "In C the published and lock-pinned columns pass only where a C toolchain is present (macOS, Windows, glibc arm64 in CI); on the stock images without `make` they fail to install."
+    : `In C the published column passes on ${pub.filter((c) => c.status === "pass").map((c) => c.id).join(", ") || "no cell"} (CI runners with a C toolchain), fails on ${pub.filter((c) => c.status === "fail").map((c) => c.id).join(", ") || "no cell"} (stock images without \`make\`, where node-pty has to be compiled; the x64 glibc cells pass on CI runners that have make, see the details)${(() => { const nr = pub.filter((c) => c.status === "not run").map((c) => c.id); return nr.length ? `, and was not run on ${nr.join(", ")}` : ""; })()}.`;
+} else {
+  const tc = group((p) => p.toolchain), ntc = group((p) => !p.toolchain);
+  cText = `C is Linux-only (the registry does not require macOS or Windows). In the published column, cells **with** a C toolchain pass ${fmt(tc)}, cells **without** one pass ${fmt(ntc)}; ${pub.filter((c) => c.status === "pass" && c.level === "live model turn").length} cells completed a live model turn (the local x64 cells; CI has no model key). The breakdown follows the headline.`;
+}
+lines.push(`Denominators exclude the checks listed as *not covered*; those are named in \`COVERAGE.md\`. ${cText} B's node-pty-fix column is empty on purpose: the one earlier fix-chain registry result ran against a different entry (see the README) and is not counted.`, "");
+if (platformSet !== "legacy") {
+  const rows = [["glibc, slim image (no toolchain)", (p) => p.libc === "glibc" && p.image === "slim"], ["glibc, full image (toolchain)", (p) => p.libc === "glibc" && p.image === "full"], ["musl, slim image (no toolchain)", (p) => p.libc === "musl" && p.image === "slim"], ["musl, full image (toolchain)", (p) => p.libc === "musl" && p.image === "full"], ["Ubuntu 24.04 runner (the registry's CI environment)", (p) => p.image === "ubuntu-24.04 runner"]];
+  const nodeList = (pred) => { const cs = pub.filter((c) => pred(byId[c.id])); const ok = cs.filter((c) => c.status === "pass").map((c) => byId[c.id].node); const bad = cs.filter((c) => c.status === "fail").map((c) => byId[c.id].node); return [ok.length ? `pass on Node ${ok.join(", ")}` : "", bad.length ? `fail on Node ${bad.join(", ")}` : ""].filter(Boolean).join("; ") || "not run"; };
+  lines.push("**C, published column by Linux variant** (Node 22, 24 and 26 in every row):", "", "| Variant | x64 | arm64 |", "|---|---|---|");
+  for (const [label, pred] of rows) lines.push(`| ${label} | ${fmt(group((p) => pred(p) && p.arch === "x64"))}: ${nodeList((p) => pred(p) && p.arch === "x64")} | ${fmt(group((p) => pred(p) && p.arch === "arm64"))}: ${nodeList((p) => pred(p) && p.arch === "arm64")} |`);
+  lines.push("");
+}
 lines.push("### Any-chain aggregate (for reference only)", "", `A check counts here if it passed on **at least one** chain. That is more generous than anything a registry user gets${acpVersion === "0.1.11" ? ", because every A and D pass in it comes from the lock-pinned chain" : ""}. Do not quote this table on its own.`, "", "| Metric | Passing | Failing | Not run | Not covered (by design) | Denominator |", "|---|---|---|---|---|---|");
 for (const m of ["A", "B", "D"]) { const x = summary[m]; lines.push(`| ${names[m].replace(" (headline)", "")} | ${x.passing} | ${x.failing} | ${x.notRun} | ${x.notCovered} | ${x.total} |`); }
 lines.push("");

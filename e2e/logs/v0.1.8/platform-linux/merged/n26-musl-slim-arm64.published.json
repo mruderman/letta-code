@@ -1,0 +1,5 @@
+{
+ "status": "fail",
+ "level": "clean-room install",
+ "detail": "[fork CI run 41263351337, image: node v26.13.0 aarch64; os: Alpine Linux v3.24; libc: musl libc (aarch64); make: absent; gcc: absent; python3: absent] npm install failed: npm error gyp ERR! not ok"
+}

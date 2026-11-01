@@ -1,0 +1,28 @@
+{
+ "node": "v24.22.2",
+ "platform": "linux-x64",
+ "libc": "musl",
+ "nonce": "PLATIFLOKC2",
+ "nodePty": {
+  "loads": true
+ },
+ "initialize": {
+  "ok": true,
+  "authMethods": []
+ },
+ "sessionNew": {
+  "ok": true
+ },
+ "turn": {
+  "returned": true,
+  "stopReason": "end_turn",
+  "error": null,
+  "toolCalls": 1,
+  "nonceSeen": true,
+  "reply": "PLATIFLOKC2"
+ },
+ "status": "pass",
+ "seconds": 13,
+ "stderrTail": "[letta-acp] creating a new Letta agent (set LETTA_AGENT_ID to reuse one)... | [letta-acp] created agent agent-local-e4e2b7d6-778a-40a7-9325-727709f7df16 — set LETTA_AGENT_ID=agent-local-e4e2b7d6-778a-40a7-9325-727709f7df16 to keep using it | [letta-acp] session local-conv-2 -> agent agent-local-e4e2b7d6-778a-40a7-9325-727709f7df16 (cwd: /tmp/smoke-work-JhAFic) | [letta-acp] advertising 33 slash commands",
+ "level": "live model turn"
+}

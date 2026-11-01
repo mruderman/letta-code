@@ -1,0 +1,1 @@
+{"status": "fail", "level": "clean-room install", "detail": "npm install failed: npm error gyp ERR! not ok", "env": "image: node v24.22.2 x86_64; os: Debian GNU/Linux 12 (bookworm); libc: (Debian GLIBC 2.36-9+deb12u14) 2.36; make: absent; gcc: absent; python3: absent"}
