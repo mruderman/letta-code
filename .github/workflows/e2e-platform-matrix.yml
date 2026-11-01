@@ -1,12 +1,17 @@
-# Platform cells that cannot run in the local Docker matrix (arm64, Windows, and the musl
-# arm64 images). Installs the PUBLISHED letta-acp (and a lock-pinned variant) clean from npm on each
-# runner and runs e2e/platform/platform-smoke.mjs: initialize + session/new over stdio, plus whether
-# node-pty loads. No model key exists on the fork, so these cells reach "real ACP client" level only.
+# The Linux platform matrix (metric C) cells that cannot run in the local Docker matrix:
+#   docker-arm64: the same Docker cells as the local x64 run (Node 22/24/26 x glibc/musl x slim/full),
+#                 on native arm64 runners, via e2e/platform/run-docker-cell.sh with NO_TURN=1.
+#   host:         Ubuntu 24.04 runners (x64 and arm64) with setup-node, i.e. the environment the ACP
+#                 registry's own CI uses (ubuntu-latest, setup-node "lts/*", which is Node 26 since
+#                 2026-10-28). The runner image has gcc and make.
+# Each installs the letta-acp chain clean from npm and runs e2e/platform/platform-smoke.mjs: initialize +
+# session/new over stdio, plus whether node-pty loads. No model key exists on the fork, so these cells
+# reach "real ACP client" level only; the local x64 cells add the live model turn.
 # Runs only on the e2e-evidence branch and by hand; it does not touch any other workflow.
-# ACP_VERSION: the dispatch input, else 0.1.8 (the version registry PR 472 pins). The 0.1.11 cells
-# were run with this workflow at 5c77029 (run 41187004892), when the version was hard-coded.
-# macOS cells were removed 2026-11-01: the ACP registry does not require macOS (its CI is Linux-only and
-# npx entries carry no platform field). Run 41187004892 has the last macOS cells.
+# ACP_VERSION: the dispatch input, else 0.1.8 (the version registry PR 472 pins).
+# History: the 0.1.11 cells ran at 5c77029 (run 41187004892, including macOS and Windows). macOS and
+# Windows were removed 2026-11-01 because the ACP registry does not require them (all its CI runs on
+# ubuntu-latest and an npx entry carries no platform field), and the matrix became Linux-only.
 name: e2e-platform-matrix
 on:
   push:
@@ -28,17 +33,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - { cell: n22-glibc-x64, os: ubuntu-24.04, node: "22", column: published }
-          - { cell: n22-glibc-x64, os: ubuntu-24.04, node: "22", column: lock-pinned }
-          - { cell: n24-glibc-x64, os: ubuntu-24.04, node: "24", column: published }
-          - { cell: n24-glibc-x64, os: ubuntu-24.04, node: "24", column: lock-pinned }
-          - { cell: n22-glibc-arm64, os: ubuntu-24.04-arm, node: "22", column: published }
-          - { cell: n22-glibc-arm64, os: ubuntu-24.04-arm, node: "22", column: lock-pinned }
-          - { cell: n24-glibc-arm64, os: ubuntu-24.04-arm, node: "24", column: published }
-          - { cell: n24-glibc-arm64, os: ubuntu-24.04-arm, node: "24", column: lock-pinned }
-          - { cell: windows-x64-n22, os: windows-2022, node: "22", column: published }
-          - { cell: windows-x64-n22, os: windows-2022, node: "22", column: lock-pinned }
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        node: ["22", "24", "26"]
+        column: [published, lock-pinned]
+    env:
+      CELL: ci-ubuntu2404-n${{ matrix.node }}-${{ matrix.os == 'ubuntu-24.04-arm' && 'arm64' || 'x64' }}
     steps:
       - name: Checkout (the smoke script only)
         uses: actions/checkout@v4
@@ -51,71 +50,51 @@ jobs:
         env:
           ACP_VERSION: ${{ inputs.acp_version || '0.1.8' }}
           COLUMN: ${{ matrix.column }}
-          CELL: ${{ matrix.cell }}
         run: |
           set +e
-          mkdir -p "$RUNNER_TEMP/w" 2>/dev/null || mkdir -p /tmp/w
-          W="${RUNNER_TEMP:-/tmp}/w"; cd "$W" && npm init -y >/dev/null
-          echo "toolchain: make=$(command -v make || echo absent) gcc=$(command -v gcc || echo absent) node=$(node --version) arch=$(uname -m)"
+          W="$RUNNER_TEMP/w"; mkdir -p "$W"; cd "$W" && npm init -y >/dev/null
+          ENV_LINE="os: $(. /etc/os-release && echo "$PRETTY_NAME"); libc: $(ldd --version | head -1 | sed 's/^ldd //'); node $(node --version) $(uname -m); make: $(command -v make || echo absent); gcc: $(command -v gcc || echo absent); python3: $(command -v python3 || echo absent)"
+          echo "$ENV_LINE"
           LOCK_SDK=0.7.2; [ "$ACP_VERSION" = 0.1.8 ] && LOCK_SDK=0.5.7
           if [ "$COLUMN" = published ]; then PKGS="@letta-ai/letta-acp@$ACP_VERSION"; else PKGS="@letta-ai/letta-acp@$ACP_VERSION @letta-ai/letta-agent-sdk@$LOCK_SDK @agentclientprotocol/sdk@1.3.0"; fi
-          echo "acp_version=$ACP_VERSION column=$COLUMN"
+          echo "acp_version=$ACP_VERSION column=$COLUMN cell=$CELL"
           if ! npm install --no-audit --no-fund $PKGS > install.log 2>&1; then
             reason="$(grep -E 'npm error' install.log | grep -E 'make|gyp|code' | tail -1 | tr -d '"' | cut -c1-200)"
-            echo "RESULT_JSON:{\"cell\":\"$CELL\",\"column\":\"$COLUMN\",\"status\":\"fail\",\"level\":\"clean-room install\",\"detail\":\"npm install failed: $reason\"}"
+            python3 -c 'import json,os,sys; print("RESULT_JSON:"+json.dumps({"cell":os.environ["CELL"],"column":os.environ["COLUMN"],"status":"fail","level":"clean-room install","detail":"npm install failed: "+sys.argv[1],"env":sys.argv[2]}))' "$reason" "$ENV_LINE"
             exit 0
           fi
-          BIN="$W/node_modules/.bin/letta-acp"; [ "$RUNNER_OS" = Windows ] && BIN="$W/node_modules/.bin/letta-acp.cmd"
-          node "$GITHUB_WORKSPACE/e2e/platform/platform-smoke.mjs" --out "$W/out" -- "$BIN" > smoke.log 2>&1
-          code=$?
-          if [ -f "$W/out/result.json" ]; then node "$GITHUB_WORKSPACE/e2e/platform/emit-result.mjs" "$W/out/result.json" "$CELL" "$COLUMN"
-          else echo "RESULT_JSON:{\"cell\":\"$CELL\",\"column\":\"$COLUMN\",\"status\":\"fail\",\"level\":\"clean-room install\",\"detail\":\"no result produced: $(tail -c 200 smoke.log | tr -d '\"\n')\"}"; fi
+          node "$GITHUB_WORKSPACE/e2e/platform/platform-smoke.mjs" --out "$W/out" -- "$W/node_modules/.bin/letta-acp" > smoke.log 2>&1
+          if [ -f "$W/out/result.json" ]; then ENV_LINE="$ENV_LINE" node "$GITHUB_WORKSPACE/e2e/platform/emit-result.mjs" "$W/out/result.json" "$CELL" "$COLUMN"
+          else python3 -c 'import json,os,sys; print("RESULT_JSON:"+json.dumps({"cell":os.environ["CELL"],"column":os.environ["COLUMN"],"status":"fail","level":"clean-room install","detail":"no result produced: "+sys.argv[1],"env":sys.argv[2]}))' "$(tail -c 200 smoke.log)" "$ENV_LINE"; fi
           exit 0
 
-  musl:
-    name: ${{ matrix.cell }} / ${{ matrix.column }}
-    runs-on: ${{ matrix.os }}
-    container: node:${{ matrix.node }}-alpine
-    timeout-minutes: 25
+  docker-arm64:
+    name: n${{ matrix.node }}-${{ matrix.variant }}-arm64 / ${{ matrix.column }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - { cell: n22-musl-x64, os: ubuntu-24.04, node: "22", column: published }
-          - { cell: n22-musl-x64, os: ubuntu-24.04, node: "22", column: lock-pinned }
-          - { cell: n24-musl-x64, os: ubuntu-24.04, node: "24", column: published }
-          - { cell: n24-musl-x64, os: ubuntu-24.04, node: "24", column: lock-pinned }
-          - { cell: n22-musl-arm64, os: ubuntu-24.04-arm, node: "22", column: published }
-          - { cell: n22-musl-arm64, os: ubuntu-24.04-arm, node: "22", column: lock-pinned }
-          - { cell: n24-musl-arm64, os: ubuntu-24.04-arm, node: "24", column: published }
-          - { cell: n24-musl-arm64, os: ubuntu-24.04-arm, node: "24", column: lock-pinned }
+        node: ["22", "24", "26"]
+        variant: [glibc-slim, glibc-full, musl-slim, musl-full]
+        column: [published, lock-pinned]
     steps:
-      - name: Fetch the smoke script (no git in the stock image)
-        run: |
-          mkdir -p e2e/platform
-          for f in platform-smoke.mjs emit-result.mjs; do wget -q -O "e2e/platform/$f" "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/e2e/platform/$f"; done
-      - name: Install and smoke (${{ matrix.column }})
-        shell: sh
+      - name: Checkout (the platform scripts only)
+        uses: actions/checkout@v4
+        with: { sparse-checkout: e2e/platform }
+      - name: Docker cell (${{ matrix.column }})
+        shell: bash
         env:
           ACP_VERSION: ${{ inputs.acp_version || '0.1.8' }}
-          COLUMN: ${{ matrix.column }}
-          CELL: ${{ matrix.cell }}
+          NO_TURN: "1"
         run: |
           set +e
-          mkdir -p "$RUNNER_TEMP/w" 2>/dev/null || mkdir -p /tmp/w
-          W="${RUNNER_TEMP:-/tmp}/w"; cd "$W" && npm init -y >/dev/null
-          echo "toolchain: make=$(command -v make || echo absent) gcc=$(command -v gcc || echo absent) node=$(node --version) arch=$(uname -m)"
-          LOCK_SDK=0.7.2; [ "$ACP_VERSION" = 0.1.8 ] && LOCK_SDK=0.5.7
-          if [ "$COLUMN" = published ]; then PKGS="@letta-ai/letta-acp@$ACP_VERSION"; else PKGS="@letta-ai/letta-acp@$ACP_VERSION @letta-ai/letta-agent-sdk@$LOCK_SDK @agentclientprotocol/sdk@1.3.0"; fi
-          echo "acp_version=$ACP_VERSION column=$COLUMN"
-          if ! npm install --no-audit --no-fund $PKGS > install.log 2>&1; then
-            reason="$(grep -E 'npm error' install.log | grep -E 'make|gyp|code' | tail -1 | tr -d '"' | cut -c1-200)"
-            echo "RESULT_JSON:{\"cell\":\"$CELL\",\"column\":\"$COLUMN\",\"status\":\"fail\",\"level\":\"clean-room install\",\"detail\":\"npm install failed: $reason\"}"
-            exit 0
-          fi
-          BIN="$W/node_modules/.bin/letta-acp"; [ "$RUNNER_OS" = Windows ] && BIN="$W/node_modules/.bin/letta-acp.cmd"
-          node "$GITHUB_WORKSPACE/e2e/platform/platform-smoke.mjs" --out "$W/out" -- "$BIN" > smoke.log 2>&1
-          code=$?
-          if [ -f "$W/out/result.json" ]; then node "$GITHUB_WORKSPACE/e2e/platform/emit-result.mjs" "$W/out/result.json" "$CELL" "$COLUMN"
-          else echo "RESULT_JSON:{\"cell\":\"$CELL\",\"column\":\"$COLUMN\",\"status\":\"fail\",\"level\":\"clean-room install\",\"detail\":\"no result produced: $(tail -c 200 smoke.log | tr -d '\"\n')\"}"; fi
+          OUT="$RUNNER_TEMP/cells"
+          bash e2e/platform/run-docker-cell.sh "${{ matrix.node }}" "${{ matrix.variant }}" "${{ matrix.column }}" "$OUT"
+          for f in "$OUT"/*/cell.json; do
+            d="$(dirname "$f")"; b="$(basename "$d")"
+            python3 -c 'import json,sys; c=json.load(open(sys.argv[1])); cell,col=sys.argv[2].rsplit(".",1); c.update(cell=cell,column=col); print("RESULT_JSON:"+json.dumps(c))' "$f" "$b"
+            echo "--- install.log tail"; tail -n 15 "$d/install.log" 2>/dev/null
+            echo "--- versions"; cat "$d/versions.txt" 2>/dev/null
+          done
           exit 0
